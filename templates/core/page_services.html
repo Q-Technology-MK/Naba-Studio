@@ -1,0 +1,129 @@
+{% extends "core/base.html" %}
+
+{% block title %}Hizmetler · Ankora Atelier{% endblock %}
+
+{% block content %}
+<!-- Section 1: Hero with Services -->
+<section class="services-hero">
+    <div class="services-hero-content">
+        <p class="eyebrow">our services</p>
+        <h1>Get ready with us</h1>
+    </div>
+    <div class="services-icons-grid">
+        <article class="service-icon-card">
+            <span class="service-icon">🎂</span>
+            <h3>Wedding cakes</h3>
+            <p>Dolor sit amet</p>
+        </article>
+        <article class="service-icon-card">
+            <span class="service-icon">💒</span>
+            <h3>The ceremony</h3>
+            <p>Lorem ipsum</p>
+        </article>
+        <article class="service-icon-card">
+            <span class="service-icon">📷</span>
+            <h3>Photoshoot</h3>
+            <p>Adipscin elit</p>
+        </article>
+        <article class="service-icon-card">
+            <span class="service-icon">📋</span>
+            <h3>Registry</h3>
+            <p>Sed ut perspiciati</p>
+        </article>
+    </div>
+</section>
+
+<!-- Section 2: Wedding Shop Banner -->
+<section class="services-banner">
+    <div class="services-banner-overlay">
+        <p class="eyebrow">wedding shop</p>
+        <h2>Choose the right wedding veil style</h2>
+        <a href="tel:+493012345678" class="primary-btn">Call Now</a>
+    </div>
+</section>
+
+<!-- Section 3: Pricing Table -->
+<section class="services-pricing">
+    <div class="services-pricing-header">
+        <p class="eyebrow">pricing table</p>
+        <h2>Hiring a planner</h2>
+        <p class="section-subtitle">Adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim</p>
+    </div>
+    <div class="pricing-grid">
+        {% for package in packages %}
+        <article class="pricing-card {% if package.is_featured %}featured{% endif %}">
+            <h3>{{ package.name }}</h3>
+            <div class="price">
+                <span class="amount">{{ package.price }}</span>
+                <span class="period">{{ package.period }}</span>
+            </div>
+            <ul class="features">
+                {% for feature in package.get_features_list %}
+                <li>{{ feature }}</li>
+                {% endfor %}
+            </ul>
+            <button class="primary-btn">Get Now</button>
+        </article>
+        {% empty %}
+        <article class="pricing-card">
+            <h3>Silver pack</h3>
+            <div class="price">
+                <span class="amount">$99.00</span>
+                <span class="period">Per/Month</span>
+            </div>
+            <ul class="features">
+                <li>Adipiscing elit sed do.</li>
+                <li>Eusmod tempor incididunt ut.</li>
+                <li>labore et dolore magna.</li>
+            </ul>
+            <button class="primary-btn">Get Now</button>
+        </article>
+        <article class="pricing-card featured">
+            <h3>Gold pack</h3>
+            <div class="price">
+                <span class="amount">$159.00</span>
+                <span class="period">Per/Month</span>
+            </div>
+            <ul class="features">
+                <li>Adipiscing elit sed do.</li>
+                <li>Eusmod tempor incididunt ut.</li>
+                <li>labore et dolore magna.</li>
+            </ul>
+            <button class="primary-btn">Get Now</button>
+        </article>
+        <article class="pricing-card">
+            <h3>Platinum pack</h3>
+            <div class="price">
+                <span class="amount">$299.00</span>
+                <span class="period">Per/Month</span>
+            </div>
+            <ul class="features">
+                <li>Adipiscing elit sed do.</li>
+                <li>Eusmod tempor incididunt ut.</li>
+                <li>labore et dolore magna.</li>
+            </ul>
+            <button class="primary-btn">Get Now</button>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Section 4: Gallery -->
+<section class="services-gallery-section">
+    <section class="contact-gallery">
+        <div class="gallery-grid">
+            <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=500&q=80" alt="Bridal detail">
+            <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=500&q=80" alt="Bridal bouquet">
+            <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=500&q=80" alt="Draped aisle">
+            <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=500&q=80" alt="Golden details">
+            <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=500&q=80" alt="Romantic styling">
+            <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=500&q=80" alt="Modern tablescape">
+        </div>
+        <a class="instagram-link" href="https://instagram.com/" target="_blank" rel="noreferrer">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M7 2C4.243 2 2 4.243 2 7v10c0 2.757 2.243 5 5 5h10c2.757 0 5-2.243 5-5V7c0-2.757-2.243-5-5-5H7zm0 2h10c1.654 0 3 1.346 3 3v10c0 1.654-1.346 3-3 3H7c-1.654 0-3-1.346-3-3V7c0-1.654 1.346-3 3-3zm5 2a5 5 0 100 10 5 5 0 000-10zm0 2a3 3 0 11.001 5.999A3 3 0 0112 8zm6.5-.5a1 1 0 11-2 0 1 1 0 012 0z"/>
+            </svg>
+        </a>
+    </section>
+</section>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "core/base.html" %}
+
+{% block title %}Portfolyo Masonry · Ankora Atelier{% endblock %}
+
+{% block content %}
+<div class="page-wrapper">
+    <div class="section-divider"></div>
+    <h1 class="section-heading">Portfolio Masonry</h1>
+    <p class="section-subtitle">Brick-like, metro organize edilmiş düzen; tüm portfolyo öğeleri admin panelinden yönetiliyor.</p>
+
+    <div class="masonry-grid">
+        {% for item in portfolio_items %}
+            <a class="masonry-card" href="{{ item.get_absolute_url }}">
+                <img src="{{ item.image_url }}" alt="{{ item.title }}">
+                <div class="info">
+                    <h4>{{ item.title }}</h4>
+                    <p>{{ item.summary }}</p>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

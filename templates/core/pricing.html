@@ -1,0 +1,70 @@
+{% extends "core/base.html" %}
+
+{% block title %}Fiyatlandırma · Ankora Atelier{% endblock %}
+
+{% block content %}
+<div class="page-wrapper">
+    <div class="pricing-header">
+        <p class="eyebrow">Pricing</p>
+        <h1 class="section-heading">Veil</h1>
+    </div>
+
+    <div class="pricing-grid">
+        {% for package in packages %}
+        <article class="pricing-card {% if package.is_featured %}featured{% endif %}">
+            <h3>{{ package.name }}</h3>
+            <div class="price">
+                <span class="amount">{{ package.price }}</span>
+                <span class="period">{{ package.period }}</span>
+            </div>
+            <ul class="features">
+                {% for feature in package.get_features_list %}
+                <li>{{ feature }}</li>
+                {% endfor %}
+            </ul>
+            <a href="#" class="primary-btn">Get Now</a>
+        </article>
+        {% empty %}
+        <article class="pricing-card">
+            <h3>Silver pack</h3>
+            <div class="price">
+                <span class="amount">$99.00</span>
+                <span class="period">Per/Month</span>
+            </div>
+            <ul class="features">
+                <li>Adipiscing elit sed do.</li>
+                <li>Eusmod tempor incididunt ut.</li>
+                <li>labore et dolore magna.</li>
+            </ul>
+            <a href="#" class="primary-btn">Get Now</a>
+        </article>
+        <article class="pricing-card featured">
+            <h3>Gold pack</h3>
+            <div class="price">
+                <span class="amount">$159.00</span>
+                <span class="period">Per/Month</span>
+            </div>
+            <ul class="features">
+                <li>Adipiscing elit sed do.</li>
+                <li>Eusmod tempor incididunt ut.</li>
+                <li>labore et dolore magna.</li>
+            </ul>
+            <a href="#" class="primary-btn">Get Now</a>
+        </article>
+        <article class="pricing-card">
+            <h3>Platinum pack</h3>
+            <div class="price">
+                <span class="amount">$299.00</span>
+                <span class="period">Per/Month</span>
+            </div>
+            <ul class="features">
+                <li>Adipiscing elit sed do.</li>
+                <li>Eusmod tempor incididunt ut.</li>
+                <li>labore et dolore magna.</li>
+            </ul>
+            <a href="#" class="primary-btn">Get Now</a>
+        </article>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

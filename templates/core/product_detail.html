@@ -1,0 +1,18 @@
+{% extends "core/base.html" %}
+
+{% block title %}{{ product.name }} · Atelier Collection{% endblock %}
+
+{% block content %}
+<div class="page-wrapper">
+    <div class="section-divider"></div>
+    <div class="product-hero">
+        <img src="{{ product.image_url }}" alt="{{ product.name }}">
+    </div>
+    <div class="product-meta">
+        <h1>{{ product.name }}</h1>
+        <p class="price">{{ product.price }}</p>
+        <p>{{ product.description }}</p>
+        <a href="{% url 'portfolio' %}">Portfolyo'ya geri dön</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,87 @@
+{% extends "core/base.html" %}
+
+{% block title %}İletişim · Ankora Atelier{% endblock %}
+
+{% block content %}
+<div class="page-wrapper">
+    <div class="section-divider"></div>
+    <h1 class="section-heading">İletişim</h1>
+    <p class="section-subtitle">Dilediğiniz zaman mesaj bırakın; atelier ekibi 24 saat içinde cevap verecek.</p>
+
+    <div class="contact-cards">
+        <article class="contact-card">
+            <h3>Atölye</h3>
+            <p>Berlin / Almanya</p>
+            <p>Pariser Platz 3, 10117 Berlin</p>
+        </article>
+        <article class="contact-card">
+            <h3>Telefon</h3>
+            <p>+49 30 1234 5678</p>
+            <p>Hafta içi 09:00 - 18:00</p>
+        </article>
+        <article class="contact-card">
+            <h3>E-posta</h3>
+            <a href="mailto:atelier@ankora.com" class="underline_anim">atelier@ankora.com</a>
+            <p>Her türlü soru ve özel randevu talepleri için uygun.</p>
+        </article>
+    </div>
+
+    <section class="contact-form">
+        <h2 class="section-heading">Mesaj bırakın</h2>
+        <form>
+            <label for="name">Adınız</label>
+            <input id="name" name="name" placeholder="Örn. Elif Yıldız">
+
+            <label for="email">E-posta</label>
+            <input id="email" name="email" type="email" placeholder="atelier@ankora.com">
+
+            <label for="message">Mesaj</label>
+            <textarea id="message" name="message" rows="5" placeholder="Tasarım talebinizle ilgili birkaç cümle"></textarea>
+
+            <button type="submit">Mesajı gönder</button>
+        </form>
+        <div class="map-embed">
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2500.2341900021496!2d13.3777045!3d52.5162162!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47a851b5d90c1b1b%3A0xb7a3db343f87cf57!2sPariser%20Platz%2C%2010117%20Berlin%2C%20Germany!5e0!3m2!1sen!2sus!4v1702740000000!5m2!1sen!2sus"
+                allowfullscreen
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                aria-label="Ankora Atelier konumu"
+            ></iframe>
+        </div>
+    </section>
+</div>
+<div class="contact-wide-panels">
+    <section class="contact-showcase">
+        <div class="showcase-column image-column">
+            <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=400&q=80" alt="Atelier bouquet">
+        </div>
+        <div class="showcase-column text-column">
+            <div class="showcase-text">
+                <p class="eyebrow">Creative Atelier</p>
+                <h3>We sculpt dreams in florals & fabric.</h3>
+                <p>Her köşesini özenle dokuduğumuz özel gün tasarımlarımız için sizinle buluşmak istiyoruz. Randevu teklifinizi iletin, ekibimiz hemen size geri dönsün.</p>
+                <button class="showcase-cta">Planlamaya başla</button>
+            </div>
+        </div>
+        <div class="showcase-column image-column">
+            <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=400&q=80" alt="Bridal styling">
+        </div>
+    </section>
+    <section class="contact-gallery">
+        <div class="gallery-grid">
+            <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=500&q=80" alt="Bridal detail">
+            <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=500&q=80" alt="Bridal bouquet">
+            <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=500&q=80" alt="Draped aisle">
+            <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=500&q=80" alt="Golden details">
+            <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=500&q=80" alt="Romantic styling">
+            <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=500&q=80" alt="Modern tablescape">
+        </div>
+        <a class="instagram-link" href="https://instagram.com/" target="_blank" rel="noreferrer">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M7 2C4.243 2 2 4.243 2 7v10c0 2.757 2.243 5 5 5h10c2.757 0 5-2.243 5-5V7c0-2.757-2.243-5-5-5H7zm0 2h10c1.654 0 3 1.346 3 3v10c0 1.654-1.346 3-3 3H7c-1.654 0-3-1.346-3-3V7c0-1.654 1.346-3 3-3zm5 2a5 5 0 100 10 5 5 0 000-10zm0 2a3 3 0 11.001 5.999A3 3 0 0112 8zm6.5-.5a1 1 0 11-2 0 1 1 0 012 0z"/>
+            </svg>
+        </a>
+    </section>
+</div>
+{% endblock %}

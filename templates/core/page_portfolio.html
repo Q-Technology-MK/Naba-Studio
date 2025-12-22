@@ -1,0 +1,41 @@
+{% extends "core/base.html" %}
+
+{% block title %}Portfolyo · Ankora Atelier{% endblock %}
+
+{% block content %}
+<div class="page-wrapper">
+    <div class="portfolio-hero">
+        <div class="hero-row">
+            <div class="hero-col subtitle-col">
+                <p class="eyebrow">photo gallery</p>
+            </div>
+            <div class="hero-col copy-col">
+                <h1 class="section-heading">Our brides</h1>
+                <p class="portfolio-intro">
+                    Dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur.
+                    Dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas.
+                </p>
+            </div>
+            <div class="hero-col action-col">
+                <a class="primary-btn" href="{% url 'portfolio_masonry' %}">View More</a>
+            </div>
+        </div>
+    </div>
+
+    <section class="portfolio-showcase">
+        <div class="showcase-flower left-flower">
+            <img src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=256&h=607&q=80" alt="Çiçek">
+        </div>
+        <div class="showcase-products">
+            {% for slide in gallery_slides %}
+                <article class="product-slide">
+                    <img src="{{ slide.image }}" alt="">
+                </article>
+            {% endfor %}
+        </div>
+        <div class="showcase-flower right-flower">
+            <img src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=256&h=607&q=80" alt="Çiçek">
+        </div>
+    </section>
+</div>
+{% endblock %}

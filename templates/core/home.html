@@ -1,0 +1,152 @@
+{% extends "core/base.html" %}
+
+{% block title %}Home · Ankora Atelier{% endblock %}
+
+{% block content %}
+<div class="home-page">
+    <section class="hero-split hero-first">
+        <div class="hero-content hero-content-centered">
+            <span class="hero-icon">✦</span>
+            <p class="hero-kicker">An atelier in the very heart of Amsterdam</p>
+            <h1>An atelier<br>in the very heart of Amsterdam</h1>
+            <p>Dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernaturodit aut fugit, sed quia consequuntur.</p>
+            <button class="primary-btn">Hakkımızda</button>
+        </div>
+    </section>
+
+    <section class="hero-split hero-second">
+        <div class="hero-gallery">
+            <div class="hero-year">... tarihinde başladı</div>
+            <div class="hero-stack">
+                <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=800&q=80" alt="atelier preview">
+                <img class="overlap" src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80" alt="atelier detail">
+            </div>
+        </div>
+        <div class="hero-details hero-details-centered">
+            <p class="section-kicker">wedding couture</p>
+            <h2>We create graceful wedding dresses</h2>
+            <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <p class="schedule">MON-FRI: 9 AM – 22 PM<br>SATURDAY: 9 AM – 20 PM</p>
+            <button class="primary-btn">About Us</button>
+        </div>
+        <img class="hero-floral" src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=800&q=80" alt="flower">
+    </section>
+
+    <section class="service-meta">
+        <p class="section-kicker">what we do</p>
+        <h2>Bridal sewing services</h2>
+        <div class="service-meta-grid">
+            {% for service in services %}
+            <article>
+                <span class="service-icon">{{ service.icon }}</span>
+                <h3>{{ service.title }}</h3>
+                <p>{{ service.description }}</p>
+            </article>
+            {% empty %}
+            <article>
+                <span class="service-icon">✂</span>
+                <h3>Alterations</h3>
+                <p>Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p>
+            </article>
+            <article>
+                <span class="service-icon">🧵</span>
+                <h3>Dressmaking</h3>
+                <p>Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p>
+            </article>
+            <article>
+                <span class="service-icon">🪡</span>
+                <h3>Tailoring</h3>
+                <p>Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p>
+            </article>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section class="dress-shop">
+        <div class="dress-header">
+            <p class="section-kicker">dress shop</p>
+            <h2>Ready to wear</h2>
+        </div>
+        <div class="dress-grid">
+            {% for product in featured_products %}
+            <article class="dress-item">
+                <img src="{{ product.image_url }}" alt="{{ product.name }}">
+                <div class="dress-meta">
+                    <h4>{{ product.name }}</h4>
+                    <p class="price">{{ product.price }}</p>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section class="video-section">
+        <div class="video-wrapper">
+            <iframe
+                src="https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0&autoplay=0&modestbranding=1"
+                title="Atelier cinematic demo"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+                loading="lazy"
+            ></iframe>
+        </div>
+    </section>
+
+    <section class="bride-gallery">
+        <div class="bride-text">
+            <p class="section-kicker">our brides</p>
+            <h2>Dress gallery</h2>
+            <p>Dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernaturaut odit aut fugit, sed quia consequuntur. Dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas.</p>
+            <button class="primary-btn">View More</button>
+            <div class="mini-gallery">
+                <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=400&q=80" alt="mini bride 1">
+                <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=420&q=80" alt="mini bride 2">
+                <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=380&q=80" alt="mini bride 3">
+            </div>
+            <div class="flower-demo" role="presentation"></div>
+        </div>
+        <div class="bride-grid">
+            <img style="grid-area: 1 / 1 / 2 / 2;" src="https://images.unsplash.com/photo-1504593811423-6dd665756598?auto=format&fit=crop&w=400&q=80" alt="bride 1">
+            <img style="grid-area: 1 / 2 / 2 / 3;" src="https://images.unsplash.com/photo-1475180098004-ca77a66827be?auto=format&fit=crop&w=600&q=80" alt="bride 2">
+            <img style="grid-area: 1 / 3 / 2 / 4;" src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=400&q=80" alt="bride 3">
+            <img style="grid-area: 2 / 1 / 3 / 2;" src="https://images.unsplash.com/photo-1507120410856-1f35574c3b45?auto=format&fit=crop&w=400&q=80" alt="bride 4">
+            <img style="grid-area: 2 / 2 / 3 / 4;" src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=600&q=80" alt="bride 5">
+        </div>
+    </section>
+
+    <section class="contact-split">
+        <div class="map-embed">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18" title="Studio map" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="contact-card">
+            <p class="section-kicker">Contact Us</p>
+            <h3>Have questions?<br>Get in touch!</h3>
+            <form>
+                <input placeholder="Adınız" required>
+                <input placeholder="E-posta" type="email" required>
+                <textarea rows="4" placeholder="Mesajınız"></textarea>
+                <button type="submit">Gönder</button>
+            </form>
+        </div>
+    </section>
+
+    <section class="articles">
+        <div class="articles-head">
+            <p class="section-kicker">Wedding articles</p>
+            <h2>Latest from the atelier journal</h2>
+        </div>
+        <div class="articles-grid">
+            {% for post in latest_blog %}
+            <article class="article-card">
+                <img src="{{ post.hero_image }}" alt="{{ post.title }}">
+                <div class="article-meta">
+                    <p class="article-tag">Story</p>
+                    <h3>{{ post.title }}</h3>
+                    <p>{{ post.published_at }}</p>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </section>
+</div>
+{% endblock %}

@@ -1,0 +1,90 @@
+{% extends "core/base.html" %}
+
+{% block title %}Hakkımızda · Ankora Atelier{% endblock %}
+
+{% block content %}
+<div class="page-wrapper">
+    <!-- Section 1: About Us Intro with Images -->
+    <section class="about-intro">
+        <div class="about-intro-images">
+            <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80" alt="img-59-copyright" class="intro-img">
+            <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80" alt="img-60-copyright" class="intro-img">
+        </div>
+        <div class="about-intro-content">
+            <h1 class="section-heading">We arrange the perfect weddings</h1>
+            <p class="about-description">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.
+            </p>
+            <div class="about-schedule">
+                <p><strong>MON-FRI:</strong> 9 AM – 22 PM</p>
+                <p><strong>SATURDAY:</strong> 9 AM – 20 PM</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 2: What We Do - Wedding Events -->
+    <section class="about-services">
+        <div class="about-services-header">
+            <h2>what we do</h2>
+            <h3>Wedding events</h3>
+        </div>
+        <div class="about-services-grid">
+            <article>
+                <h4>Reception</h4>
+                <p>Lorem ipsum dolor</p>
+            </article>
+            <article>
+                <h4>The ceremony</h4>
+                <p>Lorem ipsum dolor</p>
+            </article>
+            <article>
+                <h4>Photoshoot</h4>
+                <p>Lorem ipsum dolor</p>
+            </article>
+            <article>
+                <h4>Registration</h4>
+                <p>Lorem ipsum dolor</p>
+            </article>
+        </div>
+    </section>
+
+    <!-- Section 3: YouTube Video Embed -->
+    <section class="about-video">
+        <div class="video-container">
+            <iframe 
+                src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+                title="Wedding Video" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen>
+            </iframe>
+        </div>
+    </section>
+
+    <!-- Section 4: Latest Blog Posts -->
+    <section class="about-blog">
+        <div class="about-blog-header">
+            <h2>Son Blog Yazıları</h2>
+        </div>
+        <div class="about-blog-grid">
+            {% for post in latest_blog %}
+            <article class="blog-card">
+                {% if post.hero_image %}
+                <img src="{{ post.hero_image.url }}" alt="{{ post.title }}">
+                {% else %}
+                <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=400&q=80" alt="{{ post.title }}">
+                {% endif %}
+                <div class="content">
+                    <span class="date">{{ post.published_at|date:"d M Y" }}</span>
+                    <h3>{{ post.title }}</h3>
+                    <p>{{ post.excerpt|truncatewords:15 }}</p>
+                    <a href="{{ post.get_absolute_url }}" class="read-more">Devamını Oku →</a>
+                </div>
+            </article>
+            {% empty %}
+            <p>Henüz blog yazısı yok.</p>
+            {% endfor %}
+        </div>
+    </section>
+</div>
+{% endblock %}

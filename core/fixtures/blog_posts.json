@@ -1,0 +1,62 @@
+[
+  {
+    "model": "core.blogpost",
+    "pk": 1,
+    "fields": {
+      "title": "Sabah Işığı ile İpek",
+      "slug": "sabah-isigi-ile-ipek",
+      "excerpt": "Ankora’nın yeni couture elbisesinde kullanılan ipek, sabah ışığından ilham alıyor.",
+      "body": "Ankora stüdyosunda sabah ışığının kumaşta nasıl dans ettiğini gözlemledik...",
+      "published_at": "2025-11-18",
+      "hero_image": "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80"
+    }
+  },
+  {
+    "model": "core.blogpost",
+    "pk": 2,
+    "fields": {
+      "title": "Kendi Hikayeni Yaz",
+      "slug": "kendi-hikayeni-yaz",
+      "excerpt": "Davetiye tasarımlarımızı, çiftlerin hikayelerine göre yeniden yorumluyoruz.",
+      "body": "Her çiftin hikayesi farklıdır, bu yüzden davetiyede kullandığımız çizgi dili de...",
+      "published_at": "2025-11-25",
+      "hero_image": "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1200&q=80"
+    }
+  },
+  {
+    "model": "core.blogpost",
+    "pk": 3,
+    "fields": {
+      "title": "Tarihle Dans Eden Bir Koleksiyon",
+      "slug": "tarihle-dans-eden-koleksiyon",
+      "excerpt": "Berlin’in tarihi sokakları, yeni koleksiyonumuzun ana ilham kaynağı oldu.",
+      "body": "Koleksiyonun kumaşlarında hafif bir retro dokunuş, modern coupe ile harmanlanıyor...",
+      "published_at": "2025-12-02",
+      "hero_image": "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=1200&q=80"
+    }
+  },
+  {
+    "model": "core.blogpost",
+    "pk": 4,
+    "fields": {
+      "title": "Bir Kasım Günü Provası",
+      "slug": "bir-kasim-gunu-provasi",
+      "excerpt": "Atölyede bir prova sabahını fotoğrafladık, detaylar kadraja insan katıyor.",
+      "body": "Provalar sadece elbise değil, ritüelleri de birlikte yeniden yazıyor...",
+      "published_at": "2025-12-09",
+      "hero_image": "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1200&q=80"
+    }
+  },
+  {
+    "model": "core.blogpost",
+    "pk": 5,
+    "fields": {
+      "title": "Minimalism ve Rose Gold",
+      "slug": "minimalism-ve-rose-gold",
+      "excerpt": "Gelin aksesuarlarında rose gold ve minimal çizgiler dengelendi.",
+      "body": "Bu sezon rose gold, mat dokunuşlarla birlikte minimal çizgide duran aksesuarlar...",
+      "published_at": "2025-12-16",
+      "hero_image": "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1200&q=80"
+    }
+  }
+]

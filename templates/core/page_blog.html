@@ -1,0 +1,81 @@
+{% extends "core/base.html" %}
+
+{% block title %}Blog · Ankora Atelier{% endblock %}
+
+{% block content %}
+<div class="page-wrapper">
+    <div class="section-divider"></div>
+    <h1 class="section-heading">Atelier Notes</h1>
+    <p class="section-subtitle">Yeni koleksiyonlar, süreçler ve ilham buluşmaları hakkında paylaşımlar burada görünür.</p>
+
+    <div class="blog-container">
+        <main class="blog-main">
+            <div class="blog-grid">
+                {% for post in page_obj.object_list %}
+                    <article class="blog-card">
+                        <img src="{{ post.hero_image }}" alt="{{ post.title }}">
+                        <div class="content">
+                            <p class="meta">{{ post.published_at }}</p>
+                            <h3>{{ post.title }}</h3>
+                            <p>{{ post.excerpt }}</p>
+                            <a href="{{ post.get_absolute_url }}" class="read-more">Detayları oku</a>
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+
+            <nav class="pagination" aria-label="Blog sayfa numaraları">
+                {% if page_obj.has_previous %}
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Önceki</a>
+                {% else %}
+                    <span class="page-link disabled">Önceki</span>
+                {% endif %}
+
+                <span class="page-info">Sayfa {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span>
+
+                {% if page_obj.has_next %}
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">Sonraki</a>
+                {% else %}
+                    <span class="page-link disabled">Sonraki</span>
+                {% endif %}
+            </nav>
+        </main>
+
+        <aside class="blog-sidebar">
+            <section class="sidebar-widget">
+                <p class="eyebrow">Keşfet</p>
+                <h4>İlham Panosu</h4>
+                <p>Atelier’den haftalık notlar, behind-the-scenes ve sürpriz işbirlikleri için takipte kalın.</p>
+            </section>
+
+            <section class="sidebar-widget">
+                <h5>Popüler başlıklar</h5>
+                <ul>
+                    {% for highlight in posts|slice:":3" %}
+                        <li><a href="{{ highlight.get_absolute_url }}">{{ highlight.title }}</a></li>
+                    {% empty %}
+                        <li>Henüz yeni içerik yok.</li>
+                    {% endfor %}
+                </ul>
+            </section>
+
+            <section class="sidebar-widget">
+                <h5>Kategoriler</h5>
+                <div class="tag-cloud">
+                    <a href="#">Editorial</a>
+                    <a href="#">Couture</a>
+                    <a href="#">Sürdürülebilirlik</a>
+                    <a href="#">Hikaye</a>
+                </div>
+            </section>
+
+            <section class="sidebar-widget cta-panel">
+                <p class="eyebrow">İçerik güncellemesi</p>
+                <h4>Gelin planınız için notlar alın</h4>
+                <p>Haftalık haber bültenimize abone olarak planlama, prova ve özel gün detayları için ilk siz haberdar olun.</p>
+                <button type="button">Abone ol</button>
+            </section>
+        </aside>
+    </div>
+</div>
+{% endblock %}

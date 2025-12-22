@@ -1,0 +1,198 @@
+{% load static i18n %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>{% block title %}{{ site_settings.site_name }}{% endblock %}</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="{% block meta_description %}{{ site_settings.meta_description|default:site_settings.tagline }}{% endblock %}">
+    <meta name="keywords" content="{% block meta_keywords %}{{ site_settings.meta_keywords|default:'düğün, gelin, gelinlik, atölye, wedding, bridal' }}{% endblock %}">
+    <meta name="author" content="{{ site_settings.site_name }}">
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="{% block og_title %}{{ site_settings.site_name }}{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}{{ site_settings.meta_description|default:site_settings.tagline }}{% endblock %}">
+    <meta property="og:site_name" content="{{ site_settings.site_name }}">
+    
+    <!-- Favicon -->
+    {% if site_settings.favicon_url %}
+    <link rel="icon" href="{{ site_settings.favicon_url }}" type="image/x-icon">
+    {% endif %}
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Space+Grotesk:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <style>
+        :root {
+            --primary: {{ site_settings.color_primary }};
+            --secondary: {{ site_settings.color_secondary }};
+            --accent: {{ site_settings.color_accent }};
+            --accent-dark: {{ site_settings.color_accent_dark }};
+            --text-soft: {{ site_settings.color_text_soft }};
+        }
+    </style>
+</head>
+<body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="site-header">
+        <div class="header-inner">
+            <div class="brand">
+                <span class="brand-mark">{{ site_settings.site_name|slice:":1" }}</span>
+                <div>
+                    <strong>{{ site_settings.site_name }}</strong>
+                    <p>{{ site_settings.tagline }}</p>
+                </div>
+            </div>
+            <nav class="main-nav">
+                <ul class="menu-list sc_layouts_hide_on_tablet sc_layouts_hide_on_mobile">
+                    <li class="menu_hover_zoom_line"><a href="{% url 'home' %}">Home</a></li>
+                    <li class="menu_hover_zoom_line"><a href="{% url 'services' %}">Hizmetler</a></li>
+                    <li class="menu_hover_zoom_line dropdown">
+                        <button aria-haspopup="true" aria-expanded="false" class="dropdown-toggle">
+                            Kurumsal
+                        </button>
+                        <div class="dropdown-menu">
+                            <a href="{% url 'about' %}">Hakkımızda</a>
+                            <a href="{% url 'rsvp' %}">RSVP</a>
+                            <a href="{% url 'faq' %}">SSS</a>
+                            <a href="{% url 'pricing' %}">Fiyatlandırma</a>
+                        </div>
+                    </li>
+                    <li class="menu_hover_zoom_line"><a href="{% url 'portfolio' %}">Portfolyo</a></li>
+                    <li class="menu_hover_zoom_line"><a href="{% url 'blog' %}">Blog</a></li>
+                    <li class="menu_hover_zoom_line"><a href="{% url 'contacts' %}">İletişim</a></li>
+                </ul>
+                <!-- Language Switcher with Flags -->
+                <div class="lang-switcher">
+                    {% get_current_language as LANGUAGE_CODE %}
+                    {% if LANGUAGE_CODE == 'tr' or LANGUAGE_CODE == 'sq' %}
+                        {% with base_path=request.path|slice:"4:" %}
+                        <a href="/{{ base_path }}" class="lang-flag {% if LANGUAGE_CODE == 'mk' %}active{% endif %}" title="Македонски">
+                            <span class="flag-icon">🇲🇰</span>
+                        </a>
+                        <a href="/tr/{{ base_path }}" class="lang-flag {% if LANGUAGE_CODE == 'tr' %}active{% endif %}" title="Türkçe">
+                            <span class="flag-icon">🇹🇷</span>
+                        </a>
+                        <a href="/sq/{{ base_path }}" class="lang-flag {% if LANGUAGE_CODE == 'sq' %}active{% endif %}" title="Shqip">
+                            <span class="flag-icon">🇦🇱</span>
+                        </a>
+                        {% endwith %}
+                    {% else %}
+                        <a href="/" class="lang-flag {% if LANGUAGE_CODE == 'mk' %}active{% endif %}" title="Македонски">
+                            <span class="flag-icon">🇲🇰</span>
+                        </a>
+                        {% if request.path == '/' %}
+                        <a href="/tr/" class="lang-flag {% if LANGUAGE_CODE == 'tr' %}active{% endif %}" title="Türkçe">
+                            <span class="flag-icon">🇹🇷</span>
+                        </a>
+                        <a href="/sq/" class="lang-flag {% if LANGUAGE_CODE == 'sq' %}active{% endif %}" title="Shqip">
+                            <span class="flag-icon">🇦🇱</span>
+                        </a>
+                        {% else %}
+                        <a href="/tr{{ request.path }}" class="lang-flag {% if LANGUAGE_CODE == 'tr' %}active{% endif %}" title="Türkçe">
+                            <span class="flag-icon">🇹🇷</span>
+                        </a>
+                        <a href="/sq{{ request.path }}" class="lang-flag {% if LANGUAGE_CODE == 'sq' %}active{% endif %}" title="Shqip">
+                            <span class="flag-icon">🇦🇱</span>
+                        </a>
+                        {% endif %}
+                    {% endif %}
+                </div>
+                <button class="menu-collapse menu_collapse" aria-label="Menüyü göster">
+                    <span>⋯</span>
+                </button>
+                <div class="collapsed-panel" aria-hidden="true">
+                    <a href="{% url 'home' %}">Home</a>
+                    <a href="{% url 'about' %}">Hakkımızda</a>
+                    <a href="{% url 'services' %}">Hizmetler</a>
+                    <a href="{% url 'rsvp' %}">RSVP</a>
+                    <a href="{% url 'faq' %}">SSS</a>
+                    <a href="{% url 'pricing' %}">Fiyatlar</a>
+                    <a href="{% url 'portfolio' %}">Portfolyo</a>
+                    <a href="{% url 'blog' %}">Blog</a>
+                    <a href="{% url 'contacts' %}">İletişim</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main id="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-grid">
+            <div>
+                <h3>{{ site_settings.site_name }}</h3>
+                <p>{{ site_settings.tagline }}</p>
+            </div>
+            <div>
+                <h4>Office</h4>
+                <p>{{ site_settings.address }}</p>
+                <a class="footer-link underline_anim" href="mailto:{{ site_settings.email }}">{{ site_settings.email }}</a>
+                <p>{{ site_settings.phone }}</p>
+            </div>
+            <div>
+                <h4>Links</h4>
+                <ul>
+                    <li><a href="{% url 'home' %}">Ana Sayfa</a></li>
+                    <li><a href="{% url 'services' %}">Hizmetler</a></li>
+                    <li><a href="{% url 'about' %}">Hakkımızda</a></li>
+                    <li><a href="{% url 'portfolio' %}">Portfolyo</a></li>
+                    <li><a href="{% url 'contacts' %}">İletişim</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Get in touch</h4>
+                <div class="socials">
+                    {% if site_settings.facebook_url %}<a href="{{ site_settings.facebook_url }}" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>{% endif %}
+                    {% if site_settings.instagram_url %}<a href="{{ site_settings.instagram_url }}" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 2C4.243 2 2 4.243 2 7v10c0 2.757 2.243 5 5 5h10c2.757 0 5-2.243 5-5V7c0-2.757-2.243-5-5-5H7zm0 2h10c1.654 0 3 1.346 3 3v10c0 1.654-1.346 3-3 3H7c-1.654 0-3-1.346-3-3V7c0-1.654 1.346-3 3-3zm5 2a5 5 0 100 10 5 5 0 000-10zm0 2a3 3 0 11.001 5.999A3 3 0 0112 8zm6.5-.5a1 1 0 11-2 0 1 1 0 012 0z"/></svg></a>{% endif %}
+                    {% if site_settings.twitter_url %}<a href="{{ site_settings.twitter_url }}" target="_blank" rel="noopener" aria-label="Twitter"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg></a>{% endif %}
+                    {% if site_settings.pinterest_url %}<a href="{{ site_settings.pinterest_url }}" target="_blank" rel="noopener" aria-label="Pinterest"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.372 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 01.083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.632-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z"/></svg></a>{% endif %}
+                    {% if site_settings.youtube_url %}<a href="{{ site_settings.youtube_url }}" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>{% endif %}
+                    {% if site_settings.tiktok_url %}<a href="{{ site_settings.tiktok_url }}" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg></a>{% endif %}
+                </div>
+                {% if site_settings.footer_text %}
+                <p class="footer-extra-text">{{ site_settings.footer_text }}</p>
+                {% endif %}
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-to-top" aria-label="Yukarı çık">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 15l-6-6-6 6"/>
+        </svg>
+    </button>
+
+    <script>
+        const collapseBtn = document.querySelector(".menu-collapse");
+        const collapsePanel = document.querySelector(".collapsed-panel");
+        collapseBtn?.addEventListener("click", () => {
+            const isOpen = collapsePanel?.classList.toggle("open");
+            collapsePanel?.setAttribute("aria-hidden", !isOpen);
+        });
+
+        document.querySelector(".scroll-to-top")?.addEventListener("click", () => {
+            window.scrollTo({top: 0, behavior: "smooth"});
+        });
+
+        document.querySelectorAll(".dropdown").forEach((dropdown) => {
+            const button = dropdown.querySelector(".dropdown-toggle");
+            button?.addEventListener("click", () => {
+                const menu = dropdown.querySelector(".dropdown-menu");
+                const expanded = button.getAttribute("aria-expanded") === "true";
+                button.setAttribute("aria-expanded", String(!expanded));
+                menu?.classList.toggle("visible");
+            });
+        });
+    </script>
+</body>
+</html>

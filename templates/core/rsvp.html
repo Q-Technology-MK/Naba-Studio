@@ -1,0 +1,51 @@
+{% extends "core/base.html" %}
+
+{% block title %}RSVP · Ankora Atelier{% endblock %}
+
+{% block content %}
+<!-- Hero Section 1899x719 -->
+<section class="rsvp-hero" style="background-image: url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1900&q=80');">
+    <div class="rsvp-hero-overlay">
+        <div class="rsvp-hero-content">
+            <h1>Wedding Celebration</h1>
+            <p>Join us for an unforgettable evening celebrating love, joy, and new beginnings.</p>
+            <a href="#rsvp-form" class="primary-btn">RSVP Now</a>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Details + Form Section -->
+<div class="page-wrapper">
+    <section class="rsvp-contact-section" id="rsvp-form">
+        <div class="rsvp-contact-details">
+            <h2>Contact details</h2>
+            <address>
+                <p>785 15h Street, Office 478<br>Berlin, De 81566</p>
+                <p><a href="mailto:info@email.com">info@email.com</a></p>
+                <p><a href="tel:+18408412569">+1 840 841 25 69</a></p>
+            </address>
+        </div>
+        <form class="rsvp-form">
+            <label for="guest-name">Ad Soyad</label>
+            <input id="guest-name" name="guest_name" placeholder="Adınız Soyadınız">
+
+            <label for="guest-email">E-posta</label>
+            <input id="guest-email" name="guest_email" type="email" placeholder="adresiniz@example.com">
+
+            <label for="event">Etkinlik</label>
+            <input id="event" name="event" placeholder="Örn. Nikah, Düğün, Kutlama">
+
+            <label for="attending">Katılım</label>
+            <select id="attending" name="attending">
+                <option value="yes">Katılıyorum</option>
+                <option value="no">Katılamıyorum</option>
+            </select>
+
+            <label for="note">Mesaj</label>
+            <textarea id="note" name="note" rows="4" placeholder="Talepleriniz varsa belirtin"></textarea>
+
+            <button type="submit" class="primary-btn">Gönder</button>
+        </form>
+    </section>
+</div>
+{% endblock %}

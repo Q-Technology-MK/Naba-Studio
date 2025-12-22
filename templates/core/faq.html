@@ -1,0 +1,68 @@
+{% extends "core/base.html" %}
+
+{% block title %}SSS · Ankora Atelier{% endblock %}
+
+{% block content %}
+<div class="faq-sections-wrapper">
+    <div class="faq-sections">
+        <section class="faq-section faq-main">
+            <div class="faq-heading">
+                <p class="eyebrow">FAQ</p>
+            </div>
+            <div class="faq-questions">
+                <details class="faq-line">
+                    <summary>What are my options?</summary>
+                    <p>Hazır koleksiyonlarımızdan seçim yapabilir ya da tamamen size özel bir görünüm oluşturmak üzere atelier ile birebir çalışabilirsiniz.</p>
+                </details>
+                <details class="faq-line">
+                    <summary>Can I switch to a different plan?</summary>
+                    <p>Düğün planlaması esnek kalmalı; planınızda değişiklik görmek istediğinizde ekibimiz size yeni öneriler sunar.</p>
+                </details>
+                <details class="faq-line">
+                    <summary>Do you offer non-disclosure signature?</summary>
+                    <p>Özel koleksiyonlar ve VIP etkinliklerde gerekli gizlilik anlaşmaları hazırlanır; talebinizi doğrudan danışmanınızla paylaşın.</p>
+                </details>
+                <details class="faq-line">
+                    <summary>Do you issue refunds?</summary>
+                    <p>Sözleşmede belirtilen iade koşulları karşılandığında, ödemeler ilgili yönteme geri aktarılır.</p>
+                </details>
+            </div>
+        </section>
+
+        <div class="faq-accommodation-wrapper">
+            {% with background=accommodation_background|default:"https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1600&q=80" %}
+            <section
+                class="faq-section faq-accommodation"
+                style="background-image: url('{{ background }}');"
+            >
+                <div class="accommodation-content">
+                    <h3>accommodation</h3>
+                    <p>Book the rooms at a wedding boutique hotel</p>
+                    <button class="secondary-btn">Book Now</button>
+                </div>
+            </section>
+            {% endwith %}
+        </div>
+
+    </div>
+</div>
+
+<div class="faq-cta-panels">
+    <section class="contact-showcase faq-cta">
+        <div class="showcase-column image-column">
+            <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=400&q=80" alt="Atelier bouquet">
+        </div>
+        <div class="showcase-column text-column">
+            <div class="showcase-text">
+                <p class="eyebrow">Creative Atelier</p>
+                <h3>We sculpt dreams in florals & fabric.</h3>
+                <p>Her köşesini özenle dokuduğumuz özel gün tasarımlarımız için sizinle buluşmak istiyoruz. Randevu teklifinizi iletin, ekibimiz hemen size geri dönsün.</p>
+                <button class="showcase-cta">Planlamaya başla</button>
+            </div>
+        </div>
+        <div class="showcase-column image-column">
+            <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=400&q=80" alt="Bridal styling">
+        </div>
+    </section>
+</div>
+{% endblock %}
