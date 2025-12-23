@@ -139,6 +139,8 @@ def portfolio_detail(request, slug):
 
 def blog_list(request):
     posts = BlogPost.objects.order_by("-published_at")
+    print(f"DEBUG blog_list: Total posts = {posts.count()}")
+    print(f"DEBUG blog_list: Posts queryset = {list(posts)}")
     
     # Filter by category if provided
     category = request.GET.get("category")
@@ -151,6 +153,7 @@ def blog_list(request):
     paginator = Paginator(posts, 4)
     page_number = request.GET.get("page", 1)
     page_obj = paginator.get_page(page_number)
+    print(f"DEBUG blog_list: page_obj.object_list = {page_obj.object_list}")
     
     context = {
         "posts": posts,
