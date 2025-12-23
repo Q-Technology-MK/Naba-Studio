@@ -213,6 +213,7 @@ def pricing(request):
 def rsvp(request):
     success = False
     error = None
+    addons = AddOnService.objects.all().order_by('order')
     
     if request.method == 'POST':
         name = request.POST.get('name', '')
@@ -251,7 +252,7 @@ def rsvp(request):
         else:
             messages.error(request, 'Lütfen ad ve email alanlarını doldurun.')
     
-    return render(request, "core/rsvp.html", {'success': success})
+    return render(request, "core/rsvp.html", {'success': success, 'addons': addons})
 
 
 def faq(request):

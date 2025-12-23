@@ -1,0 +1,939 @@
+[
+{
+  "model": "admin.logentry",
+  "pk": 1,
+  "fields": {
+    "action_time": "2025-12-22T23:29:40.359Z",
+    "user": 1,
+    "content_type": 14,
+    "object_id": "1",
+    "object_repr": "Site Settings",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Site name\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 2,
+  "fields": {
+    "action_time": "2025-12-23T00:06:12.014Z",
+    "user": 1,
+    "content_type": 14,
+    "object_id": "1",
+    "object_repr": "Site Settings",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Site name\", \"Tagline\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 3,
+  "fields": {
+    "action_time": "2025-12-23T00:28:08.505Z",
+    "user": 1,
+    "content_type": 14,
+    "object_id": "1",
+    "object_repr": "Site Settings",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Address\", \"Email\", \"Phone\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 4,
+  "fields": {
+    "action_time": "2025-12-23T01:55:47.211Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "5",
+    "object_repr": "Minimalism ve Rose Gold",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 5,
+  "fields": {
+    "action_time": "2025-12-23T01:55:47.471Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "4",
+    "object_repr": "Bir Kasým Günü Provasý",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 6,
+  "fields": {
+    "action_time": "2025-12-23T01:55:47.597Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "3",
+    "object_repr": "Tarihle Dans Eden Bir Koleksiyon",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 7,
+  "fields": {
+    "action_time": "2025-12-23T01:55:47.664Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "2",
+    "object_repr": "Kendi Hikayeni Yaz",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 8,
+  "fields": {
+    "action_time": "2025-12-23T01:55:47.731Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "1",
+    "object_repr": "Sabah Iþýðý ile Ýpek",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 1,
+  "fields": {
+    "name": "Can add log entry",
+    "content_type": 1,
+    "codename": "add_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 2,
+  "fields": {
+    "name": "Can change log entry",
+    "content_type": 1,
+    "codename": "change_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 3,
+  "fields": {
+    "name": "Can delete log entry",
+    "content_type": 1,
+    "codename": "delete_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 4,
+  "fields": {
+    "name": "Can view log entry",
+    "content_type": 1,
+    "codename": "view_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 5,
+  "fields": {
+    "name": "Can add permission",
+    "content_type": 2,
+    "codename": "add_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 6,
+  "fields": {
+    "name": "Can change permission",
+    "content_type": 2,
+    "codename": "change_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 7,
+  "fields": {
+    "name": "Can delete permission",
+    "content_type": 2,
+    "codename": "delete_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 8,
+  "fields": {
+    "name": "Can view permission",
+    "content_type": 2,
+    "codename": "view_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 9,
+  "fields": {
+    "name": "Can add group",
+    "content_type": 3,
+    "codename": "add_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 10,
+  "fields": {
+    "name": "Can change group",
+    "content_type": 3,
+    "codename": "change_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 11,
+  "fields": {
+    "name": "Can delete group",
+    "content_type": 3,
+    "codename": "delete_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 12,
+  "fields": {
+    "name": "Can view group",
+    "content_type": 3,
+    "codename": "view_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 13,
+  "fields": {
+    "name": "Can add user",
+    "content_type": 4,
+    "codename": "add_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 14,
+  "fields": {
+    "name": "Can change user",
+    "content_type": 4,
+    "codename": "change_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 15,
+  "fields": {
+    "name": "Can delete user",
+    "content_type": 4,
+    "codename": "delete_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 16,
+  "fields": {
+    "name": "Can view user",
+    "content_type": 4,
+    "codename": "view_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 17,
+  "fields": {
+    "name": "Can add content type",
+    "content_type": 5,
+    "codename": "add_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 18,
+  "fields": {
+    "name": "Can change content type",
+    "content_type": 5,
+    "codename": "change_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 19,
+  "fields": {
+    "name": "Can delete content type",
+    "content_type": 5,
+    "codename": "delete_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 20,
+  "fields": {
+    "name": "Can view content type",
+    "content_type": 5,
+    "codename": "view_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 21,
+  "fields": {
+    "name": "Can add session",
+    "content_type": 6,
+    "codename": "add_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 22,
+  "fields": {
+    "name": "Can change session",
+    "content_type": 6,
+    "codename": "change_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 23,
+  "fields": {
+    "name": "Can delete session",
+    "content_type": 6,
+    "codename": "delete_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 24,
+  "fields": {
+    "name": "Can view session",
+    "content_type": 6,
+    "codename": "view_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 25,
+  "fields": {
+    "name": "Can add blog post",
+    "content_type": 7,
+    "codename": "add_blogpost"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 26,
+  "fields": {
+    "name": "Can change blog post",
+    "content_type": 7,
+    "codename": "change_blogpost"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 27,
+  "fields": {
+    "name": "Can delete blog post",
+    "content_type": 7,
+    "codename": "delete_blogpost"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 28,
+  "fields": {
+    "name": "Can view blog post",
+    "content_type": 7,
+    "codename": "view_blogpost"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 29,
+  "fields": {
+    "name": "Can add faq item",
+    "content_type": 8,
+    "codename": "add_faqitem"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 30,
+  "fields": {
+    "name": "Can change faq item",
+    "content_type": 8,
+    "codename": "change_faqitem"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 31,
+  "fields": {
+    "name": "Can delete faq item",
+    "content_type": 8,
+    "codename": "delete_faqitem"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 32,
+  "fields": {
+    "name": "Can view faq item",
+    "content_type": 8,
+    "codename": "view_faqitem"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 33,
+  "fields": {
+    "name": "Can add portfolio item",
+    "content_type": 9,
+    "codename": "add_portfolioitem"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 34,
+  "fields": {
+    "name": "Can change portfolio item",
+    "content_type": 9,
+    "codename": "change_portfolioitem"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 35,
+  "fields": {
+    "name": "Can delete portfolio item",
+    "content_type": 9,
+    "codename": "delete_portfolioitem"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 36,
+  "fields": {
+    "name": "Can view portfolio item",
+    "content_type": 9,
+    "codename": "view_portfolioitem"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 37,
+  "fields": {
+    "name": "Can add product",
+    "content_type": 10,
+    "codename": "add_product"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 38,
+  "fields": {
+    "name": "Can change product",
+    "content_type": 10,
+    "codename": "change_product"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 39,
+  "fields": {
+    "name": "Can delete product",
+    "content_type": 10,
+    "codename": "delete_product"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 40,
+  "fields": {
+    "name": "Can view product",
+    "content_type": 10,
+    "codename": "view_product"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 41,
+  "fields": {
+    "name": "Can add service",
+    "content_type": 11,
+    "codename": "add_service"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 42,
+  "fields": {
+    "name": "Can change service",
+    "content_type": 11,
+    "codename": "change_service"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 43,
+  "fields": {
+    "name": "Can delete service",
+    "content_type": 11,
+    "codename": "delete_service"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 44,
+  "fields": {
+    "name": "Can view service",
+    "content_type": 11,
+    "codename": "view_service"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 45,
+  "fields": {
+    "name": "Can add pricing package",
+    "content_type": 12,
+    "codename": "add_pricingpackage"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 46,
+  "fields": {
+    "name": "Can change pricing package",
+    "content_type": 12,
+    "codename": "change_pricingpackage"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 47,
+  "fields": {
+    "name": "Can delete pricing package",
+    "content_type": 12,
+    "codename": "delete_pricingpackage"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 48,
+  "fields": {
+    "name": "Can view pricing package",
+    "content_type": 12,
+    "codename": "view_pricingpackage"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 49,
+  "fields": {
+    "name": "Can add Site Content",
+    "content_type": 13,
+    "codename": "add_sitecontent"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 50,
+  "fields": {
+    "name": "Can change Site Content",
+    "content_type": 13,
+    "codename": "change_sitecontent"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 51,
+  "fields": {
+    "name": "Can delete Site Content",
+    "content_type": 13,
+    "codename": "delete_sitecontent"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 52,
+  "fields": {
+    "name": "Can view Site Content",
+    "content_type": 13,
+    "codename": "view_sitecontent"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 53,
+  "fields": {
+    "name": "Can add Site Settings",
+    "content_type": 14,
+    "codename": "add_sitesettings"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 54,
+  "fields": {
+    "name": "Can change Site Settings",
+    "content_type": 14,
+    "codename": "change_sitesettings"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 55,
+  "fields": {
+    "name": "Can delete Site Settings",
+    "content_type": 14,
+    "codename": "delete_sitesettings"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 56,
+  "fields": {
+    "name": "Can view Site Settings",
+    "content_type": 14,
+    "codename": "view_sitesettings"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 57,
+  "fields": {
+    "name": "Can add Page Media",
+    "content_type": 15,
+    "codename": "add_pagemedia"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 58,
+  "fields": {
+    "name": "Can change Page Media",
+    "content_type": 15,
+    "codename": "change_pagemedia"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 59,
+  "fields": {
+    "name": "Can delete Page Media",
+    "content_type": 15,
+    "codename": "delete_pagemedia"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 60,
+  "fields": {
+    "name": "Can view Page Media",
+    "content_type": 15,
+    "codename": "view_pagemedia"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 61,
+  "fields": {
+    "name": "Can add Page Text",
+    "content_type": 16,
+    "codename": "add_pagetext"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 62,
+  "fields": {
+    "name": "Can change Page Text",
+    "content_type": 16,
+    "codename": "change_pagetext"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 63,
+  "fields": {
+    "name": "Can delete Page Text",
+    "content_type": 16,
+    "codename": "delete_pagetext"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 64,
+  "fields": {
+    "name": "Can view Page Text",
+    "content_type": 16,
+    "codename": "view_pagetext"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 65,
+  "fields": {
+    "name": "Can add Video Embed",
+    "content_type": 17,
+    "codename": "add_videoembed"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 66,
+  "fields": {
+    "name": "Can change Video Embed",
+    "content_type": 17,
+    "codename": "change_videoembed"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 67,
+  "fields": {
+    "name": "Can delete Video Embed",
+    "content_type": 17,
+    "codename": "delete_videoembed"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 68,
+  "fields": {
+    "name": "Can view Video Embed",
+    "content_type": 17,
+    "codename": "view_videoembed"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 69,
+  "fields": {
+    "name": "Can add add on service",
+    "content_type": 18,
+    "codename": "add_addonservice"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 70,
+  "fields": {
+    "name": "Can change add on service",
+    "content_type": 18,
+    "codename": "change_addonservice"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 71,
+  "fields": {
+    "name": "Can delete add on service",
+    "content_type": 18,
+    "codename": "delete_addonservice"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 72,
+  "fields": {
+    "name": "Can view add on service",
+    "content_type": 18,
+    "codename": "view_addonservice"
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$720000$8C4uLFGhs4EssHsMr2ITJ7$v12FDOtwlP6hDI9pQMrdgvIDmW63w8YIffkpVb7u4kI=",
+    "last_login": "2025-12-23T01:17:47.851Z",
+    "is_superuser": true,
+    "username": "Wolkhan",
+    "first_name": "",
+    "last_name": "",
+    "email": "volkandortkardes@gmail.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2025-12-22T23:02:37.059Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 1,
+  "fields": {
+    "app_label": "admin",
+    "model": "logentry"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 2,
+  "fields": {
+    "app_label": "auth",
+    "model": "permission"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 3,
+  "fields": {
+    "app_label": "auth",
+    "model": "group"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 4,
+  "fields": {
+    "app_label": "auth",
+    "model": "user"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 5,
+  "fields": {
+    "app_label": "contenttypes",
+    "model": "contenttype"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 6,
+  "fields": {
+    "app_label": "sessions",
+    "model": "session"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 7,
+  "fields": {
+    "app_label": "core",
+    "model": "blogpost"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 8,
+  "fields": {
+    "app_label": "core",
+    "model": "faqitem"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 9,
+  "fields": {
+    "app_label": "core",
+    "model": "portfolioitem"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 10,
+  "fields": {
+    "app_label": "core",
+    "model": "product"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 11,
+  "fields": {
+    "app_label": "core",
+    "model": "service"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 12,
+  "fields": {
+    "app_label": "core",
+    "model": "pricingpackage"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 13,
+  "fields": {
+    "app_label": "core",
+    "model": "sitecontent"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 14,
+  "fields": {
+    "app_label": "core",
+    "model": "sitesettings"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 15,
+  "fields": {
+    "app_label": "core",
+    "model": "pagemedia"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 16,
+  "fields": {
+    "app_label": "core",
+    "model": "pagetext"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 17,
+  "fields": {
+    "app_label": "core",
+    "model": "videoembed"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 18,
+  "fields": {
+    "app_label": "core",
+    "model": "addonservice"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "azcwusc8ydq6ag2ry5y5rao0828am7it",
+  "fields": {
+    "session_data": ".eJxVjMsOwiAURP-FtSG38nbp3m8gXC5I1UBS2pXx36VJFzrLOWfmzXzY1uK3nhY_E7uwiZ1-OwzxmeoO6BHqvfHY6rrMyHeFH7TzW6P0uh7u30EJvYy1U0q4ibQyJo-AS_IcNCiyIFNEFHIQlA5sxiy1A4AsMDsgSyaDYp8v0WY3jA:1vXp0n:PDfTIdNIdNu5WEwcZqCn0HNshESt3naPzcTiDBS61Og",
+    "expire_date": "2026-01-05T23:08:21.123Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "ihg40nehoi3rla0m4rdd7wvwt8pcruby",
+  "fields": {
+    "session_data": ".eJxVjMsOwiAURP-FtSG38nbp3m8gXC5I1UBS2pXx36VJFzrLOWfmzXzY1uK3nhY_E7uwiZ1-OwzxmeoO6BHqvfHY6rrMyHeFH7TzW6P0uh7u30EJvYy1U0q4ibQyJo-AS_IcNCiyIFNEFHIQlA5sxiy1A4AsMDsgSyaDYp8v0WY3jA:1vXr23:pcMWS9i8OA9o_3IB836IEG7q1779y8zmCAjMXjwejUg",
+    "expire_date": "2026-01-06T01:17:47.909Z"
+  }
+},
+{
+  "model": "core.blogpost",
+  "pk": 6,
+  "fields": {
+    "title": "Özel Dikim Couture Gelinlik Modelleri Hakkýnda",
+    "slug": "couture-gelinlik-modelleri",
+    "excerpt": "Couture gelinlik modellerinin en büyük farký, tasarým sürecinin merkezinde sizin olmanýzdýr. Naba Studio by Semma'da, sýfýrdan, sizin ölçülerinize, vücut oranlarýnýza ve stilinize göre inþa edilen benzersiz gelinlikler yaratýlýr.",
+    "body": 

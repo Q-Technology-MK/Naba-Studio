@@ -97,7 +97,7 @@ class BlogPost(models.Model):
     
     title = models.CharField(max_length=160)
     slug = models.SlugField(unique=True)
-    excerpt = models.CharField(max_length=220)
+    excerpt = models.TextField()
     body = models.TextField()
     published_at = models.DateField()
     category = models.CharField(max_length=100, choices=CATEGORY_CHOICES, default='Atelier Haberleri', help_text="Blog yazısının kategorisini seçin")

@@ -49,12 +49,13 @@
             <input id="date" name="date" type="date">
 
             <label for="service">Hizmet</label>
-            <select id="service" name="service">
-                <option value="Gelinlik Tasarımı">Gelinlik Tasarımı</option>
-                <option value="Özel Dikim">Özel Dikim</option>
-                <option value="Tadilat">Tadilat</option>
-                <option value="Danışmanlık">Danışmanlık</option>
-                <option value="Diğer">Diğer</option>
+            <select id="service" name="service" required>
+                <option value="">-- Hizmet Seçiniz --</option>
+                {% for addon in addons %}
+                <option value="{{ addon.name }}">{{ addon.name }}</option>
+                {% empty %}
+                <option value="">Kullanılabilir hizmet yok</option>
+                {% endfor %}
             </select>
 
             <label for="message">Mesaj</label>
