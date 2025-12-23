@@ -25,26 +25,42 @@
                 <p><a href="tel:{{ site_settings.phone }}">{{ site_settings.phone }}</a></p>
             </address>
         </div>
-        <form class="rsvp-form">
-            <label for="guest-name">Ad Soyad</label>
-            <input id="guest-name" name="guest_name" placeholder="Adınız Soyadınız">
+        
+        {% if messages %}
+        <div class="form-messages">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        
+        <form class="rsvp-form" method="post" action="{% url 'rsvp' %}">
+            {% csrf_token %}
+            <label for="name">Ad Soyad</label>
+            <input id="name" name="name" placeholder="Adınız Soyadınız" required>
 
-            <label for="guest-email">E-posta</label>
-            <input id="guest-email" name="guest_email" type="email" placeholder="adresiniz@example.com">
+            <label for="email">E-posta</label>
+            <input id="email" name="email" type="email" placeholder="adresiniz@example.com" required>
 
-            <label for="event">Etkinlik</label>
-            <input id="event" name="event" placeholder="Örn. Nikah, Düğün, Kutlama">
+            <label for="phone">Telefon</label>
+            <input id="phone" name="phone" type="tel" placeholder="+389 70 123 456">
 
-            <label for="attending">Katılım</label>
-            <select id="attending" name="attending">
-                <option value="yes">Katılıyorum</option>
-                <option value="no">Katılamıyorum</option>
+            <label for="date">Tercih Edilen Tarih</label>
+            <input id="date" name="date" type="date">
+
+            <label for="service">Hizmet</label>
+            <select id="service" name="service">
+                <option value="Gelinlik Tasarımı">Gelinlik Tasarımı</option>
+                <option value="Özel Dikim">Özel Dikim</option>
+                <option value="Tadilat">Tadilat</option>
+                <option value="Danışmanlık">Danışmanlık</option>
+                <option value="Diğer">Diğer</option>
             </select>
 
-            <label for="note">Mesaj</label>
-            <textarea id="note" name="note" rows="4" placeholder="Talepleriniz varsa belirtin"></textarea>
+            <label for="message">Mesaj</label>
+            <textarea id="message" name="message" rows="4" placeholder="Talepleriniz varsa belirtin"></textarea>
 
-            <button type="submit" class="primary-btn">Gönder</button>
+            <button type="submit" class="primary-btn">Randevu Talep Et</button>
         </form>
     </section>
 </div>

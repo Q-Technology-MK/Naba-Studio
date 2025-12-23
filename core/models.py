@@ -280,6 +280,15 @@ class SiteSettings(models.Model):
     map_longitude = models.DecimalField(max_digits=9, decimal_places=6, default="21.428057", help_text="Naba Studio Samoilova 90 boylamı: 21.428057")
     map_embed_code = models.TextField(blank=True, help_text="Google Maps embed kod: https://maps.app.goo.gl/TnBQbTKjQFpx3DFN7")
     
+    # SMTP / Email Settings (Google SMTP)
+    smtp_host = models.CharField(max_length=255, default="smtp.gmail.com", help_text="SMTP sunucu adresi (Gmail: smtp.gmail.com)")
+    smtp_port = models.PositiveIntegerField(default=587, help_text="SMTP port numarası (Gmail TLS: 587)")
+    smtp_user = models.EmailField(blank=True, help_text="SMTP kullanıcı adı (Gmail adresi)")
+    smtp_password = models.CharField(max_length=255, blank=True, help_text="SMTP şifresi (Gmail App Password)")
+    smtp_use_tls = models.BooleanField(default=True, help_text="TLS kullan (Gmail için True)")
+    smtp_from_email = models.EmailField(blank=True, help_text="Gönderen email adresi (genellikle SMTP kullanıcısı ile aynı)")
+    email_enabled = models.BooleanField(default=False, help_text="Email gönderimini aktif et")
+    
     class Meta:
         verbose_name = "Site Settings"
         verbose_name_plural = "Site Settings"

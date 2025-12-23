@@ -11,6 +11,7 @@ urlpatterns = [
     path("portfolio/<slug:slug>/", views.portfolio_detail, name="portfolio_detail"),
     path("blog/", views.blog_list, name="blog"),
     path("blog/<slug:slug>/", views.blog_detail, name="blog_detail"),
+    path("blog/<int:post_id>/like/", views.like_post, name="like_post"),
     path("contacts/", views.contacts, name="contacts"),
     path("pricing/", views.pricing, name="pricing"),
     path("rsvp/", views.rsvp, name="rsvp"),

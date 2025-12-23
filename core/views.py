@@ -1,8 +1,46 @@
 # Note: we intentionally avoid default "Shortcut" to keep clarity.
 from django.shortcuts import get_object_or_404, render
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+from django.core.mail import EmailMessage
+from django.contrib import messages
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
-from .models import AddOnService, BlogPost, FAQItem, PageMedia, PortfolioItem, PricingPackage, Product, Service, VideoEmbed
+from .models import AddOnService, BlogPost, FAQItem, PageMedia, PortfolioItem, PricingPackage, Product, Service, VideoEmbed, SiteSettings
 from django.core.paginator import Paginator
+
+
+def send_email_with_settings(subject, body, to_email):
+    """Send email using SMTP settings from SiteSettings"""
+    try:
+        settings = SiteSettings.get_settings()
+        
+        if not settings.email_enabled:
+            return False, "Email gönderimi devre dışı"
+        
+        if not settings.smtp_user or not settings.smtp_password:
+            return False, "SMTP ayarları eksik"
+        
+        # Create message
+        msg = MIMEMultipart()
+        msg['From'] = settings.smtp_from_email or settings.smtp_user
+        msg['To'] = to_email
+        msg['Subject'] = subject
+        msg.attach(MIMEText(body, 'html'))
+        
+        # Send email
+        server = smtplib.SMTP(settings.smtp_host, settings.smtp_port)
+        if settings.smtp_use_tls:
+            server.starttls()
+        server.login(settings.smtp_user, settings.smtp_password)
+        server.send_message(msg)
+        server.quit()
+        
+        return True, "Email gönderildi"
+    except Exception as e:
+        return False, str(e)
 
 
 def get_media(section):
@@ -129,7 +167,41 @@ def blog_detail(request, slug):
 
 
 def contacts(request):
-    return render(request, "core/contacts.html")
+    success = False
+    error = None
+    
+    if request.method == 'POST':
+        name = request.POST.get('name', '')
+        email = request.POST.get('email', '')
+        message = request.POST.get('message', '')
+        
+        if name and email and message:
+            settings = SiteSettings.get_settings()
+            
+            # Email to site owner
+            subject = f"Yeni İletişim Formu: {name}"
+            body = f"""
+            <h2>Yeni İletişim Mesajı</h2>
+            <p><strong>Gönderen:</strong> {name}</p>
+            <p><strong>Email:</strong> {email}</p>
+            <p><strong>Mesaj:</strong></p>
+            <p>{message}</p>
+            """
+            
+            success, error = send_email_with_settings(
+                subject=subject,
+                body=body,
+                to_email=settings.email
+            )
+            
+            if success:
+                messages.success(request, 'Mesajınız başarıyla gönderildi!')
+            else:
+                messages.error(request, f'Mesaj gönderilemedi: {error}')
+        else:
+            messages.error(request, 'Lütfen tüm alanları doldurun.')
+    
+    return render(request, "core/contacts.html", {'success': success})
 
 
 def pricing(request):
@@ -139,7 +211,47 @@ def pricing(request):
 
 
 def rsvp(request):
-    return render(request, "core/rsvp.html")
+    success = False
+    error = None
+    
+    if request.method == 'POST':
+        name = request.POST.get('name', '')
+        email = request.POST.get('email', '')
+        phone = request.POST.get('phone', '')
+        date = request.POST.get('date', '')
+        service = request.POST.get('service', '')
+        message = request.POST.get('message', '')
+        
+        if name and email:
+            settings = SiteSettings.get_settings()
+            
+            # Email to site owner
+            subject = f"Yeni Randevu Talebi: {name}"
+            body = f"""
+            <h2>Yeni Randevu Talebi</h2>
+            <p><strong>Ad Soyad:</strong> {name}</p>
+            <p><strong>Email:</strong> {email}</p>
+            <p><strong>Telefon:</strong> {phone}</p>
+            <p><strong>Tercih Edilen Tarih:</strong> {date}</p>
+            <p><strong>Hizmet:</strong> {service}</p>
+            <p><strong>Ek Notlar:</strong></p>
+            <p>{message}</p>
+            """
+            
+            success, error = send_email_with_settings(
+                subject=subject,
+                body=body,
+                to_email=settings.email
+            )
+            
+            if success:
+                messages.success(request, 'Randevu talebiniz alındı! En kısa sürede size dönüş yapacağız.')
+            else:
+                messages.error(request, f'Randevu talebi gönderilemedi: {error}')
+        else:
+            messages.error(request, 'Lütfen ad ve email alanlarını doldurun.')
+    
+    return render(request, "core/rsvp.html", {'success': success})
 
 
 def faq(request):
@@ -166,5 +278,14 @@ def faq(request):
 def product_detail(request, slug):
     product = get_object_or_404(Product, slug=slug)
     return render(request, "core/product_detail.html", {"product": product})
+
+
+@require_POST
+def like_post(request, post_id):
+    """Like a blog post via AJAX"""
+    post = get_object_or_404(BlogPost, id=post_id)
+    post.likes += 1
+    post.save()
+    return JsonResponse({'likes': post.likes})
 
 # Create your views here.

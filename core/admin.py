@@ -212,6 +212,10 @@ class SiteSettingsAdmin(admin.ModelAdmin):
             "fields": ("map_latitude", "map_longitude", "map_embed_code"),
             "description": "Naba Studio - Samoilova 90, Skopje Kale | 📍 Harita: https://maps.app.goo.gl/TnBQbTKjQFpx3DFN7"
         }),
+        ("📧 Email / SMTP Ayarları (Google)", {
+            "fields": ("email_enabled", "smtp_host", "smtp_port", "smtp_user", "smtp_password", "smtp_use_tls", "smtp_from_email"),
+            "description": "Gmail SMTP için: Host: smtp.gmail.com | Port: 587 | TLS: True | Şifre: App Password kullanın (normal Gmail şifresi değil). App Password almak için: Google Account > Security > 2-Step Verification > App Passwords"
+        }),
     )
 
     def has_add_permission(self, request):
