@@ -21,6 +21,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Load environment variables from .env file (convert Path to string for dotenv)
 load_dotenv(str(BASE_DIR / '.env'))
 
+# Debug: Verify DATABASE_URL was loaded
+print(f"DEBUG settings.py: DATABASE_URL = {os.environ.get('DATABASE_URL', 'NOT SET')}")
+print(f"DEBUG settings.py: BASE_DIR = {BASE_DIR}")
+print(f"DEBUG settings.py: .env path = {str(BASE_DIR / '.env')}")
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
