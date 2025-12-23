@@ -11,44 +11,82 @@
             <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80" alt="img-60-copyright" class="intro-img">
         </div>
         <div class="about-intro-content">
-            <h1 class="section-heading">We arrange the perfect weddings</h1>
+            <h1 class="section-heading">Hayalleri Gerçeğe Dönüştürüyoruz</h1>
             <p class="about-description">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.
+                Naba Studio by Semma'da sadece elbise dikmiyoruz; anılar yaratıyoruz. Üsküp'ün kalbinde yer alan atölyemiz, geleneksel el işçiliğini modern silüetlerle birleştirerek kişiye özel gelinlikler konusunda uzmanlaşmıştır. İlk eskizden son dikişe kadar yanınızdayız.
             </p>
             <div class="about-schedule">
-                <p><strong>MON-FRI:</strong> 9 AM – 22 PM</p>
-                <p><strong>SATURDAY:</strong> 9 AM – 20 PM</p>
+                <p><strong>PAZARTESİ-CUMA:</strong> 09:00 – 22:00</p>
+                <p><strong>CUMARTESİ:</strong> 09:00 – 20:00</p>
             </div>
         </div>
     </section>
 
-    <!-- Section 2: What We Do - Wedding Events -->
+    <!-- Section 2: What We Do - Hizmetler -->
     <section class="about-services">
         <div class="about-services-header">
-            <h2>what we do</h2>
-            <h3>Wedding events</h3>
+            <h2>Neler Yapıyoruz</h2>
+            <h3>Özel Tasarım Hizmetleri</h3>
         </div>
         <div class="about-services-grid">
             <article>
-                <h4>Reception</h4>
-                <p>Lorem ipsum dolor</p>
+                <h4>Kişiye Özel Gelinlikler</h4>
+                <p>Her gelinin eşsiz kişiliğine uygun özel tasarım ve üretim</p>
             </article>
             <article>
-                <h4>The ceremony</h4>
-                <p>Lorem ipsum dolor</p>
+                <h4>Nişan Kıyafetleri</h4>
+                <p>Nişan törenine göre tasarlanmış şık ve zarif elbiseler</p>
             </article>
             <article>
-                <h4>Photoshoot</h4>
-                <p>Lorem ipsum dolor</p>
+                <h4>Tadilat & Prova Hizmetleri</h4>
+                <p>Profesyonel vücut ölçümleri ve defalarca prova ile mükemmel uyum</p>
             </article>
             <article>
-                <h4>Registration</h4>
-                <p>Lorem ipsum dolor</p>
+                <h4>Gece Elbiseleri / Abiye</h4>
+                <p>Özel davetler ve balolar için lüks tasarım elbiseler</p>
             </article>
         </div>
     </section>
 
-    <!-- Section 3: YouTube Video Embed -->
+    <!-- Section 3: Statistics Section -->
+    <section class="about-stats">
+        <div class="stats-container">
+            <div class="stat-item">
+                <div class="stat-icon">✋</div>
+                <h4>%100 El İşçiliği</h4>
+                <p>Her dikişi profesyonel ustalarımız tarafından birebir yapılır</p>
+            </div>
+            <div class="stat-item">
+                <div class="stat-icon">✨</div>
+                <h4>Birinci Sınıf Kumaşlar</h4>
+                <p>Dünyanın en iyi kumaş tedarikçilerinden premium malzemeler</p>
+            </div>
+            <div class="stat-item">
+                <div class="stat-icon">📍</div>
+                <h4>Üsküp'te Üretildi</h4>
+                <p>Tüm tasarımlarımız Makedonyalı sanatçılar tarafından yapılır</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 4: Values Section -->
+    <section class="about-values">
+        <h2>Neden Biz?</h2>
+        <div class="values-list">
+            <div class="value-item">
+                <div class="value-number">01</div>
+                <h4>Kişisel Yaklaşım</h4>
+                <p>Her gelin eşsizdir, ve elbisesi de öyle olmalı. Sizin hayallerinizi dinler ve bunu gerçeğe dönüştürürüz.</p>
+            </div>
+            <div class="value-item">
+                <div class="value-number">02</div>
+                <h4>Yüksek Kalite</h4>
+                <p>Dünyanın dört bir yanından gelen en iyi dantel, ipek ve kumaşlar. Hiçbir kompromı yoktur.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 4: YouTube Video Embed -->
     <section class="about-video">
         <div class="video-container">
             <iframe 
@@ -61,26 +99,28 @@
         </div>
     </section>
 
-    <!-- Section 4: Latest Blog Posts -->
+    <!-- Section 5: Latest Blog Posts -->
     <section class="about-blog">
         <div class="about-blog-header">
             <h2>Son Blog Yazıları</h2>
         </div>
         <div class="about-blog-grid">
             {% for post in latest_blog %}
-            <article class="blog-card">
-                {% if post.hero_image %}
-                <img src="{{ post.hero_image.url }}" alt="{{ post.title }}">
-                {% else %}
-                <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=400&q=80" alt="{{ post.title }}">
-                {% endif %}
-                <div class="content">
-                    <span class="date">{{ post.published_at|date:"d M Y" }}</span>
-                    <h3>{{ post.title }}</h3>
-                    <p>{{ post.excerpt|truncatewords:15 }}</p>
-                    <a href="{{ post.get_absolute_url }}" class="read-more">Devamını Oku →</a>
-                </div>
-            </article>
+            <a href="{% url 'blog_detail' post.slug %}" style="text-decoration: none; color: inherit;">
+                <article class="blog-card">
+                    {% if post.hero_image %}
+                    <img src="{{ post.hero_image.url }}" alt="{{ post.title }}">
+                    {% else %}
+                    <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=400&q=80" alt="{{ post.title }}">
+                    {% endif %}
+                    <div class="content">
+                        <span class="date">{{ post.published_at|date:"d M Y" }}</span>
+                        <h3>{{ post.title }}</h3>
+                        <p>{{ post.excerpt|truncatewords:15 }}</p>
+                        <a href="{% url 'blog_detail' post.slug %}" class="read-more">Devamını Oku →</a>
+                    </div>
+                </article>
+            </a>
             {% empty %}
             <p>Henüz blog yazısı yok.</p>
             {% endfor %}

@@ -15,12 +15,15 @@
                     <article class="blog-card">
                         <img src="{{ post.hero_image }}" alt="{{ post.title }}">
                         <div class="content">
+                            <span class="category-badge">{{ post.category }}</span>
                             <p class="meta">{{ post.published_at }}</p>
                             <h3>{{ post.title }}</h3>
                             <p>{{ post.excerpt }}</p>
                             <a href="{{ post.get_absolute_url }}" class="read-more">Detayları oku</a>
                         </div>
                     </article>
+                {% empty %}
+                    <p style="grid-column: 1/-1; text-align: center; padding: 2rem;">Blog yazısı bulunamadı.</p>
                 {% endfor %}
             </div>
 
@@ -62,10 +65,10 @@
             <section class="sidebar-widget">
                 <h5>Kategoriler</h5>
                 <div class="tag-cloud">
-                    <a href="#">Editorial</a>
-                    <a href="#">Couture</a>
-                    <a href="#">Sürdürülebilirlik</a>
-                    <a href="#">Hikaye</a>
+                    <a href="{% url 'blog' %}" class="{% if not selected_category %}active{% endif %}">Tümü</a>
+                    {% for category_key, category_name in categories %}
+                        <a href="?category={{ category_key }}" class="{% if selected_category == category_key %}active{% endif %}">{{ category_name }}</a>
+                    {% endfor %}
                 </div>
             </section>
 
@@ -73,7 +76,7 @@
                 <p class="eyebrow">İçerik güncellemesi</p>
                 <h4>Gelin planınız için notlar alın</h4>
                 <p>Haftalık haber bültenimize abone olarak planlama, prova ve özel gün detayları için ilk siz haberdar olun.</p>
-                <button type="button">Abone ol</button>
+                <a href="{% url 'contacts' %}" class="btn">Abone ol</a>
             </section>
         </aside>
     </div>

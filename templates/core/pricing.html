@@ -6,9 +6,10 @@
 <div class="page-wrapper">
     <div class="pricing-header">
         <p class="eyebrow">Pricing</p>
-        <h1 class="section-heading">Veil</h1>
+        <h1 class="section-heading">Fiyatlandırma Paketleri</h1>
     </div>
 
+    <!-- Main Packages -->
     <div class="pricing-grid">
         {% for package in packages %}
         <article class="pricing-card {% if package.is_featured %}featured{% endif %}">
@@ -17,12 +18,17 @@
                 <span class="amount">{{ package.price }}</span>
                 <span class="period">{{ package.period }}</span>
             </div>
+            
+            <!-- Standard Features -->
+            {% if package.get_features_list %}
             <ul class="features">
                 {% for feature in package.get_features_list %}
                 <li>{{ feature }}</li>
                 {% endfor %}
             </ul>
-            <a href="#" class="primary-btn">Get Now</a>
+            {% endif %}
+            
+            <a href="{% url 'contacts' %}" class="primary-btn">Randevu Al</a>
         </article>
         {% empty %}
         <article class="pricing-card">
@@ -66,5 +72,26 @@
         </article>
         {% endfor %}
     </div>
+
+    <!-- Add-On Services Section -->
+    {% if add_ons %}
+    <div class="addon-services-section">
+        <div class="addon-header">
+            <h2>🎁 Ek Hizmetler & Add-Ons</h2>
+            <p>Paketinize eklemek için ek hizmetleri seçin</p>
+        </div>
+
+        <div class="addon-grid">
+            {% for addon in add_ons %}
+            <div class="addon-card">
+                <div class="addon-icon">{{ addon.icon }}</div>
+                <h4>{{ addon.name }}</h4>
+                {% if addon.description %}<p>{{ addon.description }}</p>{% endif %}
+                {% if addon.price %}<span class="addon-price">{{ addon.price }}</span>{% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
 </div>
 {% endblock %}

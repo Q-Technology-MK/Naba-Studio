@@ -7,27 +7,27 @@
     <section class="hero-split hero-first">
         <div class="hero-content hero-content-centered">
             <span class="hero-icon">✦</span>
-            <p class="hero-kicker">An atelier in the very heart of Amsterdam</p>
-            <h1>An atelier<br>in the very heart of Amsterdam</h1>
-            <p>Dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernaturodit aut fugit, sed quia consequuntur.</p>
-            <button class="primary-btn">Hakkımızda</button>
+            <p class="hero-kicker">Üsküp'ün Kalbi'nde Bir Atölye</p>
+            <h1>Naba Studio<br>by Semma</h1>
+            <p>Kuzey Makedonya'nın en prestijli couture gelinlik tasarım atölyesi. Her gelinliğin bir hikâyesi vardır. Seninkini yazmaya hazır mısın?</p>
+            <a href="{% url 'about' %}" class="primary-btn">Hakkımızda</a>
         </div>
     </section>
 
     <section class="hero-split hero-second">
         <div class="hero-gallery">
-            <div class="hero-year">... tarihinde başladı</div>
+            <div class="hero-year">Her Gelinliğin Bir Anısı Vardır</div>
             <div class="hero-stack">
-                <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=800&q=80" alt="atelier preview">
-                <img class="overlap" src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80" alt="atelier detail">
+                <img src="https://images.unsplash.com/photo-1487180144351-b8472da7d491?auto=format&fit=crop&w=800&q=80" alt="couture bridal dress preview">
+                <img class="overlap" src="https://images.unsplash.com/photo-1594938298603-c8148c4dae35?auto=format&fit=crop&w=800&q=80" alt="custom bridal design detail">
             </div>
         </div>
         <div class="hero-details hero-details-centered">
-            <p class="section-kicker">wedding couture</p>
-            <h2>We create graceful wedding dresses</h2>
-            <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-            <p class="schedule">MON-FRI: 9 AM – 22 PM<br>SATURDAY: 9 AM – 20 PM</p>
-            <button class="primary-btn">About Us</button>
+            <p class="section-kicker">özel dikim couture</p>
+            <h2>Sıfırdan Tasarlanan Gelinlikler</h2>
+            <p>Naba Studio by Semma'da her gelinlik, sizin ölçülerinize, vücut yapınıza ve ruhunuza uygun olarak sıfırdan tasarlanır. Couture terziliğin zarafeti, her dikişte hissedilir.</p>
+            <p class="schedule">PAZARTESİ-CUMA: 10:00 – 19:00<br>CUMARTESİ: 10:00 – 17:00</p>
+            <a href="{% url 'about' %}" class="primary-btn">Hakkımızda</a>
         </div>
         <img class="hero-floral" src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=800&q=80" alt="flower">
     </section>
@@ -70,11 +70,13 @@
         <div class="dress-grid">
             {% for product in featured_products %}
             <article class="dress-item">
-                <img src="{{ product.image_url }}" alt="{{ product.name }}">
-                <div class="dress-meta">
-                    <h4>{{ product.name }}</h4>
-                    <p class="price">{{ product.price }}</p>
-                </div>
+                <a href="{% url 'product_detail' product.slug %}" style="text-decoration: none; color: inherit;">
+                    <img src="{{ product.image_url }}" alt="{{ product.name }}">
+                    <div class="dress-meta">
+                        <h4>{{ product.name }}</h4>
+                        <p class="price">{{ product.price }}</p>
+                    </div>
+                </a>
             </article>
             {% endfor %}
         </div>
@@ -83,7 +85,7 @@
     <section class="video-section">
         <div class="video-wrapper">
             <iframe
-                src="https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0&autoplay=0&modestbranding=1"
+                src="{% if video_embed %}{{ video_embed.get_embed_url }}{% else %}https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0&autoplay=0&modestbranding=1{% endif %}"
                 title="Atelier cinematic demo"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen
@@ -96,8 +98,12 @@
         <div class="bride-text">
             <p class="section-kicker">our brides</p>
             <h2>Dress gallery</h2>
-            <p>Dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernaturaut odit aut fugit, sed quia consequuntur. Dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas.</p>
-            <button class="primary-btn">View More</button>
+            <p>Naba Studio by Semma'da tasarlanan her gelinlik, gelinin hayalini gerçeğe dönüştüren bir couture sanat eseridir. Kuzey Makedonya'dan dünyanın dört bir yanına kadar uzanan gelinlerimiz, özel dikim tasarımlarımızla en özel günlerini başında güzel, rahat ve özgüvenli hissettiler.</p>
+            <p>Koleksiyonumuz, prenses kesimlerinden etkileyici balık gelinliklere, minimal sadeliklere ya da lüks detaylarla kaplı couture tasarımlara kadar geniş bir yelpazede yer alıyor. Her tasarım, gelinin vücut yapısına, stiline ve düğün konseptine özel olarak uyarlanır. İhtişamlı dantel detayları, el işçiliği taş nakışları ve kusursuz kalıplarımız, her gelinliğin zamansız güzelliğini ve zarafetini ortaya çıkarır.</p>
+            <p>Atölyemizde yaratılan bu gelinlikleri, kendini saran kumaş, titiz dikişler ve sofistike silüetlerle görebilirsiniz. Siz de kendi couture hikâyenizi yazıp bu özel galeriyi tamamlamak istiyor musunuz?</p>
+            <p>Randevu almak, konsultasyon yapmak ve gelinliğinizi tasarlamaya başlamak için bizimle iletişime geçebilirsiniz. Naba Studio by Semma'nın kapıları, sizi bekliyoruz.</p>
+            <p>Düğün gününüze dair her detay önemli. Gelinlik de tıpkı öyle. Hadi, birlikte sizin için mükemmel olan gelinliği tasarlayalım.</p>
+            <a href="{% url 'portfolio' %}" class="primary-btn">Tüm Koleksiyonu Gör</a>
             <div class="mini-gallery">
                 <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=400&q=80" alt="mini bride 1">
                 <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=420&q=80" alt="mini bride 2">
@@ -116,7 +122,17 @@
 
     <section class="contact-split">
         <div class="map-embed">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18" title="Studio map" allowfullscreen loading="lazy"></iframe>
+            {% if site_settings.map_embed_code %}
+                {{ site_settings.map_embed_code|safe }}
+            {% else %}
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1498.2340000000002!2d21.428057!3d41.997335!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1354586c8b8d7d4d%3A0x8f8f8f8f8f8f8f8f!2sSamoilova%2090%2C%20Skopje!5e0!3m2!1sen!2sus!4v1702740000000!5m2!1sen!2sus"
+                    allowfullscreen
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    title="Naba Studio Skopje"
+                ></iframe>
+            {% endif %}
         </div>
         <div class="contact-card">
             <p class="section-kicker">Contact Us</p>
@@ -138,12 +154,14 @@
         <div class="articles-grid">
             {% for post in latest_blog %}
             <article class="article-card">
-                <img src="{{ post.hero_image }}" alt="{{ post.title }}">
-                <div class="article-meta">
-                    <p class="article-tag">Story</p>
-                    <h3>{{ post.title }}</h3>
-                    <p>{{ post.published_at }}</p>
-                </div>
+                <a href="{% url 'blog_detail' post.slug %}" style="text-decoration: none; color: inherit;">
+                    <img src="{{ post.hero_image }}" alt="{{ post.title }}">
+                    <div class="article-meta">
+                        <p class="article-tag">Story</p>
+                        <h3>{{ post.title }}</h3>
+                        <p>{{ post.published_at }}</p>
+                    </div>
+                </a>
             </article>
             {% endfor %}
         </div>

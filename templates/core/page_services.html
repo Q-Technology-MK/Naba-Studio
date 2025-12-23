@@ -11,43 +11,43 @@
     </div>
     <div class="services-icons-grid">
         <article class="service-icon-card">
-            <span class="service-icon">🎂</span>
-            <h3>Wedding cakes</h3>
-            <p>Dolor sit amet</p>
+            <span class="service-icon">✨</span>
+            <h3>Custom Dress Design</h3>
+            <p>Kişisel stilinize ve hayallerinize uygun tamamen özel gelinlik tasarımı ve üretimi</p>
         </article>
         <article class="service-icon-card">
-            <span class="service-icon">💒</span>
-            <h3>The ceremony</h3>
-            <p>Lorem ipsum</p>
+            <span class="service-icon">💬</span>
+            <h3>Free Consultation</h3>
+            <p>Atelier uzmanlarıyla ücretsiz danışmanlık seansı. Tasarım, kumaş ve fiyatlandırma hakkında konuşun</p>
         </article>
         <article class="service-icon-card">
-            <span class="service-icon">📷</span>
-            <h3>Photoshoot</h3>
-            <p>Adipscin elit</p>
+            <span class="service-icon">📏</span>
+            <h3>Fitting & Swatch Try-On</h3>
+            <p>Kalıp denemesi ve numune kumaşlarla deneme. Rengini ve dokuyu gerçek hayatta gör</p>
         </article>
         <article class="service-icon-card">
-            <span class="service-icon">📋</span>
-            <h3>Registry</h3>
-            <p>Sed ut perspiciati</p>
+            <span class="service-icon">🧵</span>
+            <h3>Made-to-Measure</h3>
+            <p>Tam ölçü uyarlanmış, özel dikişli gelinlikler. Mükemmel uyumu garantiliyoruz</p>
+        </article>
+        <article class="service-icon-card">
+            <span class="service-icon">⚡</span>
+            <h3>Express Alteration</h3>
+            <p>Acil durumlarda hızlı kısaltma, ayarlama ve onarım hizmetleri. Kısa sürede çözüm</p>
         </article>
     </div>
 </section>
 
-<!-- Section 2: Wedding Shop Banner -->
+<!-- Section 2: Couture Consultation Banner -->
 <section class="services-banner">
     <div class="services-banner-overlay">
-        <p class="eyebrow">wedding shop</p>
-        <h2>Choose the right wedding veil style</h2>
-        <a href="tel:+493012345678" class="primary-btn">Call Now</a>
-    </div>
-</section>
-
-<!-- Section 3: Pricing Table -->
-<section class="services-pricing">
+        <p class="eyebrow">couture danışmanlığı</p>
+        <h2>Sizin İçin Mükemmel Gelinliği Tasarlayalım</h2>
+            <a href="{% url 'contacts' %}" class="primary-btn">Randevu Al</a>
     <div class="services-pricing-header">
-        <p class="eyebrow">pricing table</p>
-        <h2>Hiring a planner</h2>
-        <p class="section-subtitle">Adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim</p>
+        <p class="eyebrow">paket fiyatlandırması</p>
+        <h2>Couture Gelinlik Paketleri</h2>
+        <p class="section-subtitle">Naba Studio by Semma'da her bütçe ve tercih için tasarlanmış couture gelinlik paketleri sunuyoruz. Temel dikim hizmetinden tam customizasyona kadar, sizin için uygun paketi seçin.</p>
     </div>
     <div class="pricing-grid">
         {% for package in packages %}

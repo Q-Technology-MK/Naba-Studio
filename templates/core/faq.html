@@ -1,32 +1,60 @@
 {% extends "core/base.html" %}
+{% load i18n %}
 
 {% block title %}SSS · Ankora Atelier{% endblock %}
 
 {% block content %}
+{% get_current_language as LANGUAGE_CODE %}
 <div class="faq-sections-wrapper">
     <div class="faq-sections">
         <section class="faq-section faq-main">
             <div class="faq-heading">
                 <p class="eyebrow">FAQ</p>
             </div>
-            <div class="faq-questions">
-                <details class="faq-line">
-                    <summary>What are my options?</summary>
-                    <p>Hazır koleksiyonlarımızdan seçim yapabilir ya da tamamen size özel bir görünüm oluşturmak üzere atelier ile birebir çalışabilirsiniz.</p>
-                </details>
-                <details class="faq-line">
-                    <summary>Can I switch to a different plan?</summary>
-                    <p>Düğün planlaması esnek kalmalı; planınızda değişiklik görmek istediğinizde ekibimiz size yeni öneriler sunar.</p>
-                </details>
-                <details class="faq-line">
-                    <summary>Do you offer non-disclosure signature?</summary>
-                    <p>Özel koleksiyonlar ve VIP etkinliklerde gerekli gizlilik anlaşmaları hazırlanır; talebinizi doğrudan danışmanınızla paylaşın.</p>
-                </details>
-                <details class="faq-line">
-                    <summary>Do you issue refunds?</summary>
-                    <p>Sözleşmede belirtilen iade koşulları karşılandığında, ödemeler ilgili yönteme geri aktarılır.</p>
-                </details>
+
+            <!-- Category Navigation -->
+            {% if faq_categories %}
+            <nav class="faq-navigation">
+                <ul class="faq-nav-list">
+                    {% for category in faq_categories.keys %}
+                    <li>
+                        <a href="#{{ category|slugify }}" class="faq-nav-link">{{ category }}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </nav>
+            {% endif %}
+
+            <!-- FAQ Items Grouped by Category -->
+            {% for category, faqs in faq_categories.items %}
+            <div class="faq-category-group" id="{{ category|slugify }}">
+                <h3 class="faq-category-title">{{ category }}</h3>
+                <div class="faq-questions">
+                    {% for faq in faqs %}
+                        <details class="faq-line">
+                            <summary>
+                                {% if LANGUAGE_CODE == 'tr' %}
+                                    {{ faq.question_tr }}
+                                {% elif LANGUAGE_CODE == 'sq' %}
+                                    {{ faq.question_sq }}
+                                {% else %}
+                                    {{ faq.question_mk }}
+                                {% endif %}
+                            </summary>
+                            <p>
+                                {% if LANGUAGE_CODE == 'tr' %}
+                                    {{ faq.answer_tr }}
+                                {% elif LANGUAGE_CODE == 'sq' %}
+                                    {{ faq.answer_sq }}
+                                {% else %}
+                                    {{ faq.answer_mk }}
+                                {% endif %}
+                            </p>
+                        </details>
+                    {% endfor %}
+                </div>
             </div>
+            {% endfor %}
         </section>
 
         <div class="faq-accommodation-wrapper">
@@ -38,7 +66,7 @@
                 <div class="accommodation-content">
                     <h3>accommodation</h3>
                     <p>Book the rooms at a wedding boutique hotel</p>
-                    <button class="secondary-btn">Book Now</button>
+                    <a href="{% url 'contacts' %}" class="secondary-btn">Book Now</a>
                 </div>
             </section>
             {% endwith %}
@@ -54,10 +82,10 @@
         </div>
         <div class="showcase-column text-column">
             <div class="showcase-text">
-                <p class="eyebrow">Creative Atelier</p>
-                <h3>We sculpt dreams in florals & fabric.</h3>
-                <p>Her köşesini özenle dokuduğumuz özel gün tasarımlarımız için sizinle buluşmak istiyoruz. Randevu teklifinizi iletin, ekibimiz hemen size geri dönsün.</p>
-                <button class="showcase-cta">Planlamaya başla</button>
+                <p class="eyebrow">Naba Studio by Semma</p>
+                <h3>Couture Terziliğin Sanatı</h3>
+                <p>Kuzey Makedonya'daki atölyemizde, her gelinlik bir sanat eseri olarak tasarlanır. Sizin ölçülerinize, stilinize ve hayallarınıza uygun özel dikim gelinlikleri yaratıyoruz. Konsultasyon yapın, gelinliğinizi tasarlamaya başlayın.</p>
+                <a href="{% url 'contacts' %}" class="showcase-cta">Randevu Al</a>
             </div>
         </div>
         <div class="showcase-column image-column">

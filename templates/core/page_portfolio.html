@@ -1,41 +1,182 @@
 {% extends "core/base.html" %}
 
-{% block title %}Portfolyo · Ankora Atelier{% endblock %}
+{% block title %}Koleksiyonumuz · Naba Studio by Semma{% endblock %}
 
 {% block content %}
-<div class="page-wrapper">
-    <div class="portfolio-hero">
-        <div class="hero-row">
-            <div class="hero-col subtitle-col">
-                <p class="eyebrow">photo gallery</p>
-            </div>
-            <div class="hero-col copy-col">
-                <h1 class="section-heading">Our brides</h1>
-                <p class="portfolio-intro">
-                    Dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur.
-                    Dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas.
-                </p>
-            </div>
-            <div class="hero-col action-col">
-                <a class="primary-btn" href="{% url 'portfolio_masonry' %}">View More</a>
-            </div>
+<!-- Hero / Featured Item -->
+<div class="mb-6 w-full overflow-hidden relative aspect-[16/9] shadow-md px-4 max-w-6xl mx-auto rounded-2xl mt-8">
+    <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1487180144351-b8472da7d491?auto=format&fit=crop&w=1200&q=80');">
+    </div>
+    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex flex-col justify-center items-center p-5">
+        <span class="bg-red-500/90 backdrop-blur-sm text-white text-[10px] font-bold px-2 py-1 rounded w-fit mb-2">YENİ KOLEKSIYON</span>
+        <h3 class="text-white text-2xl font-bold leading-tight text-center">Gelinlerimizin Sanat Eserleri</h3>
+        <p class="text-white/90 text-sm mt-1 text-center">Naba Studio by Semma Couture Koleksiyonu</p>
+    </div>
+</div>
+
+<!-- Category Filter Chips -->
+<div class="w-full flex justify-center pb-3 pt-2 mb-6">
+    <div class="flex flex-wrap gap-2 md:gap-3 justify-center px-2 md:px-0">
+        <button class="filter-btn active flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-red-500 px-4 md:px-5 shadow-sm shadow-red-500/20 transition-transform active:scale-95 text-xs md:text-sm" data-filter="*">
+            <p class="text-white font-bold leading-normal">Hepsi</p>
+        </button>
+        {% for category_key, category_name in categories %}
+        <button class="filter-btn flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-white border border-gray-200 px-4 md:px-5 transition-transform active:scale-95 hover:border-red-500/30 text-xs md:text-sm" data-filter="{{ category_key }}">
+            <p class="text-gray-900 font-medium leading-normal">{{ category_name }}</p>
+        </button>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- ImageGrid: 2x2 Grid Layout -->
+<div class="grid grid-cols-2 gap-4 mb-8 px-4 max-w-6xl mx-auto" id="portfolio-grid">
+    {% for item in portfolio_items %}
+    <!-- Card -->
+    <a href="{% url 'product_detail' item.slug %}" style="text-decoration: none; color: inherit;" class="portfolio-item relative group cursor-pointer rounded-xl overflow-hidden bg-white shadow-sm border border-gray-200 block" data-category="*">
+        <div class="relative">
+            <img alt="{{ item.title }}" class="w-full h-64 object-cover transform transition-transform duration-500 group-hover:scale-105" src="{{ item.image_url }}">
+            <button type="button" class="absolute top-2 right-2 h-8 w-8 flex items-center justify-center rounded-full bg-black/20 backdrop-blur-md text-white hover:bg-red-500 hover:text-white transition-all">
+                <span class="material-symbols-outlined text-[18px]">favorite</span>
+            </button>
+        </div>
+        <div class="p-3">
+            <h4 class="font-bold text-sm text-gray-900">{{ item.title }}</h4>
+            <p class="text-xs text-gray-500 mt-0.5">{{ item.designer }}</p>
+            <p class="text-xs font-bold text-red-500 mt-2">{{ item.year }}</p>
+        </div>
+    </a>
+    {% endfor %}
+    
+    {% for product in products %}
+    <!-- Product Card -->
+    <a href="{% url 'product_detail' product.slug %}" style="text-decoration: none; color: inherit;" class="portfolio-item relative group cursor-pointer rounded-xl overflow-hidden bg-white shadow-sm border border-gray-200 block" data-category="{{ product.category }}">
+        <div class="relative">
+            <img alt="{{ product.name }}" class="w-full h-64 object-cover transform transition-transform duration-500 group-hover:scale-105" src="{{ product.image_url }}">
+            <button type="button" class="absolute top-2 right-2 h-8 w-8 flex items-center justify-center rounded-full bg-black/20 backdrop-blur-md text-white hover:bg-red-500 hover:text-white transition-all">
+                <span class="material-symbols-outlined text-[18px]">favorite</span>
+            </button>
+        </div>
+        <div class="p-3">
+            <h4 class="font-bold text-sm text-gray-900">{{ product.name }}</h4>
+            <p class="text-xs text-gray-500 mt-0.5">{{ product.category }}</p>
+            <p class="text-xs font-bold text-red-500 mt-2">{{ product.price }}</p>
+        </div>
+    </a>
+    {% endfor %}
+    
+    {% empty %}
+    <!-- Fallback Kartları (Veri Yoksa) -->
+    <div class="relative group cursor-pointer rounded-xl overflow-hidden bg-white shadow-sm border border-gray-200" data-category="*">
+        <div class="relative">
+            <img alt="Peri Model" class="w-full h-64 object-cover transform transition-transform duration-500 group-hover:scale-105" src="https://images.unsplash.com/photo-1487180144351-b8472da7d491?auto=format&fit=crop&w=500&q=80">
+            <button class="absolute top-2 right-2 h-8 w-8 flex items-center justify-center rounded-full bg-black/20 backdrop-blur-md text-white hover:bg-red-500 hover:text-white transition-all">
+                <span class="material-symbols-outlined text-[18px]">favorite</span>
+            </button>
+        </div>
+        <div class="p-3">
+            <h4 class="font-bold text-sm text-gray-900">Peri Model</h4>
+            <p class="text-xs text-gray-500 mt-0.5">Fransız Güpür</p>
+            <p class="text-xs font-bold text-red-500 mt-2">2024</p>
         </div>
     </div>
 
-    <section class="portfolio-showcase">
-        <div class="showcase-flower left-flower">
-            <img src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=256&h=607&q=80" alt="Çiçek">
+    <div class="relative group cursor-pointer rounded-xl overflow-hidden bg-white shadow-sm border border-gray-200" data-category="*">
+        <div class="relative">
+            <img alt="Eliz Model" class="w-full h-64 object-cover transform transition-transform duration-500 group-hover:scale-105" src="https://images.unsplash.com/photo-1594938298603-c8148c4dae35?auto=format&fit=crop&w=500&q=80">
+            <button class="absolute top-2 right-2 h-8 w-8 flex items-center justify-center rounded-full bg-black/20 backdrop-blur-md text-white hover:bg-red-500 hover:text-white transition-all">
+                <span class="material-symbols-outlined text-[18px]">favorite</span>
+            </button>
         </div>
-        <div class="showcase-products">
-            {% for slide in gallery_slides %}
-                <article class="product-slide">
-                    <img src="{{ slide.image }}" alt="">
-                </article>
-            {% endfor %}
+        <div class="p-3">
+            <h4 class="font-bold text-sm text-gray-900">Eliz Model</h4>
+            <p class="text-xs text-gray-500 mt-0.5">İpek Saten</p>
+            <p class="text-xs font-bold text-red-500 mt-2">2024</p>
         </div>
-        <div class="showcase-flower right-flower">
-            <img src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=256&h=607&q=80" alt="Çiçek">
+    </div>
+
+    <div class="relative group cursor-pointer rounded-xl overflow-hidden bg-white shadow-sm border border-gray-200" data-category="*">
+        <div class="relative">
+            <img alt="Serra Model" class="w-full h-64 object-cover transform transition-transform duration-500 group-hover:scale-105" src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=500&q=80">
+            <button class="absolute top-2 right-2 h-8 w-8 flex items-center justify-center rounded-full bg-black/20 backdrop-blur-md text-white hover:bg-red-500 hover:text-white transition-all">
+                <span class="material-symbols-outlined text-[18px]">favorite</span>
+            </button>
         </div>
-    </section>
+        <div class="p-3">
+            <h4 class="font-bold text-sm text-gray-900">Serra Model</h4>
+            <p class="text-xs text-gray-500 mt-0.5">Bohem Şifon</p>
+            <p class="text-xs font-bold text-red-500 mt-2">2024</p>
+        </div>
+    </div>
+
+    <div class="relative group cursor-pointer rounded-xl overflow-hidden bg-white shadow-sm border border-gray-200" data-category="*">
+        <div class="relative">
+            <img alt="İnci Model" class="w-full h-64 object-cover transform transition-transform duration-500 group-hover:scale-105" src="https://images.unsplash.com/photo-1475180098004-ca77a66827be?auto=format&fit=crop&w=500&q=80">
+            <button class="absolute top-2 right-2 h-8 w-8 flex items-center justify-center rounded-full bg-black/20 backdrop-blur-md text-white hover:bg-red-500 hover:text-white transition-all">
+                <span class="material-symbols-outlined text-[18px]">favorite</span>
+            </button>
+        </div>
+        <div class="p-3">
+            <h4 class="font-bold text-sm text-gray-900">İnci Model</h4>
+            <p class="text-xs text-gray-500 mt-0.5">Dantel Detay</p>
+            <p class="text-xs font-bold text-red-500 mt-2">2024</p>
+        </div>
+    </div>
+    {% endfor %}
 </div>
+
+<!-- Loading Indicator -->
+<div class="flex justify-center py-6 opacity-60">
+    <div class="flex gap-1">
+        <div class="w-1.5 h-1.5 rounded-full bg-red-500 animate-bounce"></div>
+        <div class="w-1.5 h-1.5 rounded-full bg-red-500 animate-bounce" style="animation-delay: 75ms;"></div>
+        <div class="w-1.5 h-1.5 rounded-full bg-red-500 animate-bounce" style="animation-delay: 150ms;"></div>
+    </div>
+</div>
+
+<!-- Floating Action Button -->
+<div class="fixed bottom-8 right-5 z-30">
+    <a href="{% url 'contacts' %}" class="flex items-center justify-center h-14 bg-red-500 text-white rounded-2xl shadow-xl shadow-red-500/30 gap-3 px-5 transition-transform hover:bg-red-600">
+        <span class="material-symbols-outlined text-[24px]">calendar_month</span>
+        <span class="text-base font-bold leading-normal tracking-[0.015em] truncate">Randevu Al</span>
+    </a>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const portfolioItems = document.querySelectorAll('.portfolio-item');
+    
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const filterValue = this.getAttribute('data-filter');
+            
+            // Update active button
+            filterBtns.forEach(b => {
+                b.classList.remove('bg-red-500', 'shadow-red-500/20', 'text-white');
+                b.classList.add('bg-white', 'border', 'border-gray-200', 'text-gray-900');
+            });
+            this.classList.remove('bg-white', 'border', 'border-gray-200', 'text-gray-900');
+            this.classList.add('bg-red-500', 'shadow-red-500/20', 'text-white');
+            
+            // Filter items with animation
+            portfolioItems.forEach(item => {
+                const itemCategory = item.getAttribute('data-category');
+                
+                if (filterValue === '*' || itemCategory === filterValue) {
+                    item.style.display = 'block';
+                    setTimeout(() => {
+                        item.style.opacity = '1';
+                    }, 10);
+                } else {
+                    item.style.opacity = '0';
+                    setTimeout(() => {
+                        item.style.display = 'none';
+                    }, 300);
+                }
+            });
+        });
+    });
+});
+</script>
+
 {% endblock %}

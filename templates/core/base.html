@@ -18,8 +18,8 @@
     <meta property="og:site_name" content="{{ site_settings.site_name }}">
     
     <!-- Favicon -->
-    {% if site_settings.favicon_url %}
-    <link rel="icon" href="{{ site_settings.favicon_url }}" type="image/x-icon">
+    {% if site_settings.get_favicon_url %}
+    <link rel="icon" href="{{ site_settings.get_favicon_url }}" type="image/x-icon">
     {% endif %}
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,7 +27,11 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Space+Grotesk:wght@400;500;600&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <!-- Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">>
     <style>
         :root {
             --primary: {{ site_settings.color_primary }};
@@ -68,8 +72,8 @@
                     <li class="menu_hover_zoom_line"><a href="{% url 'blog' %}">Blog</a></li>
                     <li class="menu_hover_zoom_line"><a href="{% url 'contacts' %}">İletişim</a></li>
                 </ul>
-                <!-- Language Switcher with Flags -->
-                <div class="lang-switcher">
+                <!-- Language Switcher with Flags - Desktop -->
+                <div class="lang-switcher lang-switcher-desktop">
                     {% get_current_language as LANGUAGE_CODE %}
                     {% if LANGUAGE_CODE == 'tr' or LANGUAGE_CODE == 'sq' %}
                         {% with base_path=request.path|slice:"4:" %}
@@ -107,6 +111,42 @@
                 <button class="menu-collapse menu_collapse" aria-label="Menüyü göster">
                     <span>⋯</span>
                 </button>
+                <!-- Language Switcher with Flags - Mobile -->
+                <div class="lang-switcher lang-switcher-mobile">
+                    {% get_current_language as LANGUAGE_CODE %}
+                    {% if LANGUAGE_CODE == 'tr' or LANGUAGE_CODE == 'sq' %}
+                        {% with base_path=request.path|slice:"4:" %}
+                        <a href="/{{ base_path }}" class="lang-flag {% if LANGUAGE_CODE == 'mk' %}active{% endif %}" title="Македонски">
+                            <span class="flag-icon">🇲🇰</span>
+                        </a>
+                        <a href="/tr/{{ base_path }}" class="lang-flag {% if LANGUAGE_CODE == 'tr' %}active{% endif %}" title="Türkçe">
+                            <span class="flag-icon">🇹🇷</span>
+                        </a>
+                        <a href="/sq/{{ base_path }}" class="lang-flag {% if LANGUAGE_CODE == 'sq' %}active{% endif %}" title="Shqip">
+                            <span class="flag-icon">🇦🇱</span>
+                        </a>
+                        {% endwith %}
+                    {% else %}
+                        <a href="/" class="lang-flag {% if LANGUAGE_CODE == 'mk' %}active{% endif %}" title="Македонски">
+                            <span class="flag-icon">🇲🇰</span>
+                        </a>
+                        {% if request.path == '/' %}
+                        <a href="/tr/" class="lang-flag {% if LANGUAGE_CODE == 'tr' %}active{% endif %}" title="Türkçe">
+                            <span class="flag-icon">🇹🇷</span>
+                        </a>
+                        <a href="/sq/" class="lang-flag {% if LANGUAGE_CODE == 'sq' %}active{% endif %}" title="Shqip">
+                            <span class="flag-icon">🇦🇱</span>
+                        </a>
+                        {% else %}
+                        <a href="/tr{{ request.path }}" class="lang-flag {% if LANGUAGE_CODE == 'tr' %}active{% endif %}" title="Türkçe">
+                            <span class="flag-icon">🇹🇷</span>
+                        </a>
+                        <a href="/sq{{ request.path }}" class="lang-flag {% if LANGUAGE_CODE == 'sq' %}active{% endif %}" title="Shqip">
+                            <span class="flag-icon">🇦🇱</span>
+                        </a>
+                        {% endif %}
+                    {% endif %}
+                </div>
                 <div class="collapsed-panel" aria-hidden="true">
                     <a href="{% url 'home' %}">Home</a>
                     <a href="{% url 'about' %}">Hakkımızda</a>
@@ -163,6 +203,19 @@
                 {% endif %}
             </div>
         </div>
+        <div class="footer-bottom">
+            <p class="copyright">
+                {% load i18n %}
+                {% get_current_language as LANGUAGE_CODE %}
+                {% if LANGUAGE_CODE == 'tr' %}
+                    {{ site_settings.copyright_text_tr }}
+                {% elif LANGUAGE_CODE == 'sq' %}
+                    {{ site_settings.copyright_text_sq }}
+                {% else %}
+                    {{ site_settings.copyright_text_mk }}
+                {% endif %}
+            </p>
+        </div>
     </footer>
 
     <!-- Scroll to Top Button -->
@@ -193,6 +246,23 @@
                 menu?.classList.toggle("visible");
             });
         });
+
+        // Auto-scroll portfolio showcase every second
+        const showcase = document.querySelector('.showcase-products');
+        if (showcase) {
+            let scrollIndex = 0;
+            const slides = showcase.querySelectorAll('.product-slide');
+            const slideCount = slides.length;
+            
+            setInterval(() => {
+                scrollIndex = (scrollIndex + 1) % slideCount;
+                const slideWidth = slides[0].offsetWidth;
+                showcase.scrollTo({
+                    left: slideWidth * scrollIndex,
+                    behavior: 'smooth'
+                });
+            }, 1500);
+        }
     </script>
 </body>
 </html>

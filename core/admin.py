@@ -1,6 +1,9 @@
 from django.contrib import admin
 
-from .models import BlogPost, FAQItem, PortfolioItem, PricingPackage, Product, Service, SiteContent, SiteSettings
+from .models import (
+    AddOnService, BlogPost, FAQItem, PageMedia, PortfolioItem, PricingPackage, Product, Service, 
+    SiteContent, SiteSettings, PageText, VideoEmbed
+)
 
 
 @admin.register(Service)
@@ -50,11 +53,12 @@ class ProductAdmin(admin.ModelAdmin):
 
 @admin.register(BlogPost)
 class BlogPostAdmin(admin.ModelAdmin):
-    list_display = ("title", "published_at", "likes")
+    list_display = ("title", "category", "published_at", "likes")
+    list_filter = ("category", "published_at")
     prepopulated_fields = {"slug": ("title",)}
     fieldsets = (
         ("Temel Bilgiler", {
-            "fields": ("title", "slug", "excerpt", "body", "published_at")
+            "fields": ("title", "slug", "excerpt", "body", "published_at", "category")
         }),
         ("Görsel", {
             "fields": ("hero_image",),
@@ -73,7 +77,29 @@ class BlogPostAdmin(admin.ModelAdmin):
 
 @admin.register(FAQItem)
 class FAQItemAdmin(admin.ModelAdmin):
-    list_display = ("question", "order")
+    list_display = ("question_mk", "category", "order")
+    list_filter = ("category",)
+    ordering = ("category", "order")
+    fieldsets = (
+        ("Македонски (Default)", {
+            "fields": ("question_mk", "answer_mk"),
+            "description": "Основен јазик за веб-страницата"
+        }),
+        ("Türkçe", {
+            "fields": ("question_tr", "answer_tr"),
+            "classes": ("collapse",),
+            "description": "Сорула и одговорот на турски јазик"
+        }),
+        ("Shqip", {
+            "fields": ("question_sq", "answer_sq"),
+            "classes": ("collapse",),
+            "description": "Pyetja dhe përgjigja në shqip"
+        }),
+        ("Organizacija", {
+            "fields": ("category", "order"),
+            "description": "Категорија и редослед"
+        }),
+    )
 
 
 @admin.register(PricingPackage)
@@ -90,6 +116,33 @@ class PricingPackageAdmin(admin.ModelAdmin):
         }),
         ("Shqip", {
             "fields": ("name_sq", "period_sq", "features_sq"),
+            "classes": ("collapse",)
+        }),
+        ("🎁 Premium Features", {
+            "fields": (
+                "free_consultation", "design_sketch", "measurements", "trials",
+                "express_delivery", "gift_accessories", "design_modifications",
+                "fabric_consultation", "final_steaming", "storage_bag", "online_meeting"
+            ),
+            "description": "Paket ile birlikte sunulacak hizmetleri seçin. Bu özellikler otomatik olarak pricing sayfasında gösterilecektir."
+        }),
+    )
+
+
+@admin.register(AddOnService)
+class AddOnServiceAdmin(admin.ModelAdmin):
+    list_display = ("name", "price", "icon", "order")
+    ordering = ("order", "name")
+    fieldsets = (
+        ("Македонски (Default)", {
+            "fields": ("name", "description", "price", "icon", "order")
+        }),
+        ("Türkçe", {
+            "fields": ("name_tr", "description_tr"),
+            "classes": ("collapse",)
+        }),
+        ("Shqip", {
+            "fields": ("name_sq", "description_sq"),
             "classes": ("collapse",)
         }),
     )
@@ -123,9 +176,14 @@ class SiteSettingsAdmin(admin.ModelAdmin):
         ("Site Bilgileri", {
             "fields": ("site_name", "tagline")
         }),
-        ("Logo & Favicon", {
+        ("Logo & Favicon - Dosya Yükleme", {
+            "fields": ("logo_file", "favicon_file"),
+            "description": "⚠️ Logo: 200x60 piksel PNG/JPG | Favicon: 32x32 piksel .ico"
+        }),
+        ("Logo & Favicon - URL (Eski Yöntem)", {
             "fields": ("logo_url", "favicon_url"),
-            "description": "⚠️ Logo: 200x60 piksel | Favicon: 32x32 piksel"
+            "classes": ("collapse",),
+            "description": "Bu alanlar kullanılmıyorsa, yukarıdaki dosya yükleme seçeneğini kullanın"
         }),
         ("Tema Renkleri", {
             "fields": ("color_primary", "color_secondary", "color_accent", "color_accent_dark", "color_text_soft"),
@@ -142,9 +200,17 @@ class SiteSettingsAdmin(admin.ModelAdmin):
             "fields": ("meta_description", "meta_keywords"),
             "description": "Site geneli SEO ayarları"
         }),
-        ("Footer", {
+        ("Footer - Copyright Yazısı", {
+            "fields": ("copyright_text_mk", "copyright_text_tr", "copyright_text_sq"),
+            "description": "3 dil için copyright yazısı. Site dili değiştiğinde otomatik güncellenir"
+        }),
+        ("Footer - Ek Metin", {
             "fields": ("footer_text",),
             "classes": ("collapse",)
+        }),
+        ("Harita & Konum", {
+            "fields": ("map_latitude", "map_longitude", "map_embed_code"),
+            "description": "Naba Studio - Samoilova 90, Skopje Kale | 📍 Harita: https://maps.app.goo.gl/TnBQbTKjQFpx3DFN7"
         }),
     )
 
@@ -154,3 +220,75 @@ class SiteSettingsAdmin(admin.ModelAdmin):
 
     def has_delete_permission(self, request, obj=None):
         return False
+
+
+@admin.register(PageMedia)
+class PageMediaAdmin(admin.ModelAdmin):
+    list_display = ("get_section_display", "alt_text", "is_active", "order")
+    list_filter = ("section", "is_active")
+    list_editable = ("is_active",)
+    ordering = ("section", "order")
+    search_fields = ("alt_text", "title")
+    
+    fieldsets = (
+        ("📍 Bölüm & Sıralama", {
+            "fields": ("section", "order", "is_active"),
+            "description": "Görselin hangi sayfada ve hangi sırada gösterileceğini belirtin"
+        }),
+        ("🖼️ Görsel Yükleme", {
+            "fields": ("image",),
+            "description": "⚠️ Çok önemli: Bölümünüzün gerektirdiği ölçülerde yükleyiniz (aşağıda belirtilmiştir)"
+        }),
+        ("📝 SEO & Erişilebilirlik", {
+            "fields": ("alt_text", "title"),
+            "classes": ("wide",),
+            "description": "Alt text görsel yüklenemediğinde gösterilir. Title SEO için önemlidir."
+        }),
+        ("📏 Ölçüler & Format Bilgisi", {
+            "fields": ("description",),
+            "classes": ("wide",),
+            "description": "Bu alana görselin gerekli ölçülerini ve formatını yazınız. Örn: 1200x800px, JPG, max 500KB"
+        }),
+    )
+    
+    def get_readonly_fields(self, request, obj=None):
+        # section'u seçtikten sonra değiştirilemesin diye
+        if obj:
+            return ['section']
+        return []
+
+
+@admin.register(PageText)
+class PageTextAdmin(admin.ModelAdmin):
+    list_display = ("get_section_display",)
+    fieldsets = (
+        ("Bölüm Seçimi", {
+            "fields": ("section",)
+        }),
+        ("Македонски (Default)", {
+            "fields": ("content_mk",)
+        }),
+        ("Türkçe", {
+            "fields": ("content_tr",),
+            "classes": ("collapse",)
+        }),
+        ("Shqip", {
+            "fields": ("content_sq",),
+            "classes": ("collapse",)
+        }),
+    )
+
+
+@admin.register(VideoEmbed)
+class VideoEmbedAdmin(admin.ModelAdmin):
+    list_display = ("get_section_display", "title", "youtube_id")
+    fieldsets = (
+        ("Video Bilgileri", {
+            "fields": ("section", "title")
+        }),
+        ("YouTube ID", {
+            "fields": ("youtube_id",),
+            "description": "YouTube URL'sinin ?v= sonrası yazın. Örn: dQw4w9WgXcQ"
+        }),
+    )
+
