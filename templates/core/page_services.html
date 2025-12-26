@@ -1,39 +1,40 @@
 {% extends "core/base.html" %}
+{% load multilang %}
 
-{% block title %}Hizmetler · Ankora Atelier{% endblock %}
+{% block title %}{% t 'nav_services' %} · Naba Studio{% endblock %}
 
 {% block content %}
 <!-- Section 1: Hero with Services -->
 <section class="services-hero">
     <div class="services-hero-content">
-        <p class="eyebrow">our services</p>
-        <h1>Get ready with us</h1>
+        <p class="eyebrow">{% t 'services_our_services' %}</p>
+        <h1>{% t 'services_prepare_with_us' %}</h1>
     </div>
     <div class="services-icons-grid">
         <article class="service-icon-card">
             <span class="service-icon">✨</span>
-            <h3>Custom Dress Design</h3>
-            <p>Kişisel stilinize ve hayallerinize uygun tamamen özel gelinlik tasarımı ve üretimi</p>
+            <h3>{% t 'services_custom_design' %}</h3>
+            <p>{% t 'home_hero_subtitle' %}</p>
         </article>
         <article class="service-icon-card">
             <span class="service-icon">💬</span>
-            <h3>Free Consultation</h3>
-            <p>Atelier uzmanlarıyla ücretsiz danışmanlık seansı. Tasarım, kumaş ve fiyatlandırma hakkında konuşun</p>
+            <h3>{% t 'services_free_consultation' %}</h3>
+            <p>{% t 'home_hero_subtitle' %}</p>
         </article>
         <article class="service-icon-card">
             <span class="service-icon">📏</span>
-            <h3>Fitting & Swatch Try-On</h3>
-            <p>Kalıp denemesi ve numune kumaşlarla deneme. Rengini ve dokuyu gerçek hayatta gör</p>
+            <h3>{% t 'services_fitting_samples' %}</h3>
+            <p>{% t 'home_hero_subtitle' %}</p>
         </article>
         <article class="service-icon-card">
             <span class="service-icon">🧵</span>
-            <h3>Made-to-Measure</h3>
-            <p>Tam ölçü uyarlanmış, özel dikişli gelinlikler. Mükemmel uyumu garantiliyoruz</p>
+            <h3>{% t 'services_custom_tailoring' %}</h3>
+            <p>{% t 'home_hero_subtitle' %}</p>
         </article>
         <article class="service-icon-card">
             <span class="service-icon">⚡</span>
-            <h3>Express Alteration</h3>
-            <p>Acil durumlarda hızlı kısaltma, ayarlama ve onarım hizmetleri. Kısa sürede çözüm</p>
+            <h3>{% t 'services_express_alterations' %}</h3>
+            <p>{% t 'home_hero_subtitle' %}</p>
         </article>
     </div>
 </section>
@@ -41,32 +42,32 @@
 <!-- Section 2: Couture Consultation Banner -->
 <section class="services-banner">
     <div class="services-banner-overlay">
-        <p class="eyebrow">couture danışmanlığı</p>
-        <h2>Sizin İçin Mükemmel Gelinliği Tasarlayalım</h2>
-        <a href="{% url 'contacts' %}" class="primary-btn">Randevu Al</a>
+        <p class="eyebrow">{% t 'services_couture_consultation' %}</p>
+        <h2>{% t 'services_design_perfect' %}</h2>
+        <a href="{% url 'contacts' %}" class="primary-btn">{% t 'services_book_appointment' %}</a>
     </div>
 </section>
 
 <!-- Section 3: Pricing -->
 <section class="pricing-section">
     <div class="services-pricing-header">
-        <h2>Couture Gelinlik Paketleri</h2>
-        <p class="section-subtitle">Naba Studio by Semma'da her bütçe ve tercih için tasarlanmış couture gelinlik paketleri sunuyoruz. Temel dikim hizmetinden tam customizasyona kadar, sizin için uygun paketi seçin.</p>
+        <h2>{% t 'services_couture_packages' %}</h2>
+        <p class="section-subtitle">{% t 'home_hero_subtitle' %}</p>
     </div>
     <div class="pricing-grid">
         {% for package in packages %}
         <article class="pricing-card {% if package.is_featured %}featured{% endif %}">
-            <h3>{{ package.name }}</h3>
+            <h3>{{ package.translated_name }}</h3>
             <div class="price">
                 <span class="amount">{{ package.price }}</span>
-                <span class="period">{{ package.period }}</span>
+                <span class="period">{{ package.translated_period }}</span>
             </div>
             <ul class="features">
-                {% for feature in package.get_features_list %}
+                {% for feature in package.translated_features %}
                 <li>{{ feature }}</li>
                 {% endfor %}
             </ul>
-            <button class="primary-btn">Get Now</button>
+            <button class="primary-btn">{% t 'services_get_now' %}</button>
         </article>
         {% empty %}
         <article class="pricing-card">
@@ -80,7 +81,7 @@
                 <li>Eusmod tempor incididunt ut.</li>
                 <li>labore et dolore magna.</li>
             </ul>
-            <button class="primary-btn">Get Now</button>
+            <button class="primary-btn">{% t 'services_get_now' %}</button>
         </article>
         <article class="pricing-card featured">
             <h3>Gold pack</h3>
@@ -93,7 +94,7 @@
                 <li>Eusmod tempor incididunt ut.</li>
                 <li>labore et dolore magna.</li>
             </ul>
-            <button class="primary-btn">Get Now</button>
+            <button class="primary-btn">{% t 'services_get_now' %}</button>
         </article>
         <article class="pricing-card">
             <h3>Platinum pack</h3>
@@ -106,7 +107,7 @@
                 <li>Eusmod tempor incididunt ut.</li>
                 <li>labore et dolore magna.</li>
             </ul>
-            <button class="primary-btn">Get Now</button>
+            <button class="primary-btn">{% t 'services_get_now' %}</button>
         </article>
         {% endfor %}
     </div>
@@ -116,14 +117,20 @@
 <section class="services-gallery-section">
     <section class="contact-gallery">
         <div class="gallery-grid">
+            {% if contact_gallery_images %}
+                {% for img in contact_gallery_images %}
+                <img src="{{ img.image.url }}" alt="{{ img.alt_text|default:'Gallery image' }}">
+                {% endfor %}
+            {% else %}
             <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=500&q=80" alt="Bridal detail">
             <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=500&q=80" alt="Bridal bouquet">
             <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=500&q=80" alt="Draped aisle">
             <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=500&q=80" alt="Golden details">
             <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=500&q=80" alt="Romantic styling">
             <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=500&q=80" alt="Modern tablescape">
+            {% endif %}
         </div>
-        <a class="instagram-link" href="https://instagram.com/" target="_blank" rel="noreferrer">
+        <a class="instagram-link" href="{{ site_settings.instagram_url|default:'https://instagram.com/' }}" target="_blank" rel="noreferrer">
             <svg viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M7 2C4.243 2 2 4.243 2 7v10c0 2.757 2.243 5 5 5h10c2.757 0 5-2.243 5-5V7c0-2.757-2.243-5-5-5H7zm0 2h10c1.654 0 3 1.346 3 3v10c0 1.654-1.346 3-3 3H7c-1.654 0-3-1.346-3-3V7c0-1.654 1.346-3 3-3zm5 2a5 5 0 100 10 5 5 0 000-10zm0 2a3 3 0 11.001 5.999A3 3 0 0112 8zm6.5-.5a1 1 0 11-2 0 1 1 0 012 0z"/>
             </svg>

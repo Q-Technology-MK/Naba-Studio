@@ -1,16 +1,18 @@
 {% extends "core/base.html" %}
+{% load i18n multilang %}
 
-{% block title %}Koleksiyonumuz · Naba Studio by Semma{% endblock %}
+{% block title %}{% t 'portfolio_collection' %} · Naba Studio by Semma{% endblock %}
 
 {% block content %}
+{% get_current_language as LANGUAGE_CODE %}
 <!-- Hero / Featured Item -->
 <div class="mb-6 w-full overflow-hidden relative aspect-[16/9] shadow-md px-4 max-w-6xl mx-auto rounded-2xl mt-8">
     <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1487180144351-b8472da7d491?auto=format&fit=crop&w=1200&q=80');">
     </div>
     <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex flex-col justify-center items-center p-5">
-        <span class="bg-red-500/90 backdrop-blur-sm text-white text-[10px] font-bold px-2 py-1 rounded w-fit mb-2">YENİ KOLEKSIYON</span>
-        <h3 class="text-white text-2xl font-bold leading-tight text-center">Gelinlerimizin Sanat Eserleri</h3>
-        <p class="text-white/90 text-sm mt-1 text-center">Naba Studio by Semma Couture Koleksiyonu</p>
+        <span class="bg-red-500/90 backdrop-blur-sm text-white text-[10px] font-bold px-2 py-1 rounded w-fit mb-2">{% t 'portfolio_new_collection' %}</span>
+        <h3 class="text-white text-2xl font-bold leading-tight text-center">{% t 'portfolio_artworks' %}</h3>
+        <p class="text-white/90 text-sm mt-1 text-center">Naba Studio by Semma Couture</p>
     </div>
 </div>
 
@@ -18,7 +20,7 @@
 <div class="w-full flex justify-center pb-3 pt-2 mb-6">
     <div class="flex flex-wrap gap-2 md:gap-3 justify-center px-2 md:px-0">
         <button class="filter-btn active flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-red-500 px-4 md:px-5 shadow-sm shadow-red-500/20 transition-transform active:scale-95 text-xs md:text-sm" data-filter="*">
-            <p class="text-white font-bold leading-normal">Hepsi</p>
+            <p class="text-white font-bold leading-normal">{% t 'portfolio_all' %}</p>
         </button>
         {% for category_key, category_name in categories %}
         <button class="filter-btn flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-white border border-gray-200 px-4 md:px-5 transition-transform active:scale-95 hover:border-red-500/30 text-xs md:text-sm" data-filter="{{ category_key }}">
@@ -28,97 +30,27 @@
     </div>
 </div>
 
-<!-- ImageGrid: 2x2 Grid Layout -->
+<!-- ImageGrid: 2x2 Grid Layout - Products Only -->
 <div class="grid grid-cols-2 gap-4 mb-8 px-4 max-w-6xl mx-auto" id="portfolio-grid">
-    {% for item in portfolio_items %}
-    <!-- Card -->
-    <a href="{% url 'product_detail' item.slug %}" style="text-decoration: none; color: inherit;" class="portfolio-item relative group cursor-pointer rounded-xl overflow-hidden bg-white shadow-sm border border-gray-200 block" data-category="*">
-        <div class="relative">
-            <img alt="{{ item.title }}" class="w-full h-64 object-cover transform transition-transform duration-500 group-hover:scale-105" src="{{ item.image_url }}">
-            <button type="button" class="absolute top-2 right-2 h-8 w-8 flex items-center justify-center rounded-full bg-black/20 backdrop-blur-md text-white hover:bg-red-500 hover:text-white transition-all">
-                <span class="material-symbols-outlined text-[18px]">favorite</span>
-            </button>
-        </div>
-        <div class="p-3">
-            <h4 class="font-bold text-sm text-gray-900">{{ item.title }}</h4>
-            <p class="text-xs text-gray-500 mt-0.5">{{ item.designer }}</p>
-            <p class="text-xs font-bold text-red-500 mt-2">{{ item.year }}</p>
-        </div>
-    </a>
-    {% endfor %}
-    
     {% for product in products %}
     <!-- Product Card -->
     <a href="{% url 'product_detail' product.slug %}" style="text-decoration: none; color: inherit;" class="portfolio-item relative group cursor-pointer rounded-xl overflow-hidden bg-white shadow-sm border border-gray-200 block" data-category="{{ product.category }}">
         <div class="relative">
-            <img alt="{{ product.name }}" class="w-full h-64 object-cover transform transition-transform duration-500 group-hover:scale-105" src="{{ product.image_url }}">
-            <button type="button" class="absolute top-2 right-2 h-8 w-8 flex items-center justify-center rounded-full bg-black/20 backdrop-blur-md text-white hover:bg-red-500 hover:text-white transition-all">
+            <img alt="{{ product.translated_name }}" class="w-full h-64 object-cover transform transition-transform duration-500 group-hover:scale-105" src="{{ product.get_primary_image }}">
+            <button type="button" class="favorite-btn absolute top-2 right-2 h-8 w-8 flex items-center justify-center rounded-full bg-black/20 backdrop-blur-md text-white hover:bg-red-500 hover:text-white transition-all" onclick="event.preventDefault(); event.stopPropagation(); toggleFavorite(this);">
                 <span class="material-symbols-outlined text-[18px]">favorite</span>
             </button>
         </div>
         <div class="p-3">
-            <h4 class="font-bold text-sm text-gray-900">{{ product.name }}</h4>
-            <p class="text-xs text-gray-500 mt-0.5">{{ product.category }}</p>
+            <h4 class="font-bold text-sm text-gray-900">{{ product.translated_name }}</h4>
+            <p class="text-xs text-gray-500 mt-0.5">{{ product.translated_category }}</p>
             <p class="text-xs font-bold text-red-500 mt-2">{{ product.price }}</p>
         </div>
     </a>
-    
     {% empty %}
-    <!-- Fallback Kartları (Veri Yoksa) -->
-    <div class="relative group cursor-pointer rounded-xl overflow-hidden bg-white shadow-sm border border-gray-200" data-category="*">
-        <div class="relative">
-            <img alt="Peri Model" class="w-full h-64 object-cover transform transition-transform duration-500 group-hover:scale-105" src="https://images.unsplash.com/photo-1487180144351-b8472da7d491?auto=format&fit=crop&w=500&q=80">
-            <button class="absolute top-2 right-2 h-8 w-8 flex items-center justify-center rounded-full bg-black/20 backdrop-blur-md text-white hover:bg-red-500 hover:text-white transition-all">
-                <span class="material-symbols-outlined text-[18px]">favorite</span>
-            </button>
-        </div>
-        <div class="p-3">
-            <h4 class="font-bold text-sm text-gray-900">Peri Model</h4>
-            <p class="text-xs text-gray-500 mt-0.5">Fransız Güpür</p>
-            <p class="text-xs font-bold text-red-500 mt-2">2024</p>
-        </div>
-    </div>
-
-    <div class="relative group cursor-pointer rounded-xl overflow-hidden bg-white shadow-sm border border-gray-200" data-category="*">
-        <div class="relative">
-            <img alt="Eliz Model" class="w-full h-64 object-cover transform transition-transform duration-500 group-hover:scale-105" src="https://images.unsplash.com/photo-1594938298603-c8148c4dae35?auto=format&fit=crop&w=500&q=80">
-            <button class="absolute top-2 right-2 h-8 w-8 flex items-center justify-center rounded-full bg-black/20 backdrop-blur-md text-white hover:bg-red-500 hover:text-white transition-all">
-                <span class="material-symbols-outlined text-[18px]">favorite</span>
-            </button>
-        </div>
-        <div class="p-3">
-            <h4 class="font-bold text-sm text-gray-900">Eliz Model</h4>
-            <p class="text-xs text-gray-500 mt-0.5">İpek Saten</p>
-            <p class="text-xs font-bold text-red-500 mt-2">2024</p>
-        </div>
-    </div>
-
-    <div class="relative group cursor-pointer rounded-xl overflow-hidden bg-white shadow-sm border border-gray-200" data-category="*">
-        <div class="relative">
-            <img alt="Serra Model" class="w-full h-64 object-cover transform transition-transform duration-500 group-hover:scale-105" src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=500&q=80">
-            <button class="absolute top-2 right-2 h-8 w-8 flex items-center justify-center rounded-full bg-black/20 backdrop-blur-md text-white hover:bg-red-500 hover:text-white transition-all">
-                <span class="material-symbols-outlined text-[18px]">favorite</span>
-            </button>
-        </div>
-        <div class="p-3">
-            <h4 class="font-bold text-sm text-gray-900">Serra Model</h4>
-            <p class="text-xs text-gray-500 mt-0.5">Bohem Şifon</p>
-            <p class="text-xs font-bold text-red-500 mt-2">2024</p>
-        </div>
-    </div>
-
-    <div class="relative group cursor-pointer rounded-xl overflow-hidden bg-white shadow-sm border border-gray-200" data-category="*">
-        <div class="relative">
-            <img alt="İnci Model" class="w-full h-64 object-cover transform transition-transform duration-500 group-hover:scale-105" src="https://images.unsplash.com/photo-1475180098004-ca77a66827be?auto=format&fit=crop&w=500&q=80">
-            <button class="absolute top-2 right-2 h-8 w-8 flex items-center justify-center rounded-full bg-black/20 backdrop-blur-md text-white hover:bg-red-500 hover:text-white transition-all">
-                <span class="material-symbols-outlined text-[18px]">favorite</span>
-            </button>
-        </div>
-        <div class="p-3">
-            <h4 class="font-bold text-sm text-gray-900">İnci Model</h4>
-            <p class="text-xs text-gray-500 mt-0.5">Dantel Detay</p>
-            <p class="text-xs font-bold text-red-500 mt-2">2024</p>
-        </div>
+    <!-- No Products Message -->
+    <div class="col-span-2 text-center py-12">
+        <p class="text-gray-500">{% t 'portfolio_no_products' %}</p>
     </div>
     {% endfor %}
 </div>
@@ -136,12 +68,50 @@
 <div class="fixed bottom-8 right-5 z-30">
     <a href="{% url 'contacts' %}" class="flex items-center justify-center h-14 bg-red-500 text-white rounded-2xl shadow-xl shadow-red-500/30 gap-3 px-5 transition-transform hover:bg-red-600">
         <span class="material-symbols-outlined text-[24px]">calendar_month</span>
-        <span class="text-base font-bold leading-normal tracking-[0.015em] truncate">Randevu Al</span>
+        <span class="text-base font-bold leading-normal tracking-[0.015em] truncate">{% t 'services_book_appointment' %}</span>
     </a>
 </div>
 
 <script>
+// Toggle favorite function
+function toggleFavorite(btn) {
+    btn.classList.toggle('bg-red-500');
+    btn.classList.toggle('bg-black/20');
+    
+    // Get favorites from localStorage
+    let favorites = JSON.parse(localStorage.getItem('portfolio_favorites') || '[]');
+    const card = btn.closest('.portfolio-item');
+    const itemId = card ? card.getAttribute('href') : null;
+    
+    if (itemId) {
+        if (favorites.includes(itemId)) {
+            favorites = favorites.filter(f => f !== itemId);
+        } else {
+            favorites.push(itemId);
+        }
+        localStorage.setItem('portfolio_favorites', JSON.stringify(favorites));
+    }
+}
+
+// Load favorites on page load
+function loadFavorites() {
+    const favorites = JSON.parse(localStorage.getItem('portfolio_favorites') || '[]');
+    document.querySelectorAll('.portfolio-item').forEach(card => {
+        const itemId = card.getAttribute('href');
+        if (favorites.includes(itemId)) {
+            const btn = card.querySelector('.favorite-btn');
+            if (btn) {
+                btn.classList.add('bg-red-500');
+                btn.classList.remove('bg-black/20');
+            }
+        }
+    });
+}
+
 document.addEventListener('DOMContentLoaded', function() {
+    // Load favorites
+    loadFavorites();
+    
     const filterBtns = document.querySelectorAll('.filter-btn');
     const portfolioItems = document.querySelectorAll('.portfolio-item');
     

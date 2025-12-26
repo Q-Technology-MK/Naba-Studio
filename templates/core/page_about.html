@@ -1,6 +1,7 @@
 {% extends "core/base.html" %}
+{% load multilang %}
 
-{% block title %}Hakkımızda · Ankora Atelier{% endblock %}
+{% block title %}{% t 'nav_about' %} · Naba Studio{% endblock %}
 
 {% block content %}
 <div class="page-wrapper">
@@ -11,13 +12,13 @@
             <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80" alt="img-60-copyright" class="intro-img">
         </div>
         <div class="about-intro-content">
-            <h1 class="section-heading">Hayalleri Gerçeğe Dönüştürüyoruz</h1>
+            <h1 class="section-heading">{% t 'about_dreams_reality' %}</h1>
             <p class="about-description">
-                Naba Studio by Semma'da sadece elbise dikmiyoruz; anılar yaratıyoruz. Üsküp'ün kalbinde yer alan atölyemiz, geleneksel el işçiliğini modern silüetlerle birleştirerek kişiye özel gelinlikler konusunda uzmanlaşmıştır. İlk eskizden son dikişe kadar yanınızdayız.
+                {% t 'home_hero_subtitle' %}
             </p>
             <div class="about-schedule">
-                <p><strong>PAZARTESİ-CUMA:</strong> 09:00 – 22:00</p>
-                <p><strong>CUMARTESİ:</strong> 09:00 – 20:00</p>
+                <p><strong>{% t 'home_weekdays' %}:</strong> 09:00 – 22:00</p>
+                <p><strong>{% t 'home_saturday' %}:</strong> 09:00 – 20:00</p>
             </div>
         </div>
     </section>
@@ -25,25 +26,25 @@
     <!-- Section 2: What We Do - Hizmetler -->
     <section class="about-services">
         <div class="about-services-header">
-            <h2>Neler Yapıyoruz</h2>
-            <h3>Özel Tasarım Hizmetleri</h3>
+            <h2>{% t 'about_what_we_do' %}</h2>
+            <h3>{% t 'about_special_design' %}</h3>
         </div>
         <div class="about-services-grid">
             <article>
-                <h4>Kişiye Özel Gelinlikler</h4>
-                <p>Her gelinin eşsiz kişiliğine uygun özel tasarım ve üretim</p>
+                <h4>{% t 'about_personalized' %}</h4>
+                <p>{% t 'home_hero_subtitle' %}</p>
             </article>
             <article>
-                <h4>Nişan Kıyafetleri</h4>
-                <p>Nişan törenine göre tasarlanmış şık ve zarif elbiseler</p>
+                <h4>{% t 'about_engagement' %}</h4>
+                <p>{% t 'home_hero_subtitle' %}</p>
             </article>
             <article>
-                <h4>Tadilat & Prova Hizmetleri</h4>
-                <p>Profesyonel vücut ölçümleri ve defalarca prova ile mükemmel uyum</p>
+                <h4>{% t 'about_alteration_fitting' %}</h4>
+                <p>{% t 'home_hero_subtitle' %}</p>
             </article>
             <article>
-                <h4>Gece Elbiseleri / Abiye</h4>
-                <p>Özel davetler ve balolar için lüks tasarım elbiseler</p>
+                <h4>{% t 'about_evening_dresses' %}</h4>
+                <p>{% t 'home_hero_subtitle' %}</p>
             </article>
         </div>
     </section>
@@ -53,76 +54,82 @@
         <div class="stats-container">
             <div class="stat-item">
                 <div class="stat-icon">✋</div>
-                <h4>%100 El İşçiliği</h4>
-                <p>Her dikişi profesyonel ustalarımız tarafından birebir yapılır</p>
+                <h4>{% t 'about_handmade' %}</h4>
+                <p>{% t 'home_hero_subtitle' %}</p>
             </div>
             <div class="stat-item">
                 <div class="stat-icon">✨</div>
-                <h4>Birinci Sınıf Kumaşlar</h4>
-                <p>Dünyanın en iyi kumaş tedarikçilerinden premium malzemeler</p>
+                <h4>{% t 'about_first_class' %}</h4>
+                <p>{% t 'home_hero_subtitle' %}</p>
             </div>
             <div class="stat-item">
                 <div class="stat-icon">📍</div>
-                <h4>Üsküp'te Üretildi</h4>
-                <p>Tüm tasarımlarımız Makedonyalı sanatçılar tarafından yapılır</p>
+                <h4>{% t 'about_made_in_skopje' %}</h4>
+                <p>{% t 'home_hero_subtitle' %}</p>
             </div>
         </div>
     </section>
 
     <!-- Section 4: Values Section -->
     <section class="about-values">
-        <h2>Neden Biz?</h2>
+        <h2>{% t 'about_why_us' %}</h2>
         <div class="values-list">
             <div class="value-item">
                 <div class="value-number">01</div>
-                <h4>Kişisel Yaklaşım</h4>
-                <p>Her gelin eşsizdir, ve elbisesi de öyle olmalı. Sizin hayallerinizi dinler ve bunu gerçeğe dönüştürürüz.</p>
+                <h4>{% t 'about_personal_approach' %}</h4>
+                <p>{% t 'home_hero_subtitle' %}</p>
             </div>
             <div class="value-item">
                 <div class="value-number">02</div>
-                <h4>Yüksek Kalite</h4>
-                <p>Dünyanın dört bir yanından gelen en iyi dantel, ipek ve kumaşlar. Hiçbir kompromı yoktur.</p>
+                <h4>{% t 'about_high_quality' %}</h4>
+                <p>{% t 'home_hero_subtitle' %}</p>
             </div>
         </div>
     </section>
 
     <!-- Section 4: YouTube Video Embed -->
+    {% if video_embed %}
     <section class="about-video">
-        <div class="video-container">
+        <div class="video-container" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%;">
             <iframe 
-                src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
-                title="Wedding Video" 
+                src="{{ video_embed.get_embed_url }}" 
+                title="{{ video_embed.title|default:'Wedding Video' }}" 
                 frameborder="0" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                width="560"
+                height="315"
+                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                referrerpolicy="strict-origin-when-cross-origin"
                 allowfullscreen>
             </iframe>
         </div>
     </section>
+    {% endif %}
 
     <!-- Section 5: Latest Blog Posts -->
     <section class="about-blog">
         <div class="about-blog-header">
-            <h2>Son Blog Yazıları</h2>
+            <h2>{% t 'about_latest_blog' %}</h2>
         </div>
         <div class="about-blog-grid">
             {% for post in latest_blog %}
             <a href="{% url 'blog_detail' post.slug %}" style="text-decoration: none; color: inherit;">
                 <article class="blog-card">
                     {% if post.hero_image %}
-                    <img src="{{ post.hero_image.url }}" alt="{{ post.title }}">
+                    <img src="{{ post.hero_image }}" alt="{{ post.translated_title }}">
                     {% else %}
-                    <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=400&q=80" alt="{{ post.title }}">
+                    <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=400&q=80" alt="{{ post.translated_title }}">
                     {% endif %}
                     <div class="content">
                         <span class="date">{{ post.published_at|date:"d M Y" }}</span>
-                        <h3>{{ post.title }}</h3>
-                        <p>{{ post.excerpt|truncatewords:15 }}</p>
-                        <a href="{% url 'blog_detail' post.slug %}" class="read-more">Devamını Oku →</a>
+                        <h3>{{ post.translated_title }}</h3>
+                        <p>{{ post.translated_excerpt|truncatewords:15 }}</p>
+                        <a href="{% url 'blog_detail' post.slug %}" class="read-more">{% t 'about_read_more' %}</a>
                     </div>
                 </article>
             </a>
             {% empty %}
-            <p>Henüz blog yazısı yok.</p>
+            <p>{% t 'about_no_blog' %}</p>
             {% endfor %}
         </div>
     </section>

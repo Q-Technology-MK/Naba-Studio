@@ -1,18 +1,355 @@
 {% extends "core/base.html" %}
+{% load i18n multilang %}
 
 {% block title %}{{ product.name }} · Atelier Collection{% endblock %}
 
 {% block content %}
-<div class="page-wrapper">
-    <div class="section-divider"></div>
-    <div class="product-hero">
-        <img src="{{ product.image_url }}" alt="{{ product.name }}">
+{% get_current_language as LANGUAGE_CODE %}
+<div class="product-detail-page">
+    <!-- Hero Slideshow -->
+    <div class="product-slideshow">
+        <!-- Top Navigation Buttons -->
+        <div class="slideshow-nav">
+            <a href="javascript:history.back()" class="nav-btn back-btn" title="{% t 'back_to_portfolio' %}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+            </a>
+            <div class="nav-btn-group">
+                <button class="nav-btn like-btn" title="{% if LANGUAGE_CODE == 'tr' %}Beğen{% elif LANGUAGE_CODE == 'sq' %}Pëlqej{% else %}Допаѓа ми се{% endif %}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+                </button>
+                <button class="nav-btn share-btn" title="{% if LANGUAGE_CODE == 'tr' %}Paylaş{% elif LANGUAGE_CODE == 'sq' %}Ndaj{% else %}Сподели{% endif %}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/></svg>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Slides Container -->
+        <div class="slides-container">
+            {% with all_images=product.get_all_images %}
+            {% if all_images %}
+                {% for img in all_images %}
+                <div class="slide{% if forloop.first %} active{% endif %}" data-index="{{ forloop.counter0 }}">
+                    <img src="{{ img.image.url }}" alt="{{ img.alt_text|default:product.name }}">
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="slide active" data-index="0">
+                    <img src="{{ product.get_primary_image }}" alt="{{ product.name }}">
+                </div>
+            {% endif %}
+            {% endwith %}
+        </div>
+        
+        <!-- Slideshow Controls -->
+        <button class="slide-arrow prev-arrow">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+        </button>
+        <button class="slide-arrow next-arrow">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+        
+        <!-- Dots Pagination -->
+        <div class="slide-dots">
+            {% with all_images=product.get_all_images %}
+            {% if all_images %}
+                {% for img in all_images %}
+                <span class="dot{% if forloop.first %} active{% endif %}" data-index="{{ forloop.counter0 }}"></span>
+                {% endfor %}
+            {% else %}
+                <span class="dot active" data-index="0"></span>
+            {% endif %}
+            {% endwith %}
+        </div>
     </div>
-    <div class="product-meta">
-        <h1>{{ product.name }}</h1>
-        <p class="price">{{ product.price }}</p>
-        <p>{{ product.description }}</p>
-        <a href="{% url 'portfolio' %}">Portfolyo'ya geri dön</a>
+    
+    <!-- Product Content -->
+    <div class="product-content">
+        <div class="product-header">
+            <div class="product-header-left">
+                <span class="product-category">{{ product.get_category_display }}</span>
+                <h1>{% if LANGUAGE_CODE == 'tr' and product.name_tr %}{{ product.name_tr }}{% elif LANGUAGE_CODE == 'sq' and product.name_sq %}{{ product.name_sq }}{% else %}{{ product.name }}{% endif %}</h1>
+                <p class="product-price">{{ product.price }}</p>
+            </div>
+            <div class="product-header-right">
+                {% with avg_rating=product.get_average_rating review_count=product.get_review_count %}
+                <div class="star-rating">
+                    {% for i in "12345" %}
+                        {% if forloop.counter <= avg_rating %}
+                            <span class="star">★</span>
+                        {% elif forloop.counter|add:"-0.5" <= avg_rating %}
+                            <span class="star">★</span>
+                        {% else %}
+                            <span class="star empty">★</span>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <span class="rating-count">{{ avg_rating|floatformat:1 }} ({{ review_count }})</span>
+                {% endwith %}
+            </div>
+        </div>
+        
+        <!-- Description -->
+        <div class="product-description">
+            <h3>{% if LANGUAGE_CODE == 'tr' %}Açıklama{% elif LANGUAGE_CODE == 'sq' %}Përshkrimi{% else %}Опис{% endif %}</h3>
+            <p>{% if LANGUAGE_CODE == 'tr' and product.description_tr %}{{ product.description_tr }}{% elif LANGUAGE_CODE == 'sq' and product.description_sq %}{{ product.description_sq }}{% else %}{{ product.description }}{% endif %}</p>
+        </div>
+        
+        <!-- Details Grid -->
+        <div class="product-details-grid">
+            <div class="detail-card">
+                <div class="detail-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.555C21.965 6.012 17.461 2 12 2z"/></svg>
+                </div>
+                <span class="detail-label">{% if LANGUAGE_CODE == 'tr' %}Renk{% elif LANGUAGE_CODE == 'sq' %}Ngjyra{% else %}Боја{% endif %}</span>
+                <span class="detail-value">{% if LANGUAGE_CODE == 'tr' %}Kırık Beyaz / Fildişi{% elif LANGUAGE_CODE == 'sq' %}E bardhë e thyer / Fildish{% else %}Бела / Слонова коска{% endif %}</span>
+            </div>
+            <div class="detail-card">
+                <div class="detail-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
+                </div>
+                <span class="detail-label">{% if LANGUAGE_CODE == 'tr' %}Teslimat{% elif LANGUAGE_CODE == 'sq' %}Dorëzimi{% else %}Достава{% endif %}</span>
+                <span class="detail-value">{% if LANGUAGE_CODE == 'tr' %}4-6 Hafta{% elif LANGUAGE_CODE == 'sq' %}4-6 Javë{% else %}4-6 Недели{% endif %}</span>
+            </div>
+            <div class="detail-card">
+                <div class="detail-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v12"/><path d="M18 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/><path d="M6 21a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/><path d="M15 6a9 9 0 0 0-9 9"/><path d="M18 15v6"/><path d="M21 18h-6"/></svg>
+                </div>
+                <span class="detail-label">{% if LANGUAGE_CODE == 'tr' %}Kumaş{% elif LANGUAGE_CODE == 'sq' %}Pëlhura{% else %}Материјал{% endif %}</span>
+                <span class="detail-value">{% if LANGUAGE_CODE == 'tr' %}Fransız Güpür & İpek{% elif LANGUAGE_CODE == 'sq' %}Dantella Franceze & Mëndafsh{% else %}Француска чипка и свила{% endif %}</span>
+            </div>
+            <div class="detail-card">
+                <div class="detail-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+                </div>
+                <span class="detail-label">{% if LANGUAGE_CODE == 'tr' %}Kesim{% elif LANGUAGE_CODE == 'sq' %}Prerja{% else %}Крој{% endif %}</span>
+                <span class="detail-value">{% if LANGUAGE_CODE == 'tr' %}A-Kesim Modern{% elif LANGUAGE_CODE == 'sq' %}A-Line Modern{% else %}А-линија модерен{% endif %}</span>
+            </div>
+        </div>
+        
+        <!-- Action Buttons -->
+        <div class="product-actions">
+            <a href="{% url 'contacts' %}" class="action-btn primary-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+                {% if LANGUAGE_CODE == 'tr' %}Randevu Oluştur{% elif LANGUAGE_CODE == 'sq' %}Krijo Takim{% else %}Закажи термин{% endif %}
+            </a>
+            <a href="https://wa.me/{{ site_settings.whatsapp_number|default:'38970666567' }}?text={% if LANGUAGE_CODE == 'tr' %}Merhaba, {{ product.name }} hakkında bilgi almak istiyorum.{% elif LANGUAGE_CODE == 'sq' %}Përshëndetje, dua të marr informacion për {{ product.name }}.{% else %}Здраво, сакам информации за {{ product.name }}.{% endif %}" target="_blank" class="action-btn whatsapp-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                {% if LANGUAGE_CODE == 'tr' %}WhatsApp ile Ulaş{% elif LANGUAGE_CODE == 'sq' %}Kontakto me WhatsApp{% else %}Контакт преку WhatsApp{% endif %}
+            </a>
+            <button class="action-btn order-btn" onclick="openOrderModal()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                {% if LANGUAGE_CODE == 'tr' %}Sipariş Gönder{% elif LANGUAGE_CODE == 'sq' %}Dërgo Porosi{% else %}Испрати нарачка{% endif %}
+            </button>
+        </div>
     </div>
 </div>
+
+<!-- Order Modal -->
+<div id="orderModal" class="order-modal" style="display: none;">
+    <div class="order-modal-overlay" onclick="closeOrderModal()"></div>
+    <div class="order-modal-content">
+        <button class="order-modal-close" onclick="closeOrderModal()">&times;</button>
+        <h2>{% if LANGUAGE_CODE == 'tr' %}Sipariş Formu{% elif LANGUAGE_CODE == 'sq' %}Formulari i Porosisë{% else %}Формулар за нарачка{% endif %}</h2>
+        <p class="order-product-name">{{ product.name }}</p>
+        
+        <form id="orderForm" onsubmit="return submitOrderForm(event)">
+            <input type="hidden" name="product_id" value="{{ product.id }}">
+            <input type="hidden" name="product_name" value="{{ product.name }}">
+            
+            <div class="form-group">
+                <label for="order_name">{% if LANGUAGE_CODE == 'tr' %}Ad Soyad{% elif LANGUAGE_CODE == 'sq' %}Emri dhe Mbiemri{% else %}Име и презиме{% endif %} *</label>
+                <input type="text" id="order_name" name="name" required minlength="3" 
+                    placeholder="{% if LANGUAGE_CODE == 'tr' %}Adınızı ve soyadınızı girin{% elif LANGUAGE_CODE == 'sq' %}Shkruani emrin dhe mbiemrin{% else %}Внесете го вашето име и презиме{% endif %}">
+                <span class="error-message" id="name_error"></span>
+            </div>
+            
+            <div class="form-group">
+                <label for="order_phone">{% if LANGUAGE_CODE == 'tr' %}Telefon Numarası{% elif LANGUAGE_CODE == 'sq' %}Numri i Telefonit{% else %}Телефонски број{% endif %} *</label>
+                <input type="tel" id="order_phone" name="phone" required 
+                    pattern="[0-9+\-\s]{7,20}"
+                    placeholder="{% if LANGUAGE_CODE == 'tr' %}Örn: +389 70 123 456{% elif LANGUAGE_CODE == 'sq' %}P.sh: +389 70 123 456{% else %}Пр: +389 70 123 456{% endif %}">
+                <span class="error-message" id="phone_error"></span>
+            </div>
+            
+            <div class="form-group">
+                <label for="order_address">{% if LANGUAGE_CODE == 'tr' %}Adres{% elif LANGUAGE_CODE == 'sq' %}Adresa{% else %}Адреса{% endif %} *</label>
+                <textarea id="order_address" name="address" required minlength="10" rows="3"
+                    placeholder="{% if LANGUAGE_CODE == 'tr' %}Tam adresinizi girin{% elif LANGUAGE_CODE == 'sq' %}Shkruani adresën tuaj të plotë{% else %}Внесете ја вашата целосна адреса{% endif %}"></textarea>
+                <span class="error-message" id="address_error"></span>
+            </div>
+            
+            <div class="form-group">
+                <label for="order_notes">{% if LANGUAGE_CODE == 'tr' %}Notlar (Opsiyonel){% elif LANGUAGE_CODE == 'sq' %}Shënime (Opsionale){% else %}Забелешки (Опционално){% endif %}</label>
+                <textarea id="order_notes" name="notes" rows="2"
+                    placeholder="{% if LANGUAGE_CODE == 'tr' %}Ek bilgi veya özel istekler{% elif LANGUAGE_CODE == 'sq' %}Informacion shtesë ose kërkesa të veçanta{% else %}Дополнителни информации или посебни барања{% endif %}"></textarea>
+            </div>
+            
+            <button type="submit" class="action-btn primary-btn order-submit-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"/><path d="m22 2-7 20-4-9-9-4 20-7z"/></svg>
+                {% if LANGUAGE_CODE == 'tr' %}Siparişi Gönder{% elif LANGUAGE_CODE == 'sq' %}Dërgo Porosinë{% else %}Испрати нарачка{% endif %}
+            </button>
+        </form>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.dot');
+    const prevBtn = document.querySelector('.prev-arrow');
+    const nextBtn = document.querySelector('.next-arrow');
+    let currentIndex = 0;
+    
+    function showSlide(index) {
+        if (index >= slides.length) index = 0;
+        if (index < 0) index = slides.length - 1;
+        currentIndex = index;
+        
+        slides.forEach((slide, i) => {
+            slide.classList.toggle('active', i === index);
+        });
+        dots.forEach((dot, i) => {
+            dot.classList.toggle('active', i === index);
+        });
+    }
+    
+    if (prevBtn) prevBtn.addEventListener('click', () => showSlide(currentIndex - 1));
+    if (nextBtn) nextBtn.addEventListener('click', () => showSlide(currentIndex + 1));
+    
+    dots.forEach(dot => {
+        dot.addEventListener('click', () => {
+            showSlide(parseInt(dot.dataset.index));
+        });
+    });
+    
+    // Like button toggle
+    const likeBtn = document.querySelector('.like-btn');
+    if (likeBtn) {
+        likeBtn.addEventListener('click', function() {
+            this.classList.toggle('liked');
+        });
+    }
+    
+    // Share button
+    const shareBtn = document.querySelector('.share-btn');
+    if (shareBtn) {
+        shareBtn.addEventListener('click', function() {
+            if (navigator.share) {
+                navigator.share({
+                    title: '{{ product.name }}',
+                    url: window.location.href
+                });
+            } else {
+                navigator.clipboard.writeText(window.location.href);
+                alert('{% if LANGUAGE_CODE == "tr" %}Link kopyalandı!{% elif LANGUAGE_CODE == "sq" %}Linku u kopjua!{% else %}Линкот е копиран!{% endif %}');
+            }
+        });
+    }
+});
+
+// Order Modal Functions
+function openOrderModal() {
+    document.getElementById('orderModal').style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+}
+
+function closeOrderModal() {
+    document.getElementById('orderModal').style.display = 'none';
+    document.body.style.overflow = '';
+    document.getElementById('orderForm').reset();
+    clearErrors();
+}
+
+function clearErrors() {
+    document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
+    document.querySelectorAll('.form-group input, .form-group textarea').forEach(el => el.classList.remove('input-error'));
+}
+
+function validateName(name) {
+    if (!name || name.trim().length < 3) {
+        return '{% if LANGUAGE_CODE == "tr" %}Ad soyad en az 3 karakter olmalıdır{% elif LANGUAGE_CODE == "sq" %}Emri duhet të ketë të paktën 3 karaktere{% else %}Името мора да има најмалку 3 карактери{% endif %}';
+    }
+    if (!/^[a-zA-ZçÇğĞıİöÖşŞüÜëËабвгдѓежзѕијклљмнњопрстќуфхцчџшАБВГДЃЕЖЗЅИЈКЛЉМНЊОПРСТЌУФХЦЧЏШ\s]+$/.test(name.trim())) {
+        return '{% if LANGUAGE_CODE == "tr" %}Geçerli bir isim girin (sadece harfler){% elif LANGUAGE_CODE == "sq" %}Shkruani një emër të vlefshëm (vetëm shkronja){% else %}Внесете валидно име (само букви){% endif %}';
+    }
+    return '';
+}
+
+function validatePhone(phone) {
+    if (!phone || phone.trim().length < 7) {
+        return '{% if LANGUAGE_CODE == "tr" %}Geçerli bir telefon numarası girin{% elif LANGUAGE_CODE == "sq" %}Shkruani një numër telefoni të vlefshëm{% else %}Внесете валиден телефонски број{% endif %}';
+    }
+    if (!/^[0-9+\-\s()]{7,20}$/.test(phone.trim())) {
+        return '{% if LANGUAGE_CODE == "tr" %}Telefon numarası sadece rakam ve + - ( ) içerebilir{% elif LANGUAGE_CODE == "sq" %}Numri i telefonit mund të përmbajë vetëm numra dhe + - ( ){% else %}Телефонскиот број може да содржи само бројки и + - ( ){% endif %}';
+    }
+    return '';
+}
+
+function validateAddress(address) {
+    if (!address || address.trim().length < 10) {
+        return '{% if LANGUAGE_CODE == "tr" %}Adres en az 10 karakter olmalıdır{% elif LANGUAGE_CODE == "sq" %}Adresa duhet të ketë të paktën 10 karaktere{% else %}Адресата мора да има најмалку 10 карактери{% endif %}';
+    }
+    return '';
+}
+
+function submitOrderForm(event) {
+    event.preventDefault();
+    clearErrors();
+    
+    const name = document.getElementById('order_name').value;
+    const phone = document.getElementById('order_phone').value;
+    const address = document.getElementById('order_address').value;
+    
+    let hasError = false;
+    
+    const nameError = validateName(name);
+    if (nameError) {
+        document.getElementById('name_error').textContent = nameError;
+        document.getElementById('order_name').classList.add('input-error');
+        hasError = true;
+    }
+    
+    const phoneError = validatePhone(phone);
+    if (phoneError) {
+        document.getElementById('phone_error').textContent = phoneError;
+        document.getElementById('order_phone').classList.add('input-error');
+        hasError = true;
+    }
+    
+    const addressError = validateAddress(address);
+    if (addressError) {
+        document.getElementById('address_error').textContent = addressError;
+        document.getElementById('order_address').classList.add('input-error');
+        hasError = true;
+    }
+    
+    if (hasError) return false;
+    
+    // Send via WhatsApp
+    const productName = document.querySelector('input[name="product_name"]').value;
+    const notes = document.getElementById('order_notes').value;
+    
+    let message = '{% if LANGUAGE_CODE == "tr" %}*Yeni Sipariş*%0A{% elif LANGUAGE_CODE == "sq" %}*Porosi e Re*%0A{% else %}*Нова нарачка*%0A{% endif %}';
+    message += '{% if LANGUAGE_CODE == "tr" %}Ürün: {% elif LANGUAGE_CODE == "sq" %}Produkti: {% else %}Производ: {% endif %}' + productName + '%0A';
+    message += '{% if LANGUAGE_CODE == "tr" %}Ad Soyad: {% elif LANGUAGE_CODE == "sq" %}Emri: {% else %}Име: {% endif %}' + name + '%0A';
+    message += '{% if LANGUAGE_CODE == "tr" %}Telefon: {% elif LANGUAGE_CODE == "sq" %}Telefoni: {% else %}Телефон: {% endif %}' + phone + '%0A';
+    message += '{% if LANGUAGE_CODE == "tr" %}Adres: {% elif LANGUAGE_CODE == "sq" %}Adresa: {% else %}Адреса: {% endif %}' + address;
+    if (notes) {
+        message += '%0A{% if LANGUAGE_CODE == "tr" %}Notlar: {% elif LANGUAGE_CODE == "sq" %}Shënime: {% else %}Забелешки: {% endif %}' + notes;
+    }
+    
+    const whatsappNumber = '{{ site_settings.whatsapp_number|default:"38970666567" }}';
+    window.open('https://wa.me/' + whatsappNumber + '?text=' + encodeURIComponent(message.replace(/%0A/g, '\n')), '_blank');
+    
+    closeOrderModal();
+    alert('{% if LANGUAGE_CODE == "tr" %}Siparişiniz WhatsApp üzerinden iletilecek!{% elif LANGUAGE_CODE == "sq" %}Porosia juaj do të dërgohet përmes WhatsApp!{% else %}Вашата нарачка ќе биде испратена преку WhatsApp!{% endif %}');
+    
+    return false;
+}
+
+// Close modal on Escape key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeOrderModal();
+});
+</script>
 {% endblock %}

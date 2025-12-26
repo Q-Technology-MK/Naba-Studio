@@ -1,40 +1,58 @@
 {% extends "core/base.html" %}
+{% load multilang %}
 
-{% block title %}Home · Ankora Atelier{% endblock %}
+{% block title %}{% t 'nav_home' %} · Naba Studio{% endblock %}
 
 {% block content %}
 <div class="home-page">
     <section class="hero-split hero-first">
         <div class="hero-content hero-content-centered">
             <span class="hero-icon">✦</span>
-            <p class="hero-kicker">Üsküp'ün Kalbi'nde Bir Atölye</p>
+            <p class="hero-kicker">{% t 'home_hero_title' %}</p>
             <h1>Naba Studio<br>by Semma</h1>
-            <p>Kuzey Makedonya'nın en prestijli couture gelinlik tasarım atölyesi. Her gelinliğin bir hikâyesi vardır. Seninkini yazmaya hazır mısın?</p>
-            <a href="{% url 'about' %}" class="primary-btn">Hakkımızda</a>
+            <p>{% t 'home_hero_subtitle' %}</p>
+            <a href="{% url 'about' %}" class="primary-btn">{% t 'nav_about' %}</a>
         </div>
+        {% if hero_home_bg %}
+        <img src="{{ hero_home_bg.image.url }}" alt="{{ hero_home_bg.alt_text|default:'Hero image' }}" class="hero-first-image">
+        {% else %}
+        <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=1000&q=80" alt="Hero image" class="hero-first-image">
+        {% endif %}
     </section>
 
-    <section class="hero-split hero-second">
+    <section class="hero-split hero-second" {% if hero_home_2_bg %}style="background-image: url('{{ hero_home_2_bg.image.url }}'); background-size: cover; background-position: center;"{% endif %}>
         <div class="hero-gallery">
-            <div class="hero-year">Her Gelinliğin Bir Anısı Vardır</div>
+            <div class="hero-year">{% t 'home_memory' %}</div>
             <div class="hero-stack">
+                {% if hero_stack_1 %}
+                <img src="{{ hero_stack_1.image.url }}" alt="{{ hero_stack_1.alt_text|default:'couture bridal dress preview' }}">
+                {% else %}
                 <img src="https://images.unsplash.com/photo-1487180144351-b8472da7d491?auto=format&fit=crop&w=800&q=80" alt="couture bridal dress preview">
+                {% endif %}
+                {% if hero_stack_2 %}
+                <img class="overlap" src="{{ hero_stack_2.image.url }}" alt="{{ hero_stack_2.alt_text|default:'custom bridal design detail' }}">
+                {% else %}
                 <img class="overlap" src="https://images.unsplash.com/photo-1594938298603-c8148c4dae35?auto=format&fit=crop&w=800&q=80" alt="custom bridal design detail">
+                {% endif %}
             </div>
         </div>
         <div class="hero-details hero-details-centered">
-            <p class="section-kicker">özel dikim couture</p>
-            <h2>Sıfırdan Tasarlanan Gelinlikler</h2>
-            <p>Naba Studio by Semma'da her gelinlik, sizin ölçülerinize, vücut yapınıza ve ruhunuza uygun olarak sıfırdan tasarlanır. Couture terziliğin zarafeti, her dikişte hissedilir.</p>
-            <p class="schedule">PAZARTESİ-CUMA: 10:00 – 19:00<br>CUMARTESİ: 10:00 – 17:00</p>
-            <a href="{% url 'about' %}" class="primary-btn">Hakkımızda</a>
+            <p class="section-kicker">{% t 'home_couture' %}</p>
+            <h2>{% t 'home_designed' %}</h2>
+            <p>{% t 'home_hero_subtitle' %}</p>
+            <p class="schedule">{% t 'home_weekdays' %}: 10:00 – 19:00<br>{% t 'home_saturday' %}: 10:00 – 17:00</p>
+            <a href="{% url 'about' %}" class="primary-btn">{% t 'nav_about' %}</a>
         </div>
+        {% if hero_floral %}
+        <img class="hero-floral" src="{{ hero_floral.image.url }}" alt="{{ hero_floral.alt_text|default:'flower' }}">
+        {% else %}
         <img class="hero-floral" src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=800&q=80" alt="flower">
+        {% endif %}
     </section>
 
     <section class="service-meta">
-        <p class="section-kicker">what we do</p>
-        <h2>Bridal sewing services</h2>
+        <p class="section-kicker">{% t 'home_what_we_do' %}</p>
+        <h2>{% t 'home_sewing_services' %}</h2>
         <div class="service-meta-grid">
             {% for service in services %}
             <article>
@@ -45,18 +63,18 @@
             {% empty %}
             <article>
                 <span class="service-icon">✂</span>
-                <h3>Alterations</h3>
-                <p>Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p>
+                <h3>{% t 'home_alterations' %}</h3>
+                <p>{% t 'home_hero_subtitle' %}</p>
             </article>
             <article>
                 <span class="service-icon">🧵</span>
-                <h3>Dressmaking</h3>
-                <p>Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p>
+                <h3>{% t 'home_dress_sewing' %}</h3>
+                <p>{% t 'home_hero_subtitle' %}</p>
             </article>
             <article>
                 <span class="service-icon">🪡</span>
-                <h3>Tailoring</h3>
-                <p>Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p>
+                <h3>{% t 'home_tailoring' %}</h3>
+                <p>{% t 'home_hero_subtitle' %}</p>
             </article>
             {% endfor %}
         </div>
@@ -64,14 +82,14 @@
 
     <section class="dress-shop">
         <div class="dress-header">
-            <p class="section-kicker">dress shop</p>
-            <h2>Ready to wear</h2>
+            <p class="section-kicker">{% t 'home_dress_shop' %}</p>
+            <h2>{% t 'home_ready_to_wear' %}</h2>
         </div>
         <div class="dress-grid">
             {% for product in featured_products %}
             <article class="dress-item">
                 <a href="{% url 'product_detail' product.slug %}" style="text-decoration: none; color: inherit;">
-                    <img src="{{ product.image_url }}" alt="{{ product.name }}">
+                    <img src="{{ product.get_primary_image }}" alt="{{ product.name }}">
                     <div class="dress-meta">
                         <h4>{{ product.name }}</h4>
                         <p class="price">{{ product.price }}</p>
@@ -83,11 +101,16 @@
     </section>
 
     <section class="video-section">
-        <div class="video-wrapper">
+        <div class="video-wrapper" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%;">
             <iframe
-                src="{% if video_embed %}{{ video_embed.get_embed_url }}{% else %}https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0&autoplay=0&modestbranding=1{% endif %}"
+                src="{% if video_embed %}{{ video_embed.get_embed_url }}{% else %}https://www.youtube.com/embed/dQw4w9WgXcQ{% endif %}"
                 title="Atelier cinematic demo"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                frameborder="0"
+                width="560"
+                height="315"
+                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin"
                 allowfullscreen
                 loading="lazy"
             ></iframe>
@@ -96,27 +119,60 @@
 
     <section class="bride-gallery">
         <div class="bride-text">
-            <p class="section-kicker">our brides</p>
-            <h2>Dress gallery</h2>
-            <p>Naba Studio by Semma'da tasarlanan her gelinlik, gelinin hayalini gerçeğe dönüştüren bir couture sanat eseridir. Kuzey Makedonya'dan dünyanın dört bir yanına kadar uzanan gelinlerimiz, özel dikim tasarımlarımızla en özel günlerini başında güzel, rahat ve özgüvenli hissettiler.</p>
-            <p>Koleksiyonumuz, prenses kesimlerinden etkileyici balık gelinliklere, minimal sadeliklere ya da lüks detaylarla kaplı couture tasarımlara kadar geniş bir yelpazede yer alıyor. Her tasarım, gelinin vücut yapısına, stiline ve düğün konseptine özel olarak uyarlanır. İhtişamlı dantel detayları, el işçiliği taş nakışları ve kusursuz kalıplarımız, her gelinliğin zamansız güzelliğini ve zarafetini ortaya çıkarır.</p>
-            <p>Atölyemizde yaratılan bu gelinlikleri, kendini saran kumaş, titiz dikişler ve sofistike silüetlerle görebilirsiniz. Siz de kendi couture hikâyenizi yazıp bu özel galeriyi tamamlamak istiyor musunuz?</p>
-            <p>Randevu almak, konsultasyon yapmak ve gelinliğinizi tasarlamaya başlamak için bizimle iletişime geçebilirsiniz. Naba Studio by Semma'nın kapıları, sizi bekliyoruz.</p>
-            <p>Düğün gününüze dair her detay önemli. Gelinlik de tıpkı öyle. Hadi, birlikte sizin için mükemmel olan gelinliği tasarlayalım.</p>
-            <a href="{% url 'portfolio' %}" class="primary-btn">Tüm Koleksiyonu Gör</a>
+            <p class="section-kicker">{% t 'home_our_brides' %}</p>
+            <h2>{% t 'home_dress_gallery' %}</h2>
+            <p><strong>{{ bride_gallery_text.title }}</strong></p>
+            <p>{{ bride_gallery_text.paragraph_1 }}</p>
+            <p><strong>{{ bride_gallery_text.title_2 }}</strong></p>
+            <p>{{ bride_gallery_text.paragraph_2 }}</p>
+            <p><strong>{{ bride_gallery_text.title_3 }}</strong></p>
+            <p>{{ bride_gallery_text.paragraph_3 }}</p>
+            <a href="{% url 'portfolio' %}" class="primary-btn">{% t 'home_view_collection' %}</a>
             <div class="mini-gallery">
+                {% if dress_mini_1 %}
+                <img src="{{ dress_mini_1.image.url }}" alt="{{ dress_mini_1.alt_text|default:'mini bride 1' }}">
+                {% else %}
                 <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=400&q=80" alt="mini bride 1">
+                {% endif %}
+                {% if dress_mini_2 %}
+                <img src="{{ dress_mini_2.image.url }}" alt="{{ dress_mini_2.alt_text|default:'mini bride 2' }}">
+                {% else %}
                 <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=420&q=80" alt="mini bride 2">
+                {% endif %}
+                {% if dress_mini_3 %}
+                <img src="{{ dress_mini_3.image.url }}" alt="{{ dress_mini_3.alt_text|default:'mini bride 3' }}">
+                {% else %}
                 <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=380&q=80" alt="mini bride 3">
+                {% endif %}
             </div>
             <div class="flower-demo" role="presentation"></div>
         </div>
         <div class="bride-grid">
+            {% if bride_img_1 %}
+            <img style="grid-area: 1 / 1 / 2 / 2;" src="{{ bride_img_1.image.url }}" alt="{{ bride_img_1.alt_text|default:'bride 1' }}">
+            {% else %}
             <img style="grid-area: 1 / 1 / 2 / 2;" src="https://images.unsplash.com/photo-1504593811423-6dd665756598?auto=format&fit=crop&w=400&q=80" alt="bride 1">
+            {% endif %}
+            {% if bride_img_2 %}
+            <img style="grid-area: 1 / 2 / 2 / 3;" src="{{ bride_img_2.image.url }}" alt="{{ bride_img_2.alt_text|default:'bride 2' }}">
+            {% else %}
             <img style="grid-area: 1 / 2 / 2 / 3;" src="https://images.unsplash.com/photo-1475180098004-ca77a66827be?auto=format&fit=crop&w=600&q=80" alt="bride 2">
+            {% endif %}
+            {% if bride_img_3 %}
+            <img style="grid-area: 1 / 3 / 2 / 4;" src="{{ bride_img_3.image.url }}" alt="{{ bride_img_3.alt_text|default:'bride 3' }}">
+            {% else %}
             <img style="grid-area: 1 / 3 / 2 / 4;" src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=400&q=80" alt="bride 3">
+            {% endif %}
+            {% if bride_img_4 %}
+            <img style="grid-area: 2 / 1 / 3 / 2;" src="{{ bride_img_4.image.url }}" alt="{{ bride_img_4.alt_text|default:'bride 4' }}">
+            {% else %}
             <img style="grid-area: 2 / 1 / 3 / 2;" src="https://images.unsplash.com/photo-1507120410856-1f35574c3b45?auto=format&fit=crop&w=400&q=80" alt="bride 4">
+            {% endif %}
+            {% if bride_img_5 %}
+            <img style="grid-area: 2 / 2 / 3 / 4;" src="{{ bride_img_5.image.url }}" alt="{{ bride_img_5.alt_text|default:'bride 5' }}">
+            {% else %}
             <img style="grid-area: 2 / 2 / 3 / 4;" src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=600&q=80" alt="bride 5">
+            {% endif %}
         </div>
     </section>
 
@@ -135,30 +191,30 @@
             {% endif %}
         </div>
         <div class="contact-card">
-            <p class="section-kicker">Contact Us</p>
-            <h3>Have questions?<br>Get in touch!</h3>
+            <p class="section-kicker">{% t 'footer_contact_us' %}</p>
+            <h3>{% t 'home_questions' %}</h3>
             <form>
-                <input placeholder="Adınız" required>
-                <input placeholder="E-posta" type="email" required>
-                <textarea rows="4" placeholder="Mesajınız"></textarea>
-                <button type="submit">Gönder</button>
+                <input placeholder="{% t 'home_your_name' %}" required>
+                <input placeholder="{% t 'home_email' %}" type="email" required>
+                <textarea rows="4" placeholder="{% t 'home_your_message' %}"></textarea>
+                <button type="submit">{% t 'home_send' %}</button>
             </form>
         </div>
     </section>
 
     <section class="articles">
         <div class="articles-head">
-            <p class="section-kicker">Wedding articles</p>
-            <h2>Latest from the atelier journal</h2>
+            <p class="section-kicker">{% t 'home_wedding_articles' %}</p>
+            <h2>{% t 'home_latest_from_diary' %}</h2>
         </div>
         <div class="articles-grid">
             {% for post in latest_blog %}
             <article class="article-card">
                 <a href="{% url 'blog_detail' post.slug %}" style="text-decoration: none; color: inherit;">
-                    <img src="{{ post.hero_image }}" alt="{{ post.title }}">
+                    <img src="{{ post.hero_image }}" alt="{{ post.translated_title }}">
                     <div class="article-meta">
-                        <p class="article-tag">Story</p>
-                        <h3>{{ post.title }}</h3>
+                        <p class="article-tag">{% t 'home_story' %}</p>
+                        <h3>{{ post.translated_title }}</h3>
                         <p>{{ post.published_at }}</p>
                     </div>
                 </a>

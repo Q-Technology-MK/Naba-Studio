@@ -2,10 +2,46 @@ from django.db import models
 from django.urls import reverse
 
 
+class BlogTag(models.Model):
+    """Çok dilli blog etiketleri - Admin'den yönetilebilir"""
+    name = models.CharField(max_length=50, verbose_name="Етикета (Македонски)")
+    name_tr = models.CharField(max_length=50, blank=True, verbose_name="Etiket (Türkçe)")
+    name_sq = models.CharField(max_length=50, blank=True, verbose_name="Etiketa (Shqip)")
+    slug = models.SlugField(unique=True, help_text="URL için benzersiz tanımlayıcı")
+    
+    class Meta:
+        ordering = ['name']
+        verbose_name = "Blog Etiketi"
+        verbose_name_plural = "Blog Etiketleri"
+    
+    def __str__(self):
+        return self.name
+    
+    def get_name(self, lang='mk'):
+        """Get tag name in specified language"""
+        if lang == 'tr' and self.name_tr:
+            return self.name_tr
+        elif lang == 'sq' and self.name_sq:
+            return self.name_sq
+        return self.name
+
+
 class Service(models.Model):
-    title = models.CharField(max_length=100)
-    subtitle = models.CharField(max_length=150, blank=True)
-    description = models.TextField()
+    # Macedonian (default)
+    title = models.CharField(max_length=100, verbose_name="Наслов (Македонски)")
+    subtitle = models.CharField(max_length=150, blank=True, verbose_name="Поднаслов (Македонски)")
+    description = models.TextField(verbose_name="Опис (Македонски)")
+    
+    # Turkish
+    title_tr = models.CharField(max_length=100, blank=True, verbose_name="Başlık (Türkçe)")
+    subtitle_tr = models.CharField(max_length=150, blank=True, verbose_name="Alt Başlık (Türkçe)")
+    description_tr = models.TextField(blank=True, verbose_name="Açıklama (Türkçe)")
+    
+    # Albanian
+    title_sq = models.CharField(max_length=100, blank=True, verbose_name="Titulli (Shqip)")
+    subtitle_sq = models.CharField(max_length=150, blank=True, verbose_name="Nëntitulli (Shqip)")
+    description_sq = models.TextField(blank=True, verbose_name="Përshkrimi (Shqip)")
+    
     icon = models.CharField(max_length=50, default="✶")
     order = models.PositiveIntegerField(default=0)
 
@@ -14,13 +50,46 @@ class Service(models.Model):
 
     def __str__(self):
         return self.title
+    
+    def get_title(self, lang='mk'):
+        if lang == 'tr' and self.title_tr:
+            return self.title_tr
+        elif lang == 'sq' and self.title_sq:
+            return self.title_sq
+        return self.title
+    
+    def get_subtitle(self, lang='mk'):
+        if lang == 'tr' and self.subtitle_tr:
+            return self.subtitle_tr
+        elif lang == 'sq' and self.subtitle_sq:
+            return self.subtitle_sq
+        return self.subtitle
+    
+    def get_description(self, lang='mk'):
+        if lang == 'tr' and self.description_tr:
+            return self.description_tr
+        elif lang == 'sq' and self.description_sq:
+            return self.description_sq
+        return self.description
 
 
 class PortfolioItem(models.Model):
-    title = models.CharField(max_length=120)
+    # Macedonian (default)
+    title = models.CharField(max_length=120, verbose_name="Наслов (Македонски)")
     slug = models.SlugField(unique=True)
-    summary = models.CharField(max_length=200)
-    description = models.TextField()
+    summary = models.CharField(max_length=200, verbose_name="Резиме (Македонски)")
+    description = models.TextField(verbose_name="Опис (Македонски)")
+    
+    # Turkish
+    title_tr = models.CharField(max_length=120, blank=True, verbose_name="Başlık (Türkçe)")
+    summary_tr = models.CharField(max_length=200, blank=True, verbose_name="Özet (Türkçe)")
+    description_tr = models.TextField(blank=True, verbose_name="Açıklama (Türkçe)")
+    
+    # Albanian
+    title_sq = models.CharField(max_length=120, blank=True, verbose_name="Titulli (Shqip)")
+    summary_sq = models.CharField(max_length=200, blank=True, verbose_name="Përmbledhja (Shqip)")
+    description_sq = models.TextField(blank=True, verbose_name="Përshkrimi (Shqip)")
+    
     image_url = models.URLField(
         blank=True,
         default="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1200&q=80",
@@ -28,12 +97,18 @@ class PortfolioItem(models.Model):
     )
     created_at = models.DateField(auto_now_add=True)
     featured = models.BooleanField(default=False)
-    year = models.CharField(max_length=10, blank=True, default="2024", verbose_name="Yıl")
-    designer = models.CharField(max_length=100, blank=True, verbose_name="Tasarımcı")
-    features = models.TextField(blank=True, help_text="Her satıra bir özellik yazın", verbose_name="Özellikler")
-    # SEO
-    meta_title = models.CharField(max_length=70, blank=True, help_text="SEO başlığı (max 70 karakter, boş bırakılırsa title kullanılır)")
-    meta_description = models.CharField(max_length=160, blank=True, help_text="SEO açıklaması (max 160 karakter)")
+    year = models.CharField(max_length=10, blank=True, default="2024", verbose_name="Година")
+    designer = models.CharField(max_length=100, blank=True, verbose_name="Дизајнер")
+    features = models.TextField(blank=True, help_text="Her satıra bir özellik yazın", verbose_name="Карактеристики")
+    # SEO - Macedonian
+    meta_title = models.CharField(max_length=70, blank=True, verbose_name="SEO Наслов (Македонски)", help_text="Max 70 карактери")
+    meta_description = models.CharField(max_length=160, blank=True, verbose_name="SEO Опис (Македонски)", help_text="Max 160 карактери")
+    # SEO - Turkish
+    meta_title_tr = models.CharField(max_length=70, blank=True, verbose_name="SEO Başlık (Türkçe)", help_text="Max 70 karakter")
+    meta_description_tr = models.CharField(max_length=160, blank=True, verbose_name="SEO Açıklama (Türkçe)", help_text="Max 160 karakter")
+    # SEO - Albanian
+    meta_title_sq = models.CharField(max_length=70, blank=True, verbose_name="SEO Titulli (Shqip)", help_text="Max 70 karaktere")
+    meta_description_sq = models.CharField(max_length=160, blank=True, verbose_name="SEO Përshkrimi (Shqip)", help_text="Max 160 karaktere")
 
     class Meta:
         ordering = ["-featured", "-created_at", "title"]
@@ -46,28 +121,90 @@ class PortfolioItem(models.Model):
 
     def get_features_list(self):
         return [f.strip() for f in self.features.split("\n") if f.strip()]
+    
+    def get_title(self, lang='mk'):
+        if lang == 'tr' and self.title_tr:
+            return self.title_tr
+        elif lang == 'sq' and self.title_sq:
+            return self.title_sq
+        return self.title
+    
+    def get_summary(self, lang='mk'):
+        if lang == 'tr' and self.summary_tr:
+            return self.summary_tr
+        elif lang == 'sq' and self.summary_sq:
+            return self.summary_sq
+        return self.summary
+    
+    def get_description(self, lang='mk'):
+        if lang == 'tr' and self.description_tr:
+            return self.description_tr
+        elif lang == 'sq' and self.description_sq:
+            return self.description_sq
+        return self.description
+    
+    def get_meta_title(self, lang='mk'):
+        if lang == 'tr' and self.meta_title_tr:
+            return self.meta_title_tr
+        elif lang == 'sq' and self.meta_title_sq:
+            return self.meta_title_sq
+        return self.meta_title or self.title
+    
+    def get_meta_description(self, lang='mk'):
+        if lang == 'tr' and self.meta_description_tr:
+            return self.meta_description_tr
+        elif lang == 'sq' and self.meta_description_sq:
+            return self.meta_description_sq
+        return self.meta_description or self.summary
 
 
 class Product(models.Model):
     CATEGORY_CHOICES = (
-        ('A Kesim', 'A Kesim'),
-        ('Prenses', 'Prenses'),
-        ('Balık', 'Balık'),
-        ('Minimal', 'Minimal'),
-        ('Klasik', 'Klasik'),
+        ('a_line', 'А-линија'),
+        ('princess', 'Принцеза'),
+        ('mermaid', 'Русалка'),
+        ('minimal', 'Минимал'),
+        ('classic', 'Класик'),
     )
     
-    name = models.CharField(max_length=120)
+    CATEGORY_TRANSLATIONS = {
+        'a_line': {'mk': 'А-линија', 'tr': 'A Kesim', 'sq': 'A-linjë'},
+        'princess': {'mk': 'Принцеза', 'tr': 'Prenses', 'sq': 'Princeshë'},
+        'mermaid': {'mk': 'Русалка', 'tr': 'Balık', 'sq': 'Sirenë'},
+        'minimal': {'mk': 'Минимал', 'tr': 'Minimal', 'sq': 'Minimale'},
+        'classic': {'mk': 'Класик', 'tr': 'Klasik', 'sq': 'Klasike'},
+    }
+    
+    @classmethod
+    def get_category_name(cls, category_key, lang='mk'):
+        """Get translated category name"""
+        if category_key in cls.CATEGORY_TRANSLATIONS:
+            return cls.CATEGORY_TRANSLATIONS[category_key].get(lang, cls.CATEGORY_TRANSLATIONS[category_key]['mk'])
+        return category_key
+    
+    # Macedonian (default)
+    name = models.CharField(max_length=120, verbose_name="Име (Македонски)")
     slug = models.SlugField(unique=True)
+    summary = models.CharField(max_length=200, verbose_name="Резиме (Македонски)")
+    description = models.TextField(verbose_name="Опис (Македонски)")
+    
+    # Turkish
+    name_tr = models.CharField(max_length=120, blank=True, verbose_name="Ad (Türkçe)")
+    summary_tr = models.CharField(max_length=200, blank=True, verbose_name="Özet (Türkçe)")
+    description_tr = models.TextField(blank=True, verbose_name="Açıklama (Türkçe)")
+    
+    # Albanian
+    name_sq = models.CharField(max_length=120, blank=True, verbose_name="Emri (Shqip)")
+    summary_sq = models.CharField(max_length=200, blank=True, verbose_name="Përmbledhja (Shqip)")
+    description_sq = models.TextField(blank=True, verbose_name="Përshkrimi (Shqip)")
+    
     category = models.CharField(
         max_length=50,
         choices=CATEGORY_CHOICES,
-        default='A Kesim',
-        verbose_name="Kategori"
+        default='a_line',
+        verbose_name="Категорија"
     )
-    summary = models.CharField(max_length=200)
-    description = models.TextField()
-    price = models.CharField(max_length=60, blank=True, default="Özel teklif")
+    price = models.CharField(max_length=60, blank=True, default="По договор")
     image_url = models.URLField(
         blank=True,
         default="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=900&q=80",
@@ -75,42 +212,187 @@ class Product(models.Model):
     )
     created_at = models.DateField(auto_now_add=True)
     in_stock = models.BooleanField(default=True)
+    is_featured = models.BooleanField(default=False, verbose_name="Истакнат на почетна", help_text="Означете за да се прикаже на почетната страница (максимум 3)")
 
     class Meta:
-        ordering = ["-created_at", "name"]
+        ordering = ["-is_featured", "-created_at", "name"]
 
     def __str__(self):
         return self.name
 
     def get_absolute_url(self):
         return reverse("product_detail", kwargs={"slug": self.slug})
+    
+    def get_name(self, lang='mk'):
+        if lang == 'tr' and self.name_tr:
+            return self.name_tr
+        elif lang == 'sq' and self.name_sq:
+            return self.name_sq
+        return self.name
+    
+    def get_summary(self, lang='mk'):
+        if lang == 'tr' and self.summary_tr:
+            return self.summary_tr
+        elif lang == 'sq' and self.summary_sq:
+            return self.summary_sq
+        return self.summary
+    
+    def get_description(self, lang='mk'):
+        if lang == 'tr' and self.description_tr:
+            return self.description_tr
+        elif lang == 'sq' and self.description_sq:
+            return self.description_sq
+        return self.description
+    
+    def get_primary_image(self):
+        """Get the primary image for this product"""
+        primary = self.images.filter(is_primary=True).first()
+        if primary:
+            return primary.image.url
+        first_image = self.images.first()
+        if first_image:
+            return first_image.image.url
+        return self.image_url or "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=900&q=80"
+    
+    def get_all_images(self):
+        """Get all images for this product"""
+        return self.images.all().order_by('-is_primary', 'order')
+    
+    def get_average_rating(self):
+        """Get average rating from approved reviews"""
+        from django.db.models import Avg
+        result = self.reviews.filter(is_approved=True).aggregate(avg=Avg('rating'))
+        return result['avg'] or 0
+    
+    def get_review_count(self):
+        """Get count of approved reviews"""
+        return self.reviews.filter(is_approved=True).count()
+
+
+class ProductImage(models.Model):
+    """Multiple images for a product (up to 3)"""
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images')
+    image = models.ImageField(
+        upload_to='products/',
+        help_text="Препорачана големина: 600x800 пиксели (вертикален правоаголник)"
+    )
+    is_primary = models.BooleanField(default=False, verbose_name="Примарна слика", help_text="Оваа слика ќе се прикаже како главна")
+    order = models.PositiveIntegerField(default=0, verbose_name="Редослед")
+    alt_text = models.CharField(max_length=200, blank=True, verbose_name="Alt текст")
+    
+    class Meta:
+        ordering = ['-is_primary', 'order']
+        verbose_name = "Слика на производ"
+        verbose_name_plural = "Слики на производи"
+    
+    def __str__(self):
+        return f"{self.product.name} - Слика {self.order + 1}"
+    
+    def save(self, *args, **kwargs):
+        # If this is set as primary, unset other primaries for this product
+        if self.is_primary:
+            ProductImage.objects.filter(product=self.product, is_primary=True).exclude(pk=self.pk).update(is_primary=False)
+        super().save(*args, **kwargs)
 
 
 class BlogPost(models.Model):
     CATEGORY_CHOICES = (
-        ('Gelinlik Tasarımları', 'Gelinlik Tasarımları'),
-        ('Kişisel Hikayeler', 'Kişisel Hikayeler'),
-        ('Moda Trendleri', 'Moda Trendleri'),
-        ('Bakım & Tavsiyeleri', 'Bakım & Tavsiyeleri'),
-        ('Atelier Haberleri', 'Atelier Haberleri'),
+        ('bridal_designs', 'Дизајни за невести'),
+        ('personal_stories', 'Лични приказни'),
+        ('fashion_trends', 'Модни трендови'),
+        ('care_tips', 'Совети за нега'),
+        ('atelier_news', 'Вести од атељето'),
     )
     
-    title = models.CharField(max_length=160)
+    CATEGORY_TRANSLATIONS = {
+        'bridal_designs': {'mk': 'Дизајни за невести', 'tr': 'Gelinlik Tasarımları', 'sq': 'Dizajne për nuse'},
+        'personal_stories': {'mk': 'Лични приказни', 'tr': 'Kişisel Hikayeler', 'sq': 'Histori personale'},
+        'fashion_trends': {'mk': 'Модни трендови', 'tr': 'Moda Trendleri', 'sq': 'Trendet e modës'},
+        'care_tips': {'mk': 'Совети за нега', 'tr': 'Bakım Tavsiyeleri', 'sq': 'Këshilla për kujdes'},
+        'atelier_news': {'mk': 'Вести од атељето', 'tr': 'Atelier Haberleri', 'sq': 'Lajme nga atelieja'},
+    }
+    
+    @classmethod
+    def get_category_name(cls, category_key, lang='mk'):
+        """Get translated category name"""
+        if category_key in cls.CATEGORY_TRANSLATIONS:
+            return cls.CATEGORY_TRANSLATIONS[category_key].get(lang, cls.CATEGORY_TRANSLATIONS[category_key]['mk'])
+        return category_key
+    
+    # Macedonian (default)
+    title = models.CharField(max_length=160, verbose_name="Наслов (Македонски)")
     slug = models.SlugField(unique=True)
-    excerpt = models.TextField()
-    body = models.TextField()
+    excerpt = models.TextField(verbose_name="Извадок (Македонски)")
+    body = models.TextField(verbose_name="Содржина (Македонски)")
+    
+    # Turkish
+    title_tr = models.CharField(max_length=160, blank=True, verbose_name="Başlık (Türkçe)")
+    excerpt_tr = models.TextField(blank=True, verbose_name="Özet (Türkçe)")
+    body_tr = models.TextField(blank=True, verbose_name="İçerik (Türkçe)")
+    
+    # Albanian
+    title_sq = models.CharField(max_length=160, blank=True, verbose_name="Titulli (Shqip)")
+    excerpt_sq = models.TextField(blank=True, verbose_name="Përmbledhja (Shqip)")
+    body_sq = models.TextField(blank=True, verbose_name="Përmbajtja (Shqip)")
+    
     published_at = models.DateField()
-    category = models.CharField(max_length=100, choices=CATEGORY_CHOICES, default='Atelier Haberleri', help_text="Blog yazısının kategorisini seçin")
+    category = models.CharField(max_length=100, choices=CATEGORY_CHOICES, default='atelier_news', help_text="Blog yazısının kategorisini seçin")
     hero_image = models.URLField(
         blank=True,
         default="https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?auto=format&fit=crop&w=1200&q=80",
         help_text="Önerilen boyut: 1200x675 piksel (16:9 yatay dikdörtgen)"
     )
-    tags = models.CharField(max_length=200, blank=True, help_text="Virgülle ayırarak etiketler girin")
+    # Old text-based tags (deprecated, kept for migration)
+    tags = models.CharField(max_length=200, blank=True, verbose_name="Етикети (Македонски)", help_text="Eski alan - artık kullanılmıyor")
+    tags_tr = models.CharField(max_length=200, blank=True, verbose_name="Etiketler (Türkçe)", help_text="Eski alan - artık kullanılmıyor")
+    tags_sq = models.CharField(max_length=200, blank=True, verbose_name="Etiketat (Shqip)", help_text="Eski alan - artık kullanılmıyor")
+    # New ManyToMany tags
+    blog_tags = models.ManyToManyField(BlogTag, blank=True, related_name='blog_posts', verbose_name="Etiketler")
     likes = models.PositiveIntegerField(default=0)
-    # SEO
-    meta_title = models.CharField(max_length=70, blank=True, help_text="SEO başlığı (max 70 karakter, boş bırakılırsa title kullanılır)")
-    meta_description = models.CharField(max_length=160, blank=True, help_text="SEO açıklaması (max 160 karakter)")
+    # SEO - Macedonian
+    meta_title = models.CharField(max_length=70, blank=True, verbose_name="SEO Наслов (Македонски)", help_text="Max 70 карактери")
+    meta_description = models.CharField(max_length=160, blank=True, verbose_name="SEO Опис (Македонски)", help_text="Max 160 карактери")
+    # SEO - Turkish
+    meta_title_tr = models.CharField(max_length=70, blank=True, verbose_name="SEO Başlık (Türkçe)", help_text="Max 70 karakter")
+    meta_description_tr = models.CharField(max_length=160, blank=True, verbose_name="SEO Açıklama (Türkçe)", help_text="Max 160 karakter")
+    # SEO - Albanian
+    meta_title_sq = models.CharField(max_length=70, blank=True, verbose_name="SEO Titulli (Shqip)", help_text="Max 70 karaktere")
+    meta_description_sq = models.CharField(max_length=160, blank=True, verbose_name="SEO Përshkrimi (Shqip)", help_text="Max 160 karaktere")
+    
+    def get_title(self, lang='mk'):
+        if lang == 'tr' and self.title_tr:
+            return self.title_tr
+        elif lang == 'sq' and self.title_sq:
+            return self.title_sq
+        return self.title
+    
+    def get_excerpt(self, lang='mk'):
+        if lang == 'tr' and self.excerpt_tr:
+            return self.excerpt_tr
+        elif lang == 'sq' and self.excerpt_sq:
+            return self.excerpt_sq
+        return self.excerpt
+    
+    def get_body(self, lang='mk'):
+        if lang == 'tr' and self.body_tr:
+            return self.body_tr
+        elif lang == 'sq' and self.body_sq:
+            return self.body_sq
+        return self.body
+    
+    def get_meta_title(self, lang='mk'):
+        if lang == 'tr' and self.meta_title_tr:
+            return self.meta_title_tr
+        elif lang == 'sq' and self.meta_title_sq:
+            return self.meta_title_sq
+        return self.meta_title or self.title
+    
+    def get_meta_description(self, lang='mk'):
+        if lang == 'tr' and self.meta_description_tr:
+            return self.meta_description_tr
+        elif lang == 'sq' and self.meta_description_sq:
+            return self.meta_description_sq
+        return self.meta_description or self.excerpt[:160]
 
     class Meta:
         ordering = ["-published_at", "title"]
@@ -121,23 +403,40 @@ class BlogPost(models.Model):
     def get_absolute_url(self):
         return reverse("blog_detail", kwargs={"slug": self.slug})
 
-    def get_tags_list(self):
-        return [t.strip() for t in self.tags.split(",") if t.strip()]
+    def get_tags_list(self, lang='mk'):
+        """Get tags list in the specified language from ManyToMany relationship"""
+        return [tag.get_name(lang) for tag in self.blog_tags.all()]
 
 
 class FAQItem(models.Model):
     CATEGORY_CHOICES = (
-        ('Booking & Trials', 'Booking & Trials'),
-        ('Design & Customization', 'Design & Customization'),
-        ('Timeline & Pricing', 'Timeline & Pricing'),
-        ('Delivery & Care', 'Delivery & Care'),
-        ('Products & Materials', 'Products & Materials'),
-        ('Contact & Information', 'Contact & Information'),
+        ('booking_trials', 'Резервации и проби'),
+        ('design_customization', 'Дизајн и прилагодување'),
+        ('timeline_pricing', 'Рокови и цени'),
+        ('delivery_care', 'Достава и нега'),
+        ('products_materials', 'Производи и материјали'),
+        ('contact_info', 'Контакт и информации'),
     )
     
+    CATEGORY_TRANSLATIONS = {
+        'booking_trials': {'mk': 'Резервации и проби', 'tr': 'Rezervasyon ve Deneme', 'sq': 'Rezervime dhe prova'},
+        'design_customization': {'mk': 'Дизајн и прилагодување', 'tr': 'Tasarım ve Özelleştirme', 'sq': 'Dizajn dhe personalizim'},
+        'timeline_pricing': {'mk': 'Рокови и цени', 'tr': 'Süre ve Fiyatlandırma', 'sq': 'Afatet dhe çmimet'},
+        'delivery_care': {'mk': 'Достава и нега', 'tr': 'Teslimat ve Bakım', 'sq': 'Dorëzimi dhe kujdesi'},
+        'products_materials': {'mk': 'Производи и материјали', 'tr': 'Ürünler ve Malzemeler', 'sq': 'Produkte dhe materiale'},
+        'contact_info': {'mk': 'Контакт и информации', 'tr': 'İletişim ve Bilgi', 'sq': 'Kontakt dhe informacion'},
+    }
+    
+    @classmethod
+    def get_category_name(cls, category_key, lang='mk'):
+        """Get translated category name"""
+        if category_key in cls.CATEGORY_TRANSLATIONS:
+            return cls.CATEGORY_TRANSLATIONS[category_key].get(lang, cls.CATEGORY_TRANSLATIONS[category_key]['mk'])
+        return category_key
+    
     # Macedonian (default language)
-    question_mk = models.CharField(max_length=200)
-    answer_mk = models.TextField()
+    question_mk = models.CharField(max_length=200, verbose_name="Прашање (Македонски)")
+    answer_mk = models.TextField(verbose_name="Одговор (Македонски)")
     
     # Turkish
     question_tr = models.CharField(max_length=200, blank=True, verbose_name="Soru (Türkçe)")
@@ -147,7 +446,7 @@ class FAQItem(models.Model):
     question_sq = models.CharField(max_length=200, blank=True, verbose_name="Pyetja (Shqip)")
     answer_sq = models.TextField(blank=True, verbose_name="Përgjigja (Shqip)")
     
-    category = models.CharField(max_length=100, choices=CATEGORY_CHOICES, default='Booking & Trials', help_text="Kategorija / Category / Kategori")
+    category = models.CharField(max_length=100, choices=CATEGORY_CHOICES, default='booking_trials', help_text="Категорија / Kategori / Kategoria")
     order = models.PositiveIntegerField(default=0)
 
     class Meta:
@@ -159,12 +458,12 @@ class FAQItem(models.Model):
     def get_question(self, lang='mk'):
         """Get question in specified language"""
         field = f'question_{lang}'
-        return getattr(self, field, self.question_mk)
+        return getattr(self, field, self.question_mk) or self.question_mk
     
     def get_answer(self, lang='mk'):
         """Get answer in specified language"""
         field = f'answer_{lang}'
-        return getattr(self, field, self.answer_mk)
+        return getattr(self, field, self.answer_mk) or self.answer_mk
 
 
 class PricingPackage(models.Model):
@@ -189,17 +488,43 @@ class PricingPackage(models.Model):
 
     def get_features_list(self):
         return [f.strip() for f in self.features.split("\n") if f.strip()]
+    
+    def get_name(self, lang='mk'):
+        if lang == 'tr' and self.name_tr:
+            return self.name_tr
+        elif lang == 'sq' and self.name_sq:
+            return self.name_sq
+        return self.name
+    
+    def get_price(self, lang='mk'):
+        return self.price
+    
+    def get_period(self, lang='mk'):
+        if lang == 'tr' and self.period_tr:
+            return self.period_tr
+        elif lang == 'sq' and self.period_sq:
+            return self.period_sq
+        return self.period
+    
+    def get_features(self, lang='mk'):
+        if lang == 'tr' and self.features_tr:
+            return [f.strip() for f in self.features_tr.split("\n") if f.strip()]
+        elif lang == 'sq' and self.features_sq:
+            return [f.strip() for f in self.features_sq.split("\n") if f.strip()]
+        return [f.strip() for f in self.features.split("\n") if f.strip()]
 
 
 class AddOnService(models.Model):
     """Add-on hizmetler ve opsiyonel paketler"""
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, verbose_name="Име (Македонски)")
     name_tr = models.CharField(max_length=100, blank=True, verbose_name="Ad (Türkçe)")
     name_sq = models.CharField(max_length=100, blank=True, verbose_name="Emri (Shqip)")
-    description = models.TextField(blank=True, verbose_name="Açıklama")
+    description = models.TextField(blank=True, verbose_name="Опис (Македонски)")
     description_tr = models.TextField(blank=True, verbose_name="Açıklama (Türkçe)")
     description_sq = models.TextField(blank=True, verbose_name="Përshkrimi (Shqip)")
-    price = models.CharField(max_length=50, blank=True, verbose_name="Fiyat (Opsiyonel)")
+    price = models.CharField(max_length=50, blank=True, verbose_name="Цена (Македонски)", help_text="Пр: БЕСПЛАТНО, 500 ден, По договор")
+    price_tr = models.CharField(max_length=50, blank=True, verbose_name="Fiyat (Türkçe)", help_text="Ör: ÜCRETSİZ, 500 TL, Fiyat sorunuz")
+    price_sq = models.CharField(max_length=50, blank=True, verbose_name="Çmimi (Shqip)", help_text="P.sh: FALAS, 500 den, Me marrëveshje")
     icon = models.CharField(max_length=10, default="✨", help_text="Emoji ikon (ör: ✨, 🎨, 📏, 👗, ⚡, 🎁, ✂️, 🧵, ♨️, 📦, 💻)")
     order = models.PositiveIntegerField(default=0)
     
@@ -208,6 +533,27 @@ class AddOnService(models.Model):
 
     def __str__(self):
         return f"{self.icon} {self.name}"
+    
+    def get_name(self, lang='mk'):
+        if lang == 'tr' and self.name_tr:
+            return self.name_tr
+        elif lang == 'sq' and self.name_sq:
+            return self.name_sq
+        return self.name
+    
+    def get_description(self, lang='mk'):
+        if lang == 'tr' and self.description_tr:
+            return self.description_tr
+        elif lang == 'sq' and self.description_sq:
+            return self.description_sq
+        return self.description
+    
+    def get_price(self, lang='mk'):
+        if lang == 'tr' and self.price_tr:
+            return self.price_tr
+        elif lang == 'sq' and self.price_sq:
+            return self.price_sq
+        return self.price
 
 
 class SiteContent(models.Model):
@@ -256,6 +602,7 @@ class SiteSettings(models.Model):
     address = models.TextField(blank=True, default="Samoilova 90, Skopje Kale")
     email = models.EmailField(blank=True, default="nabastudio25@gmail.com")
     phone = models.CharField(max_length=30, blank=True, default="070 666 567")
+    whatsapp_number = models.CharField(max_length=20, blank=True, default="38970666567", help_text="WhatsApp numarası (ülke kodu ile, boşluksuz: örn. 38970666567)")
     
     # Social Links
     facebook_url = models.URLField(blank=True)
@@ -264,6 +611,7 @@ class SiteSettings(models.Model):
     pinterest_url = models.URLField(blank=True)
     youtube_url = models.URLField(blank=True)
     tiktok_url = models.URLField(blank=True)
+    google_business_url = models.URLField(blank=True, help_text="Google My Business profil linki")
     
     # SEO
     meta_description = models.TextField(blank=True, max_length=160, help_text="Site açıklaması (SEO için, max 160 karakter)")
@@ -349,12 +697,17 @@ class PageMedia(models.Model):
         
         # SERVICES PAGE
         ('services_banner', 'Hizmetler - Banner Arka Planı'),
+        ('services_gallery', 'Hizmetler - Galeri Resimleri'),
         
         # CONTACTS PAGE
         ('contact_gallery', 'İletişim - Galeri Resimleri'),
+        ('contact_cta_left', 'İletişim - CTA Sol Resim'),
+        ('contact_cta_right', 'İletişim - CTA Sağ Resim'),
         
         # FAQ PAGE
         ('faq_accommodation', 'SSS - Konaklama Resimleri'),
+        ('faq_cta_left', 'SSS - CTA Sol Resim'),
+        ('faq_cta_right', 'SSS - CTA Sağ Resim'),
         
         # PORTFOLIO PAGE
         ('portfolio_showcase', 'Portfolio - Galerideki Resimler'),
@@ -362,6 +715,34 @@ class PageMedia(models.Model):
         # RSVP PAGE
         ('rsvp_hero', 'RSVP - Hero Arka Planı'),
     ]
+    
+    # Image size guidelines for each section
+    SECTION_SIZE_GUIDELINES = {
+        'hero_home': '1920x1080px (Full HD), JPG/WebP, max 500KB - Tam ekran hero arka planı',
+        'hero_home_2': '1920x1080px (Full HD), JPG/WebP, max 500KB - İkinci hero arka planı',
+        'hero_home_stack_1': '400x500px (Dikey), JPG/WebP, max 200KB - Stack resim sol',
+        'hero_home_stack_2': '400x500px (Dikey), JPG/WebP, max 200KB - Stack resim sağ',
+        'hero_home_floral': '300x300px (Kare), PNG (şeffaf arka plan), max 150KB - Dekoratif çiçek',
+        'dress_gallery_mini_1': '400x400px (Kare), JPG/WebP, max 150KB - Mini galeri resmi',
+        'dress_gallery_mini_2': '420x420px (Kare), JPG/WebP, max 150KB - Mini galeri resmi',
+        'dress_gallery_mini_3': '380x380px (Kare), JPG/WebP, max 150KB - Mini galeri resmi',
+        'bride_gallery_1': '400x500px (Dikey), JPG/WebP, max 200KB - Gelin galerisi',
+        'bride_gallery_2': '600x500px (Yatay), JPG/WebP, max 250KB - Gelin galerisi (geniş)',
+        'bride_gallery_3': '400x500px (Dikey), JPG/WebP, max 200KB - Gelin galerisi',
+        'bride_gallery_4': '400x500px (Dikey), JPG/WebP, max 200KB - Gelin galerisi',
+        'bride_gallery_5': '600x500px (Yatay), JPG/WebP, max 250KB - Gelin galerisi (geniş)',
+        'about_hero': '1920x800px (Geniş banner), JPG/WebP, max 400KB - Hakkımızda hero',
+        'services_banner': '1920x600px (Banner), JPG/WebP, max 400KB - Hizmetler banner',
+        'services_gallery': '400x500px (Dikey), JPG/WebP, max 200KB - Hizmetler sayfası galeri',
+        'contact_gallery': '400x500px (Dikey), JPG/WebP, max 200KB - İletişim sayfası galeri',
+        'contact_cta_left': '400x500px (Dikey), JPG/WebP, max 200KB - İletişim CTA sol resim',
+        'contact_cta_right': '400x500px (Dikey), JPG/WebP, max 200KB - İletişim CTA sağ resim',
+        'faq_accommodation': '800x600px (Yatay), JPG/WebP, max 300KB - SSS konaklama görseli',
+        'faq_cta_left': '400x500px (Dikey), JPG/WebP, max 200KB - SSS CTA sol resim',
+        'faq_cta_right': '400x500px (Dikey), JPG/WebP, max 200KB - SSS CTA sağ resim',
+        'portfolio_showcase': '800x1000px (Dikey), JPG/WebP, max 350KB - Portfolio vitrin',
+        'rsvp_hero': '1920x800px (Geniş banner), JPG/WebP, max 400KB - RSVP hero arka planı',
+    }
     
     section = models.CharField(
         max_length=50,
@@ -408,6 +789,75 @@ class PageMedia(models.Model):
     
     def __str__(self):
         return f"{self.get_section_display()} - #{self.order}"
+    
+    def get_size_guideline(self):
+        """Get the recommended image size for this section"""
+        return self.SECTION_SIZE_GUIDELINES.get(self.section, 'Önerilen boyut belirtilmemiş')
+
+
+# Proxy models for section-based admin organization
+class HomeHeroMedia(PageMedia):
+    """Anasayfa Hero Görselleri"""
+    class Meta:
+        proxy = True
+        verbose_name = "Anasayfa Hero Görseli"
+        verbose_name_plural = "🏠 Anasayfa - Hero Görselleri"
+
+
+class HomeBrideGalleryMedia(PageMedia):
+    """Anasayfa Gelin Galerisi Görselleri"""
+    class Meta:
+        proxy = True
+        verbose_name = "Gelin Galerisi Görseli"
+        verbose_name_plural = "🏠 Anasayfa - Gelin Galerisi"
+
+
+class HomeDressGalleryMedia(PageMedia):
+    """Anasayfa Dress Gallery Mini Görselleri"""
+    class Meta:
+        proxy = True
+        verbose_name = "Dress Gallery Görseli"
+        verbose_name_plural = "🏠 Anasayfa - Dress Gallery"
+
+
+class AboutPageMedia(PageMedia):
+    """Hakkımızda Sayfası Görselleri"""
+    class Meta:
+        proxy = True
+        verbose_name = "Hakkımızda Görseli"
+        verbose_name_plural = "📄 Hakkımızda - Görseller"
+
+
+class ServicesPageMedia(PageMedia):
+    """Hizmetler Sayfası Görselleri"""
+    class Meta:
+        proxy = True
+        verbose_name = "Hizmetler Görseli"
+        verbose_name_plural = "🛠️ Hizmetler - Görseller"
+
+
+class ContactsPageMedia(PageMedia):
+    """İletişim Sayfası Görselleri"""
+    class Meta:
+        proxy = True
+        verbose_name = "İletişim Görseli"
+        verbose_name_plural = "📞 İletişim - Görseller"
+
+
+class FAQPageMedia(PageMedia):
+    """SSS Sayfası Görselleri"""
+    class Meta:
+        proxy = True
+        verbose_name = "SSS Görseli"
+        verbose_name_plural = "❓ SSS - Görseller"
+
+
+class RSVPPageMedia(PageMedia):
+    """RSVP Sayfası Görselleri"""
+    class Meta:
+        proxy = True
+        verbose_name = "RSVP Görseli"
+        verbose_name_plural = "📋 RSVP - Görseller"
 
 
 class PageText(models.Model):
@@ -467,5 +917,37 @@ class VideoEmbed(models.Model):
         return f"{self.get_section_display()} - {self.title}"
     
     def get_embed_url(self):
-        return f"https://www.youtube.com/embed/{self.youtube_id}?rel=0&autoplay=0&modestbranding=1"
+        return f"https://www.youtube.com/embed/{self.youtube_id}"
+
+
+class ProductReview(models.Model):
+    """Product reviews with star ratings (1-5 with half stars)"""
+    RATING_CHOICES = [
+        (0.5, '0.5 ⭐'),
+        (1.0, '1 ⭐'),
+        (1.5, '1.5 ⭐'),
+        (2.0, '2 ⭐'),
+        (2.5, '2.5 ⭐'),
+        (3.0, '3 ⭐'),
+        (3.5, '3.5 ⭐'),
+        (4.0, '4 ⭐'),
+        (4.5, '4.5 ⭐'),
+        (5.0, '5 ⭐'),
+    ]
+    
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='reviews')
+    rating = models.DecimalField(max_digits=2, decimal_places=1, choices=RATING_CHOICES, verbose_name="Değerlendirme")
+    reviewer_name = models.CharField(max_length=100, verbose_name="İsim")
+    reviewer_email = models.EmailField(verbose_name="E-posta")
+    comment = models.TextField(blank=True, verbose_name="Yorum")
+    is_approved = models.BooleanField(default=False, verbose_name="Onaylandı", help_text="Onaylanmadan sayfada görünmez")
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name = "Ürün Değerlendirmesi"
+        verbose_name_plural = "Ürün Değerlendirmeleri"
+    
+    def __str__(self):
+        return f"{self.product.name} - {self.rating}⭐ by {self.reviewer_name}"
 

@@ -1,8 +1,11 @@
 from django.contrib import admin
+from django.db import models
 
 from .models import (
-    AddOnService, BlogPost, FAQItem, PageMedia, PortfolioItem, PricingPackage, Product, Service, 
-    SiteContent, SiteSettings, PageText, VideoEmbed
+    AddOnService, BlogPost, BlogTag, FAQItem, PageMedia, PortfolioItem, PricingPackage, Product, ProductImage, ProductReview, Service, 
+    SiteContent, SiteSettings, PageText, VideoEmbed,
+    HomeHeroMedia, HomeBrideGalleryMedia, HomeDressGalleryMedia, AboutPageMedia,
+    ServicesPageMedia, ContactsPageMedia, FAQPageMedia, RSVPPageMedia
 )
 
 
@@ -10,6 +13,22 @@ from .models import (
 class ServiceAdmin(admin.ModelAdmin):
     list_display = ("title", "subtitle", "order")
     ordering = ("order", "title")
+    fieldsets = (
+        ("Македонски (Default)", {
+            "fields": ("title", "subtitle", "description", "icon", "order"),
+            "description": "Основен јазик за веб-страницата"
+        }),
+        ("Türkçe", {
+            "fields": ("title_tr", "subtitle_tr", "description_tr"),
+            "classes": ("collapse",),
+            "description": "Türkçe içerik (opsiyonel)"
+        }),
+        ("Shqip", {
+            "fields": ("title_sq", "subtitle_sq", "description_sq"),
+            "classes": ("collapse",),
+            "description": "Përmbajtja në shqip (opsionale)"
+        }),
+    )
 
 
 @admin.register(PortfolioItem)
@@ -18,61 +37,156 @@ class PortfolioItemAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("title",)}
     list_filter = ("featured", "year")
     fieldsets = (
-        ("Temel Bilgiler", {
-            "fields": ("title", "slug", "summary", "description", "featured")
+        ("Македонски (Default)", {
+            "fields": ("title", "slug", "summary", "description", "featured"),
+            "description": "Основен јазик за веб-страницата"
         }),
-        ("Görsel", {
+        ("Türkçe", {
+            "fields": ("title_tr", "summary_tr", "description_tr"),
+            "classes": ("collapse",),
+            "description": "Türkçe içerik (opsiyonel)"
+        }),
+        ("Shqip", {
+            "fields": ("title_sq", "summary_sq", "description_sq"),
+            "classes": ("collapse",),
+            "description": "Përmbajtja në shqip (opsionale)"
+        }),
+        ("🖼️ Горсел", {
             "fields": ("image_url",),
-            "description": "⚠️ Önerilen boyut: 1200x800 piksel (yatay dikdörtgen)"
+            "description": "⚠️ Препорачана големина: 1200x800 пиксели"
         }),
-        ("Detaylar", {
+        ("Детали", {
             "fields": ("year", "designer", "features")
         }),
-        ("SEO", {
+        ("SEO - Македонски", {
             "fields": ("meta_title", "meta_description"),
             "classes": ("collapse",),
-            "description": "Boş bırakılırsa otomatik oluşturulur"
+            "description": "Ако е празно, автоматски се генерира"
+        }),
+        ("SEO - Türkçe", {
+            "fields": ("meta_title_tr", "meta_description_tr"),
+            "classes": ("collapse",),
+        }),
+        ("SEO - Shqip", {
+            "fields": ("meta_title_sq", "meta_description_sq"),
+            "classes": ("collapse",),
         }),
     )
 
 
+class ProductImageInline(admin.TabularInline):
+    model = ProductImage
+    extra = 1
+    max_num = 3
+    fields = ('image', 'is_primary', 'order', 'alt_text')
+    ordering = ['-is_primary', 'order']
+    verbose_name = "Ürün Resmi"
+    verbose_name_plural = "📸 Ürün Resimleri (Max 3 adet, Önerilen: 600x800px, JPG/PNG/WEBP)"
+
+
+class ProductReviewInlineForProduct(admin.TabularInline):
+    model = ProductReview
+    extra = 0
+    fields = ('rating', 'reviewer_name', 'is_approved', 'created_at')
+    readonly_fields = ('created_at',)
+    ordering = ['-created_at']
+    verbose_name = "Değerlendirme"
+    verbose_name_plural = "⭐ Ürün Değerlendirmeleri"
+
+
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ("name", "slug", "price", "in_stock", "created_at")
+    list_display = ("name", "slug", "category", "price", "in_stock", "is_featured", "created_at")
     prepopulated_fields = {"slug": ("name",)}
+    list_filter = ("category", "in_stock", "is_featured")
+    list_editable = ("is_featured",)
+    inlines = [ProductImageInline, ProductReviewInlineForProduct]
     fieldsets = (
-        ("Temel Bilgiler", {
-            "fields": ("name", "slug", "summary", "description", "price", "in_stock")
+        ("Македонски (Default)", {
+            "fields": ("name", "slug", "summary", "description", "category", "price", "in_stock", "is_featured"),
+            "description": "Основен јазик за веб-страницата"
         }),
-        ("Görsel", {
+        ("Türkçe", {
+            "fields": ("name_tr", "summary_tr", "description_tr"),
+            "classes": ("collapse",),
+            "description": "Türkçe içerik (opsiyonel)"
+        }),
+        ("Shqip", {
+            "fields": ("name_sq", "summary_sq", "description_sq"),
+            "classes": ("collapse",),
+            "description": "Përmbajtja në shqip (opsionale)"
+        }),
+        ("🖼️ URL Слика (Опционално)", {
             "fields": ("image_url",),
-            "description": "⚠️ Önerilen boyut: 600x800 piksel (dikey dikdörtgen)"
+            "classes": ("collapse",),
+            "description": "⚠️ Користете го ова само ако не качувате слики горе. Препорачана големина: 600x800 пиксели"
+        }),
+    )
+
+
+@admin.register(BlogTag)
+class BlogTagAdmin(admin.ModelAdmin):
+    list_display = ("name", "name_tr", "name_sq", "slug")
+    prepopulated_fields = {"slug": ("name",)}
+    search_fields = ("name", "name_tr", "name_sq")
+    fieldsets = (
+        ("Етикета / Etiket / Etiketa", {
+            "fields": ("name", "name_tr", "name_sq", "slug"),
+            "description": "Her dilde etiket adını girin. Slug otomatik oluşturulur."
         }),
     )
 
 
 @admin.register(BlogPost)
 class BlogPostAdmin(admin.ModelAdmin):
-    list_display = ("title", "category", "published_at", "likes")
-    list_filter = ("category", "published_at")
+    list_display = ("title", "category", "published_at", "likes", "get_tags_display")
+    list_filter = ("category", "published_at", "blog_tags")
     prepopulated_fields = {"slug": ("title",)}
+    filter_horizontal = ("blog_tags",)
     fieldsets = (
-        ("Temel Bilgiler", {
-            "fields": ("title", "slug", "excerpt", "body", "published_at", "category")
+        ("Македонски (Default)", {
+            "fields": ("title", "slug", "excerpt", "body", "published_at", "category"),
+            "description": "Основен јазик за веб-страницата"
+        }),
+        ("Türkçe", {
+            "fields": ("title_tr", "excerpt_tr", "body_tr"),
+            "classes": ("collapse",),
+            "description": "Türkçe içerik (opsiyonel)"
+        }),
+        ("Shqip", {
+            "fields": ("title_sq", "excerpt_sq", "body_sq"),
+            "classes": ("collapse",),
+            "description": "Përmbajtja në shqip (opsionale)"
         }),
         ("Görsel", {
             "fields": ("hero_image",),
             "description": "⚠️ Önerilen boyut: 1200x675 piksel (16:9 yatay dikdörtgen)"
         }),
-        ("Etiketler & Etkileşim", {
-            "fields": ("tags", "likes")
+        ("🏷️ Etiketler (Çok Dilli)", {
+            "fields": ("blog_tags",),
+            "description": "Etiketleri seçin. Yeni etiket eklemek için önce 'Blog Etiketleri' bölümünden oluşturun."
         }),
-        ("SEO", {
+        ("Etkileşim", {
+            "fields": ("likes",)
+        }),
+        ("SEO - Македонски", {
             "fields": ("meta_title", "meta_description"),
             "classes": ("collapse",),
-            "description": "Boş bırakılırsa otomatik oluşturulur"
+            "description": "Ако е празно, автоматски се генерира"
+        }),
+        ("SEO - Türkçe", {
+            "fields": ("meta_title_tr", "meta_description_tr"),
+            "classes": ("collapse",),
+        }),
+        ("SEO - Shqip", {
+            "fields": ("meta_title_sq", "meta_description_sq"),
+            "classes": ("collapse",),
         }),
     )
+    
+    def get_tags_display(self, obj):
+        return ", ".join([tag.name for tag in obj.blog_tags.all()])
+    get_tags_display.short_description = "Etiketler"
 
 
 @admin.register(FAQItem)
@@ -88,18 +202,27 @@ class FAQItemAdmin(admin.ModelAdmin):
         ("Türkçe", {
             "fields": ("question_tr", "answer_tr"),
             "classes": ("collapse",),
-            "description": "Сорула и одговорот на турски јазик"
+            "description": "Türkçe soru ve cevap"
         }),
         ("Shqip", {
             "fields": ("question_sq", "answer_sq"),
             "classes": ("collapse",),
             "description": "Pyetja dhe përgjigja në shqip"
         }),
-        ("Organizacija", {
-            "fields": ("category", "order"),
-            "description": "Категорија и редослед"
+        ("Организација", {
+            "fields": ("category",),
+            "description": "Категоријата автоматски се доделува редослед"
         }),
     )
+    
+    def save_model(self, request, obj, form, change):
+        if not change:  # New object
+            # Auto-assign order based on category
+            max_order = FAQItem.objects.filter(category=obj.category).aggregate(
+                max_order=models.Max('order')
+            )['max_order']
+            obj.order = (max_order or 0) + 1
+        super().save_model(request, obj, form, change)
 
 
 @admin.register(PricingPackage)
@@ -118,14 +241,6 @@ class PricingPackageAdmin(admin.ModelAdmin):
             "fields": ("name_sq", "period_sq", "features_sq"),
             "classes": ("collapse",)
         }),
-        ("🎁 Premium Features", {
-            "fields": (
-                "free_consultation", "design_sketch", "measurements", "trials",
-                "express_delivery", "gift_accessories", "design_modifications",
-                "fabric_consultation", "final_steaming", "storage_bag", "online_meeting"
-            ),
-            "description": "Paket ile birlikte sunulacak hizmetleri seçin. Bu özellikler otomatik olarak pricing sayfasında gösterilecektir."
-        }),
     )
 
 
@@ -135,15 +250,18 @@ class AddOnServiceAdmin(admin.ModelAdmin):
     ordering = ("order", "name")
     fieldsets = (
         ("Македонски (Default)", {
-            "fields": ("name", "description", "price", "icon", "order")
+            "fields": ("name", "description", "price", "icon", "order"),
+            "description": "Основен јазик за веб-страницата"
         }),
         ("Türkçe", {
-            "fields": ("name_tr", "description_tr"),
-            "classes": ("collapse",)
+            "fields": ("name_tr", "description_tr", "price_tr"),
+            "classes": ("collapse",),
+            "description": "Türkçe içerik (opsiyonel)"
         }),
         ("Shqip", {
-            "fields": ("name_sq", "description_sq"),
-            "classes": ("collapse",)
+            "fields": ("name_sq", "description_sq", "price_sq"),
+            "classes": ("collapse",),
+            "description": "Përmbajtja në shqip (opsionale)"
         }),
     )
 
@@ -193,7 +311,7 @@ class SiteSettingsAdmin(admin.ModelAdmin):
             "fields": ("address", "email", "phone")
         }),
         ("Sosyal Medya", {
-            "fields": ("facebook_url", "instagram_url", "twitter_url", "pinterest_url", "youtube_url", "tiktok_url"),
+            "fields": ("facebook_url", "instagram_url", "twitter_url", "pinterest_url", "youtube_url", "tiktok_url", "google_business_url"),
             "description": "Sadece URL'si olan sosyal medya hesapları footer'da görünür"
         }),
         ("SEO", {
@@ -226,40 +344,122 @@ class SiteSettingsAdmin(admin.ModelAdmin):
         return False
 
 
-@admin.register(PageMedia)
-class PageMediaAdmin(admin.ModelAdmin):
-    list_display = ("get_section_display", "alt_text", "is_active", "order")
-    list_filter = ("section", "is_active")
-    list_editable = ("is_active",)
-    ordering = ("section", "order")
+class BaseSectionMediaAdmin(admin.ModelAdmin):
+    """Base admin for section-specific media"""
+    list_display = ("get_section_display", "image_preview", "size_guideline_display", "alt_text", "is_active", "order")
+    list_editable = ("is_active", "order")
+    ordering = ("order",)
     search_fields = ("alt_text", "title")
     
-    fieldsets = (
-        ("📍 Bölüm & Sıralama", {
-            "fields": ("section", "order", "is_active"),
-            "description": "Görselin hangi sayfada ve hangi sırada gösterileceğini belirtin"
-        }),
-        ("🖼️ Görsel Yükleme", {
-            "fields": ("image",),
-            "description": "⚠️ Çok önemli: Bölümünüzün gerektirdiği ölçülerde yükleyiniz (aşağıda belirtilmiştir)"
-        }),
-        ("📝 SEO & Erişilebilirlik", {
-            "fields": ("alt_text", "title"),
-            "classes": ("wide",),
-            "description": "Alt text görsel yüklenemediğinde gösterilir. Title SEO için önemlidir."
-        }),
-        ("📏 Ölçüler & Format Bilgisi", {
-            "fields": ("description",),
-            "classes": ("wide",),
-            "description": "Bu alana görselin gerekli ölçülerini ve formatını yazınız. Örn: 1200x800px, JPG, max 500KB"
-        }),
-    )
+    # Subclasses should define these
+    section_filter = []  # List of section keys to filter
+    section_size_info = ""  # Size info for this section
     
-    def get_readonly_fields(self, request, obj=None):
-        # section'u seçtikten sonra değiştirilemesin diye
-        if obj:
-            return ['section']
-        return []
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        if self.section_filter:
+            qs = qs.filter(section__in=self.section_filter)
+        return qs
+    
+    def get_fieldsets(self, request, obj=None):
+        return (
+            ("📍 Görsel Konumu", {
+                "fields": ("section", "order", "is_active"),
+                "description": f"Bu bölüm için görsel yükleyin. Sıra numarası ile görüntülenme sırasını belirleyin."
+            }),
+            ("🖼️ Görsel Yükleme", {
+                "fields": ("image",),
+                "description": f"⚠️ ÖNERİLEN BOYUTLAR:\n{self.section_size_info}"
+            }),
+            ("📝 SEO & Erişilebilirlik", {
+                "fields": ("alt_text", "title"),
+                "classes": ("wide",),
+                "description": "Alt text görsel yüklenemediğinde gösterilir."
+            }),
+        )
+    
+    def image_preview(self, obj):
+        if obj.image:
+            return f'<img src="{obj.image.url}" style="max-height: 50px; max-width: 80px;" />'
+        return '-'
+    image_preview.short_description = "Önizleme"
+    image_preview.allow_tags = True
+    
+    def size_guideline_display(self, obj):
+        from .models import PageMedia
+        guideline = PageMedia.SECTION_SIZE_GUIDELINES.get(obj.section, '')
+        if guideline:
+            return guideline.split(',')[0] if ',' in guideline else guideline[:30]
+        return '-'
+    size_guideline_display.short_description = "Önerilen Boyut"
+    
+    def formfield_for_choice_field(self, db_field, request, **kwargs):
+        if db_field.name == 'section' and self.section_filter:
+            kwargs['choices'] = [(k, v) for k, v in PageMedia.SECTION_CHOICES if k in self.section_filter]
+        return super().formfield_for_choice_field(db_field, request, **kwargs)
+
+
+@admin.register(HomeHeroMedia)
+class HomeHeroMediaAdmin(BaseSectionMediaAdmin):
+    section_filter = ['hero_home', 'hero_home_2', 'hero_home_stack_1', 'hero_home_stack_2', 'hero_home_floral']
+    section_size_info = """• Hero 1 Arka Planı: 1920x1080px (Full HD), JPG/WebP, max 500KB
+• Hero 2 Arka Planı: 1920x1080px (Full HD), JPG/WebP, max 500KB
+• Stack Resim 1 (Sol): 400x500px (Dikey), JPG/WebP, max 200KB
+• Stack Resim 2 (Sağ): 400x500px (Dikey), JPG/WebP, max 200KB
+• Çiçek Dekorasyon: 300x300px (Kare), PNG şeffaf arka plan, max 150KB"""
+
+
+@admin.register(HomeBrideGalleryMedia)
+class HomeBrideGalleryMediaAdmin(BaseSectionMediaAdmin):
+    section_filter = ['bride_gallery_1', 'bride_gallery_2', 'bride_gallery_3', 'bride_gallery_4', 'bride_gallery_5']
+    section_size_info = """• Gelin Galerisi 1: 400x500px (Dikey), JPG/WebP, max 200KB
+• Gelin Galerisi 2: 600x500px (Yatay/Geniş), JPG/WebP, max 250KB
+• Gelin Galerisi 3: 400x500px (Dikey), JPG/WebP, max 200KB
+• Gelin Galerisi 4: 400x500px (Dikey), JPG/WebP, max 200KB
+• Gelin Galerisi 5: 600x500px (Yatay/Geniş), JPG/WebP, max 250KB"""
+
+
+@admin.register(HomeDressGalleryMedia)
+class HomeDressGalleryMediaAdmin(BaseSectionMediaAdmin):
+    section_filter = ['dress_gallery_mini_1', 'dress_gallery_mini_2', 'dress_gallery_mini_3']
+    section_size_info = """• Mini Resim 1: 400x400px (Kare), JPG/WebP, max 150KB
+• Mini Resim 2: 420x420px (Kare), JPG/WebP, max 150KB
+• Mini Resim 3: 380x380px (Kare), JPG/WebP, max 150KB"""
+
+
+@admin.register(AboutPageMedia)
+class AboutPageMediaAdmin(BaseSectionMediaAdmin):
+    section_filter = ['about_hero']
+    section_size_info = """• Hero Arka Planı: 1920x800px (Geniş Banner), JPG/WebP, max 400KB"""
+
+
+@admin.register(ServicesPageMedia)
+class ServicesPageMediaAdmin(BaseSectionMediaAdmin):
+    section_filter = ['services_banner', 'services_gallery']
+    section_size_info = """• Banner Arka Planı: 1920x600px (Banner), JPG/WebP, max 400KB
+• Galeri Resimleri: 400x500px (Dikey), JPG/WebP, max 200KB - Birden fazla yükleyebilirsiniz"""
+
+
+@admin.register(ContactsPageMedia)
+class ContactsPageMediaAdmin(BaseSectionMediaAdmin):
+    section_filter = ['contact_gallery', 'contact_cta_left', 'contact_cta_right']
+    section_size_info = """• Galeri Resimleri: 400x500px (Dikey), JPG/WebP, max 200KB - Birden fazla yükleyebilirsiniz
+• CTA Sol Resim: 400x500px (Dikey), JPG/WebP, max 200KB - Showcase bölümü sol resim
+• CTA Sağ Resim: 400x500px (Dikey), JPG/WebP, max 200KB - Showcase bölümü sağ resim"""
+
+
+@admin.register(FAQPageMedia)
+class FAQPageMediaAdmin(BaseSectionMediaAdmin):
+    section_filter = ['faq_accommodation', 'faq_cta_left', 'faq_cta_right']
+    section_size_info = """• Konaklama Görselleri: 800x600px (Yatay), JPG/WebP, max 300KB
+• CTA Sol Resim: 400x500px (Dikey), JPG/WebP, max 200KB - Alt showcase bölümü sol resim
+• CTA Sağ Resim: 400x500px (Dikey), JPG/WebP, max 200KB - Alt showcase bölümü sağ resim"""
+
+
+@admin.register(RSVPPageMedia)
+class RSVPPageMediaAdmin(BaseSectionMediaAdmin):
+    section_filter = ['rsvp_hero']
+    section_size_info = """• Hero Arka Planı: 1920x800px (Geniş Banner), JPG/WebP, max 400KB"""
 
 
 @admin.register(PageText)
@@ -295,4 +495,32 @@ class VideoEmbedAdmin(admin.ModelAdmin):
             "description": "YouTube URL'sinin ?v= sonrası yazın. Örn: dQw4w9WgXcQ"
         }),
     )
+
+
+class ProductReviewInline(admin.TabularInline):
+    model = ProductReview
+    extra = 0
+    fields = ('rating', 'reviewer_name', 'reviewer_email', 'comment', 'is_approved', 'created_at')
+    readonly_fields = ('created_at',)
+    ordering = ['-created_at']
+
+
+@admin.register(ProductReview)
+class ProductReviewAdmin(admin.ModelAdmin):
+    list_display = ("product", "rating", "reviewer_name", "is_approved", "created_at")
+    list_filter = ("is_approved", "rating", "product")
+    list_editable = ("is_approved",)
+    search_fields = ("reviewer_name", "reviewer_email", "comment")
+    ordering = ["-created_at"]
+    actions = ["approve_reviews", "reject_reviews"]
+    
+    def approve_reviews(self, request, queryset):
+        queryset.update(is_approved=True)
+        self.message_user(request, f"{queryset.count()} değerlendirme onaylandı.")
+    approve_reviews.short_description = "Seçili değerlendirmeleri onayla"
+    
+    def reject_reviews(self, request, queryset):
+        queryset.update(is_approved=False)
+        self.message_user(request, f"{queryset.count()} değerlendirme reddedildi.")
+    reject_reviews.short_description = "Seçili değerlendirmeleri reddet"
 

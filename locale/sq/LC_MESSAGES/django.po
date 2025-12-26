@@ -1,0 +1,388 @@
+# Arnavutça Çeviriler / Albanian Translations
+# Naba Studio by Semma
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: Naba Studio 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-12-24 00:00+0000\n"
+"PO-Revision-Date: 2024-12-24 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Albanian\n"
+"Language: sq\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+# Navigation
+msgid "Дома"
+msgstr "Ballina"
+
+msgid "Услуги"
+msgstr "Shërbimet"
+
+msgid "Корпоративно"
+msgstr "Korporata"
+
+msgid "За нас"
+msgstr "Rreth nesh"
+
+msgid "РСВП"
+msgstr "RSVP"
+
+msgid "ЧПП"
+msgstr "FAQ"
+
+msgid "Цени"
+msgstr "Çmimet"
+
+msgid "Портфолио"
+msgstr "Portofoli"
+
+msgid "Блог"
+msgstr "Blog"
+
+msgid "Контакт"
+msgstr "Kontakt"
+
+msgid "Почетна"
+msgstr "Faqja kryesore"
+
+# Footer
+msgid "Канцеларија"
+msgstr "Zyra"
+
+msgid "Линкови"
+msgstr "Lidhjet"
+
+msgid "Контактирајте нè"
+msgstr "Na kontaktoni"
+
+# Home Page
+msgid "Атеље во срцето на Скопје"
+msgstr "Një atelie në zemër të Shkupit"
+
+msgid "Најпрестижното couture атеље за венчаници во Северна Македонија. Секоја венчаница има своја приказна. Дали си подготвена да ја напишеш твојата?"
+msgstr "Atelieja më prestigjioze e fustaneve të nusërisë couture në Maqedoninë e Veriut. Çdo fustan nusërie ka një histori. A jeni gati të shkruani tuajën?"
+
+msgid "Секоја венчаница има свој спомен"
+msgstr "Çdo fustan nusërie ka një kujtim"
+
+msgid "посебно шиење couture"
+msgstr "qepje e veçantë couture"
+
+msgid "Венчаници дизајнирани од нула"
+msgstr "Fustane nusërie të dizajnuara nga zeroja"
+
+msgid "ПОНЕДЕЛНИК-ПЕТОК"
+msgstr "E HËNË-E PREMTE"
+
+msgid "САБОТА"
+msgstr "E SHTUNË"
+
+msgid "што правиме"
+msgstr "çfarë bëjmë"
+
+msgid "Услуги за шиење венчаници"
+msgstr "Shërbime qepjeje për nuse"
+
+msgid "Преправки"
+msgstr "Ndryshime"
+
+msgid "Шиење фустани"
+msgstr "Qepje fustanesh"
+
+msgid "Кројачество"
+msgstr "Rrobaqepësi"
+
+msgid "продавница за фустани"
+msgstr "dyqan fustanesh"
+
+msgid "Готови за носење"
+msgstr "Gati për tu veshur"
+
+msgid "нашите невести"
+msgstr "nusat tona"
+
+msgid "Галерија на фустани"
+msgstr "Galeria e fustaneve"
+
+msgid "Погледни ја целата колекција"
+msgstr "Shiko të gjithë koleksionin"
+
+msgid "Имате прашања?"
+msgstr "Keni pyetje?"
+
+msgid "Вашето име"
+msgstr "Emri juaj"
+
+msgid "Е-пошта"
+msgstr "Email"
+
+msgid "Вашата порака"
+msgstr "Mesazhi juaj"
+
+msgid "Испрати"
+msgstr "Dërgo"
+
+msgid "Статии за свадби"
+msgstr "Artikuj martese"
+
+msgid "Најново од дневникот на атељето"
+msgstr "Më të fundit nga ditari i ateliesë"
+
+msgid "Приказна"
+msgstr "Histori"
+
+# Services Page
+msgid "нашите услуги"
+msgstr "shërbimet tona"
+
+msgid "Подгответе се со нас"
+msgstr "Përgatituni me ne"
+
+msgid "Дизајн на фустан по нарачка"
+msgstr "Dizajn i personalizuar i fustanit"
+
+msgid "Бесплатна консултација"
+msgstr "Konsultim falas"
+
+msgid "Проба и примероци"
+msgstr "Prova dhe mostra"
+
+msgid "Шиено по мерка"
+msgstr "E qepur sipas masës"
+
+msgid "Експресна преправка"
+msgstr "Ndryshim i shpejtë"
+
+msgid "couture консултација"
+msgstr "konsultim couture"
+
+msgid "Да дизајнираме совршена венчаница за вас"
+msgstr "Le të dizajnojmë fustanin perfekt të nusërisë për ju"
+
+msgid "Закажи термин"
+msgstr "Cakto takim"
+
+msgid "Couture пакети за венчаници"
+msgstr "Paketat e fustaneve të nusërisë Couture"
+
+msgid "Земи сега"
+msgstr "Merr tani"
+
+# About Page
+msgid "Ги претвораме соништата во реалност"
+msgstr "I kthejmë ëndrrat në realitet"
+
+msgid "Што правиме"
+msgstr "Çfarë bëjmë"
+
+msgid "Услуги за специјален дизајн"
+msgstr "Shërbime të dizajnit special"
+
+msgid "Персонализирани венчаници"
+msgstr "Fustane nusërie të personalizuara"
+
+msgid "Облека за веридба"
+msgstr "Veshje fejese"
+
+msgid "Услуги за преправка и проба"
+msgstr "Shërbime ndryshimi dhe prove"
+
+msgid "Вечерни фустани / Абаје"
+msgstr "Fustane mbrëmjeje / Abaje"
+
+msgid "100% Рачна изработка"
+msgstr "100% Punë dore"
+
+msgid "Првокласни ткаенини"
+msgstr "Pëlhura të klasit të parë"
+
+msgid "Произведено во Скопје"
+msgstr "Prodhuar në Shkup"
+
+msgid "Зошто ние?"
+msgstr "Pse ne?"
+
+msgid "Личен пристап"
+msgstr "Qasje personale"
+
+msgid "Висок квалитет"
+msgstr "Cilësi e lartë"
+
+msgid "Најнови блог објави"
+msgstr "Postimet më të fundit të blogut"
+
+msgid "Прочитај повеќе →"
+msgstr "Lexo më shumë →"
+
+msgid "Сè уште нема блог објави."
+msgstr "Ende nuk ka postime blogu."
+
+# Contact Page
+msgid "Оставете порака кога сакате; тимот на атељето ќе одговори во рок од 24 часа."
+msgstr "Lini një mesazh kur të doni; ekipi i ateliesë do të përgjigjet brenda 24 orëve."
+
+msgid "Атеље"
+msgstr "Atelie"
+
+msgid "Скопје, Македонија"
+msgstr "Shkup, Maqedoni"
+
+msgid "Телефон"
+msgstr "Telefon"
+
+msgid "Работни денови 09:00 - 18:00"
+msgstr "Ditët e punës 09:00 - 18:00"
+
+msgid "Погодно за сите прашања и барања за специјални термини."
+msgstr "E përshtatshme për të gjitha pyetjet dhe kërkesat për takime speciale."
+
+msgid "Оставете порака"
+msgstr "Lini një mesazh"
+
+msgid "Порака"
+msgstr "Mesazh"
+
+msgid "Испрати порака"
+msgstr "Dërgo mesazhin"
+
+msgid "Креативно атеље"
+msgstr "Atelie kreative"
+
+msgid "Ги обликуваме соништата во цвеќиња и ткаенина."
+msgstr "I skulpturojmë ëndrrat në lule dhe pëlhurë."
+
+msgid "Започни со планирање"
+msgstr "Fillo planifikimin"
+
+# FAQ Page
+msgid "сместување"
+msgstr "akomodim"
+
+msgid "Резервирајте соби во бутик хотел за свадби"
+msgstr "Rezervoni dhomat në një hotel butik martese"
+
+msgid "Резервирај сега"
+msgstr "Rezervo tani"
+
+msgid "Уметноста на couture кројачество"
+msgstr "Arti i rrobaqepësisë couture"
+
+# RSVP Page
+msgid "Свадбена прослава"
+msgstr "Festë martese"
+
+msgid "Придружете ни се за незаборавна вечер полна со љубов, радост и нови почетоци."
+msgstr "Bashkohuni me ne për një mbrëmje të paharrueshme duke festuar dashurinë, gëzimin dhe fillimet e reja."
+
+msgid "РСВП Сега"
+msgstr "RSVP Tani"
+
+msgid "Контакт детали"
+msgstr "Detajet e kontaktit"
+
+msgid "Име и презиме"
+msgstr "Emri dhe mbiemri"
+
+msgid "Претпочитан датум"
+msgstr "Data e preferuar"
+
+msgid "Услуга"
+msgstr "Shërbimi"
+
+msgid "-- Изберете услуга --"
+msgstr "-- Zgjidhni shërbimin --"
+
+msgid "Нема достапни услуги"
+msgstr "Nuk ka shërbime të disponueshme"
+
+msgid "Наведете ги вашите барања"
+msgstr "Specifikoni kërkesat tuaja"
+
+msgid "Побарај термин"
+msgstr "Kërko takim"
+
+msgid "Локација на атељето"
+msgstr "Vendndodhja e ateliesë"
+
+# Pricing Page
+msgid "Пакети за цени"
+msgstr "Paketat e çmimeve"
+
+msgid "Дополнителни услуги"
+msgstr "Shërbime shtesë"
+
+msgid "Изберете дополнителни услуги за вашиот пакет"
+msgstr "Zgjidhni shërbime shtesë për paketën tuaj"
+
+# Portfolio Page
+msgid "Наша колекција"
+msgstr "Koleksioni ynë"
+
+msgid "НОВА КОЛЕКЦИЈА"
+msgstr "KOLEKSION I RI"
+
+msgid "Уметнички дела на нашите невести"
+msgstr "Veprat artistike të nuseve tona"
+
+msgid "Сите"
+msgstr "Të gjitha"
+
+# Blog Page
+msgid "Белешки од атељето"
+msgstr "Shënime nga atelieja"
+
+msgid "Објави за нови колекции, процеси и инспиративни средби се појавуваат тука."
+msgstr "Postimet për koleksione të reja, procese dhe takime frymëzuese shfaqen këtu."
+
+msgid "Прочитај детали"
+msgstr "Lexo detajet"
+
+msgid "Не е пронајдена блог објава."
+msgstr "Nuk u gjet postim blogu."
+
+msgid "Претходна"
+msgstr "E mëparshme"
+
+msgid "Следна"
+msgstr "E ardhshme"
+
+msgid "Страница"
+msgstr "Faqja"
+
+msgid "Истражи"
+msgstr "Eksploro"
+
+msgid "Табла за инспирација"
+msgstr "Tabela e frymëzimit"
+
+msgid "Популарни наслови"
+msgstr "Titujt popullorë"
+
+msgid "Сè уште нема нова содржина."
+msgstr "Ende nuk ka përmbajtje të re."
+
+msgid "Категории"
+msgstr "Kategoritë"
+
+msgid "Ажурирање на содржина"
+msgstr "Përditësim i përmbajtjes"
+
+msgid "Земете белешки за вашиот план за невеста"
+msgstr "Merrni shënime për planin tuaj të nusërisë"
+
+msgid "Претплати се"
+msgstr "Abonohu"
+
+# General
+msgid "Прескокни до содржина"
+msgstr "Kalo te përmbajtja"
+
+msgid "Прикажи мени"
+msgstr "Shfaq menunë"
+
+msgid "Оди горе"
+msgstr "Shko lart"

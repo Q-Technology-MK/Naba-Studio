@@ -1,71 +1,72 @@
 {% extends "core/base.html" %}
+{% load multilang %}
 
-{% block title %}Blog · Ankora Atelier{% endblock %}
+{% block title %}{% t 'nav_blog' %} · Naba Studio{% endblock %}
 
 {% block content %}
 <div class="page-wrapper">
     <div class="section-divider"></div>
-    <h1 class="section-heading">Atelier Notes</h1>
-    <p class="section-subtitle">Yeni koleksiyonlar, süreçler ve ilham buluşmaları hakkında paylaşımlar burada görünür.</p>
+    <h1 class="section-heading">{% t 'blog_notes' %}</h1>
+    <p class="section-subtitle">{% t 'blog_posts_appear' %}</p>
 
     <div class="blog-container">
         <main class="blog-main">
             <div class="blog-grid">
                 {% for post in page_obj.object_list %}
                     <article class="blog-card">
-                        <img src="{{ post.hero_image }}" alt="{{ post.title }}">
+                        <img src="{{ post.hero_image }}" alt="{{ post.translated_title }}">
                         <div class="content">
-                            <span class="category-badge">{{ post.category }}</span>
+                            <span class="category-badge">{{ post.translated_category }}</span>
                             <p class="meta">{{ post.published_at }}</p>
-                            <h3>{{ post.title }}</h3>
-                            <p>{{ post.excerpt }}</p>
-                            <a href="{{ post.get_absolute_url }}" class="read-more">Detayları oku</a>
+                            <h3>{{ post.translated_title }}</h3>
+                            <p>{{ post.translated_excerpt }}</p>
+                            <a href="{{ post.get_absolute_url }}" class="read-more">{% t 'blog_read_details' %}</a>
                         </div>
                     </article>
                 {% empty %}
-                    <p style="grid-column: 1/-1; text-align: center; padding: 2rem;">Blog yazısı bulunamadı.</p>
+                    <p style="grid-column: 1/-1; text-align: center; padding: 2rem;">{% t 'blog_not_found' %}</p>
                 {% endfor %}
             </div>
 
             <nav class="pagination" aria-label="Blog sayfa numaraları">
                 {% if page_obj.has_previous %}
-                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Önceki</a>
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">{% t 'blog_previous' %}</a>
                 {% else %}
-                    <span class="page-link disabled">Önceki</span>
+                    <span class="page-link disabled">{% t 'blog_previous' %}</span>
                 {% endif %}
 
-                <span class="page-info">Sayfa {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span>
+                <span class="page-info">{% t 'blog_page' %} {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span>
 
                 {% if page_obj.has_next %}
-                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">Sonraki</a>
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">{% t 'blog_next' %}</a>
                 {% else %}
-                    <span class="page-link disabled">Sonraki</span>
+                    <span class="page-link disabled">{% t 'blog_next' %}</span>
                 {% endif %}
             </nav>
         </main>
 
         <aside class="blog-sidebar">
             <section class="sidebar-widget">
-                <p class="eyebrow">Keşfet</p>
-                <h4>İlham Panosu</h4>
-                <p>Atelier’den haftalık notlar, behind-the-scenes ve sürpriz işbirlikleri için takipte kalın.</p>
+                <p class="eyebrow">{% t 'blog_explore' %}</p>
+                <h4>{% t 'blog_inspiration' %}</h4>
+                <p>{% t 'home_hero_subtitle' %}</p>
             </section>
 
             <section class="sidebar-widget">
-                <h5>Popüler başlıklar</h5>
+                <h5>{% t 'blog_popular' %}</h5>
                 <ul>
                     {% for highlight in posts|slice:":3" %}
-                        <li><a href="{{ highlight.get_absolute_url }}">{{ highlight.title }}</a></li>
+                        <li><a href="{{ highlight.get_absolute_url }}">{{ highlight.translated_title }}</a></li>
                     {% empty %}
-                        <li>Henüz yeni içerik yok.</li>
+                        <li>{% t 'blog_no_content' %}</li>
                     {% endfor %}
                 </ul>
             </section>
 
             <section class="sidebar-widget">
-                <h5>Kategoriler</h5>
+                <h5>{% t 'blog_categories' %}</h5>
                 <div class="tag-cloud">
-                    <a href="{% url 'blog' %}" class="{% if not selected_category %}active{% endif %}">Tümü</a>
+                    <a href="{% url 'blog' %}" class="{% if not selected_category %}active{% endif %}">{% t 'portfolio_all' %}</a>
                     {% for category_key, category_name in categories %}
                         <a href="?category={{ category_key }}" class="{% if selected_category == category_key %}active{% endif %}">{{ category_name }}</a>
                     {% endfor %}
@@ -73,10 +74,10 @@
             </section>
 
             <section class="sidebar-widget cta-panel">
-                <p class="eyebrow">İçerik güncellemesi</p>
-                <h4>Gelin planınız için notlar alın</h4>
-                <p>Haftalık haber bültenimize abone olarak planlama, prova ve özel gün detayları için ilk siz haberdar olun.</p>
-                <a href="{% url 'contacts' %}" class="btn">Abone ol</a>
+                <p class="eyebrow">{% t 'blog_content_update' %}</p>
+                <h4>{% t 'blog_take_notes' %}</h4>
+                <p>{% t 'home_hero_subtitle' %}</p>
+                <a href="{% url 'contacts' %}" class="btn">{% t 'blog_subscribe' %}</a>
             </section>
         </aside>
     </div>

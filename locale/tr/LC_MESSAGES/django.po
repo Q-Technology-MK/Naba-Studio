@@ -1,0 +1,388 @@
+# Türkçe Çeviriler
+# Naba Studio by Semma
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: Naba Studio 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-12-24 00:00+0000\n"
+"PO-Revision-Date: 2024-12-24 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Turkish\n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+# Navigation
+msgid "Дома"
+msgstr "Ana Sayfa"
+
+msgid "Услуги"
+msgstr "Hizmetler"
+
+msgid "Корпоративно"
+msgstr "Kurumsal"
+
+msgid "За нас"
+msgstr "Hakkımızda"
+
+msgid "РСВП"
+msgstr "RSVP"
+
+msgid "ЧПП"
+msgstr "SSS"
+
+msgid "Цени"
+msgstr "Fiyatlandırma"
+
+msgid "Портфолио"
+msgstr "Portfolyo"
+
+msgid "Блог"
+msgstr "Blog"
+
+msgid "Контакт"
+msgstr "İletişim"
+
+msgid "Почетна"
+msgstr "Ana Sayfa"
+
+# Footer
+msgid "Канцеларија"
+msgstr "Ofis"
+
+msgid "Линкови"
+msgstr "Linkler"
+
+msgid "Контактирајте нè"
+msgstr "İletişime Geçin"
+
+# Home Page
+msgid "Атеље во срцето на Скопје"
+msgstr "Üsküp'ün Kalbinde Bir Atölye"
+
+msgid "Најпрестижното couture атеље за венчаници во Северна Македонија. Секоја венчаница има своја приказна. Дали си подготвена да ја напишеш твојата?"
+msgstr "Kuzey Makedonya'nın en prestijli couture gelinlik tasarım atölyesi. Her gelinliğin bir hikâyesi vardır. Seninkini yazmaya hazır mısın?"
+
+msgid "Секоја венчаница има свој спомен"
+msgstr "Her Gelinliğin Bir Anısı Vardır"
+
+msgid "посебно шиење couture"
+msgstr "özel dikim couture"
+
+msgid "Венчаници дизајнирани од нула"
+msgstr "Sıfırdan Tasarlanan Gelinlikler"
+
+msgid "ПОНЕДЕЛНИК-ПЕТОК"
+msgstr "PAZARTESİ-CUMA"
+
+msgid "САБОТА"
+msgstr "CUMARTESİ"
+
+msgid "што правиме"
+msgstr "ne yapıyoruz"
+
+msgid "Услуги за шиење венчаници"
+msgstr "Gelinlik Dikim Hizmetleri"
+
+msgid "Преправки"
+msgstr "Tadilat"
+
+msgid "Шиење фустани"
+msgstr "Elbise Dikimi"
+
+msgid "Кројачество"
+msgstr "Terzilik"
+
+msgid "продавница за фустани"
+msgstr "elbise mağazası"
+
+msgid "Готови за носење"
+msgstr "Hazır Giyim"
+
+msgid "нашите невести"
+msgstr "gelinlerimiz"
+
+msgid "Галерија на фустани"
+msgstr "Elbise Galerisi"
+
+msgid "Погледни ја целата колекција"
+msgstr "Tüm Koleksiyonu Gör"
+
+msgid "Имате прашања?"
+msgstr "Sorularınız mı var?"
+
+msgid "Вашето име"
+msgstr "Adınız"
+
+msgid "Е-пошта"
+msgstr "E-posta"
+
+msgid "Вашата порака"
+msgstr "Mesajınız"
+
+msgid "Испрати"
+msgstr "Gönder"
+
+msgid "Статии за свадби"
+msgstr "Düğün Makaleleri"
+
+msgid "Најново од дневникот на атељето"
+msgstr "Atölye Günlüğünden En Yeniler"
+
+msgid "Приказна"
+msgstr "Hikaye"
+
+# Services Page
+msgid "нашите услуги"
+msgstr "hizmetlerimiz"
+
+msgid "Подгответе се со нас"
+msgstr "Bizimle Hazırlanın"
+
+msgid "Дизајн на фустан по нарачка"
+msgstr "Özel Elbise Tasarımı"
+
+msgid "Бесплатна консултација"
+msgstr "Ücretsiz Danışmanlık"
+
+msgid "Проба и примероци"
+msgstr "Prova ve Numune"
+
+msgid "Шиено по мерка"
+msgstr "Ölçüye Göre Dikim"
+
+msgid "Експресна преправка"
+msgstr "Ekspres Tadilat"
+
+msgid "couture консултација"
+msgstr "couture danışmanlığı"
+
+msgid "Да дизајнираме совршена венчаница за вас"
+msgstr "Sizin İçin Mükemmel Gelinliği Tasarlayalım"
+
+msgid "Закажи термин"
+msgstr "Randevu Al"
+
+msgid "Couture пакети за венчаници"
+msgstr "Couture Gelinlik Paketleri"
+
+msgid "Земи сега"
+msgstr "Şimdi Al"
+
+# About Page
+msgid "Ги претвораме соништата во реалност"
+msgstr "Hayalleri Gerçeğe Dönüştürüyoruz"
+
+msgid "Што правиме"
+msgstr "Neler Yapıyoruz"
+
+msgid "Услуги за специјален дизајн"
+msgstr "Özel Tasarım Hizmetleri"
+
+msgid "Персонализирани венчаници"
+msgstr "Kişiye Özel Gelinlikler"
+
+msgid "Облека за веридба"
+msgstr "Nişan Kıyafetleri"
+
+msgid "Услуги за преправка и проба"
+msgstr "Tadilat ve Prova Hizmetleri"
+
+msgid "Вечерни фустани / Абаје"
+msgstr "Gece Elbiseleri / Abiye"
+
+msgid "100% Рачна изработка"
+msgstr "%100 El İşçiliği"
+
+msgid "Првокласни ткаенини"
+msgstr "Birinci Sınıf Kumaşlar"
+
+msgid "Произведено во Скопје"
+msgstr "Üsküp'te Üretildi"
+
+msgid "Зошто ние?"
+msgstr "Neden Biz?"
+
+msgid "Личен пристап"
+msgstr "Kişisel Yaklaşım"
+
+msgid "Висок квалитет"
+msgstr "Yüksek Kalite"
+
+msgid "Најнови блог објави"
+msgstr "Son Blog Yazıları"
+
+msgid "Прочитај повеќе →"
+msgstr "Devamını Oku →"
+
+msgid "Сè уште нема блог објави."
+msgstr "Henüz blog yazısı yok."
+
+# Contact Page
+msgid "Оставете порака кога сакате; тимот на атељето ќе одговори во рок од 24 часа."
+msgstr "Dilediğiniz zaman mesaj bırakın; atölye ekibi 24 saat içinde cevap verecek."
+
+msgid "Атеље"
+msgstr "Atölye"
+
+msgid "Скопје, Македонија"
+msgstr "Üsküp, Makedonya"
+
+msgid "Телефон"
+msgstr "Telefon"
+
+msgid "Работни денови 09:00 - 18:00"
+msgstr "Hafta içi 09:00 - 18:00"
+
+msgid "Погодно за сите прашања и барања за специјални термини."
+msgstr "Her türlü soru ve özel randevu talepleri için uygun."
+
+msgid "Оставете порака"
+msgstr "Mesaj Bırakın"
+
+msgid "Порака"
+msgstr "Mesaj"
+
+msgid "Испрати порака"
+msgstr "Mesajı Gönder"
+
+msgid "Креативно атеље"
+msgstr "Yaratıcı Atölye"
+
+msgid "Ги обликуваме соништата во цвеќиња и ткаенина."
+msgstr "Hayalleri çiçekler ve kumaşlarla şekillendiriyoruz."
+
+msgid "Започни со планирање"
+msgstr "Planlamaya Başla"
+
+# FAQ Page
+msgid "сместување"
+msgstr "konaklama"
+
+msgid "Резервирајте соби во бутик хотел за свадби"
+msgstr "Düğün butik otelinde oda rezervasyonu yapın"
+
+msgid "Резервирај сега"
+msgstr "Şimdi Rezervasyon Yap"
+
+msgid "Уметноста на couture кројачество"
+msgstr "Couture Terziliğin Sanatı"
+
+# RSVP Page
+msgid "Свадбена прослава"
+msgstr "Düğün Kutlaması"
+
+msgid "Придружете ни се за незаборавна вечер полна со љубов, радост и нови почетоци."
+msgstr "Aşk, neşe ve yeni başlangıçlarla dolu unutulmaz bir akşam için bize katılın."
+
+msgid "РСВП Сега"
+msgstr "Şimdi RSVP"
+
+msgid "Контакт детали"
+msgstr "İletişim Bilgileri"
+
+msgid "Име и презиме"
+msgstr "Ad Soyad"
+
+msgid "Претпочитан датум"
+msgstr "Tercih Edilen Tarih"
+
+msgid "Услуга"
+msgstr "Hizmet"
+
+msgid "-- Изберете услуга --"
+msgstr "-- Hizmet Seçiniz --"
+
+msgid "Нема достапни услуги"
+msgstr "Kullanılabilir hizmet yok"
+
+msgid "Наведете ги вашите барања"
+msgstr "Taleplerinizi belirtin"
+
+msgid "Побарај термин"
+msgstr "Randevu Talep Et"
+
+msgid "Локација на атељето"
+msgstr "Atölye Konumu"
+
+# Pricing Page
+msgid "Пакети за цени"
+msgstr "Fiyatlandırma Paketleri"
+
+msgid "Дополнителни услуги"
+msgstr "Ek Hizmetler"
+
+msgid "Изберете дополнителни услуги за вашиот пакет"
+msgstr "Paketinize eklemek için ek hizmetleri seçin"
+
+# Portfolio Page
+msgid "Наша колекција"
+msgstr "Koleksiyonumuz"
+
+msgid "НОВА КОЛЕКЦИЈА"
+msgstr "YENİ KOLEKSİYON"
+
+msgid "Уметнички дела на нашите невести"
+msgstr "Gelinlerimizin Sanat Eserleri"
+
+msgid "Сите"
+msgstr "Hepsi"
+
+# Blog Page
+msgid "Белешки од атељето"
+msgstr "Atölye Notları"
+
+msgid "Објави за нови колекции, процеси и инспиративни средби се појавуваат тука."
+msgstr "Yeni koleksiyonlar, süreçler ve ilham buluşmaları hakkında paylaşımlar burada görünür."
+
+msgid "Прочитај детали"
+msgstr "Detayları Oku"
+
+msgid "Не е пронајдена блог објава."
+msgstr "Blog yazısı bulunamadı."
+
+msgid "Претходна"
+msgstr "Önceki"
+
+msgid "Следна"
+msgstr "Sonraki"
+
+msgid "Страница"
+msgstr "Sayfa"
+
+msgid "Истражи"
+msgstr "Keşfet"
+
+msgid "Табла за инспирација"
+msgstr "İlham Panosu"
+
+msgid "Популарни наслови"
+msgstr "Popüler Başlıklar"
+
+msgid "Сè уште нема нова содржина."
+msgstr "Henüz yeni içerik yok."
+
+msgid "Категории"
+msgstr "Kategoriler"
+
+msgid "Ажурирање на содржина"
+msgstr "İçerik Güncellemesi"
+
+msgid "Земете белешки за вашиот план за невеста"
+msgstr "Gelin planınız için notlar alın"
+
+msgid "Претплати се"
+msgstr "Abone Ol"
+
+# General
+msgid "Прескокни до содржина"
+msgstr "İçeriğe Atla"
+
+msgid "Прикажи мени"
+msgstr "Menüyü Göster"
+
+msgid "Оди горе"
+msgstr "Yukarı Çık"

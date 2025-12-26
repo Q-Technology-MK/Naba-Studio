@@ -1,8 +1,10 @@
 {% extends "core/base.html" %}
+{% load multilang i18n %}
 
-{% block title %}{{ post.title }} · Atelier Günlük{% endblock %}
+{% block title %}{{ post.translated_title }} · Naba Studio{% endblock %}
 
 {% block content %}
+{% get_current_language as LANGUAGE_CODE %}
 {% csrf_token %}
 <div class="blog-detail-page">
     <div class="blog-detail-layout">
@@ -10,17 +12,17 @@
         <article class="blog-detail-main">
             <div class="blog-detail-header">
                 <p class="blog-date">{{ post.published_at }}</p>
-                <h1>{{ post.title }}</h1>
+                <h1>{{ post.translated_title }}</h1>
             </div>
             <div class="blog-detail-hero">
-                <img src="{{ post.hero_image }}" alt="{{ post.title }}">
+                <img src="{{ post.hero_image }}" alt="{{ post.translated_title }}">
             </div>
             <div class="blog-detail-content">
-                {{ post.body|safe }}
+                {{ post.translated_body|safe }}
             </div>
             <!-- Social Share -->
             <div class="blog-social-share">
-                <span>Paylaş:</span>
+                <span>{% t 'blog_share' %}:</span>
                 <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" target="_blank" rel="noopener" aria-label="Facebook'ta paylaş">
                     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
                 </a>
@@ -41,16 +43,16 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
                     </svg>
-                    <span>{{ post.likes }}</span> Beğeni
+                    <span>{{ post.likes }}</span> {% t 'blog_likes' %}
                 </button>
             </div>
 
             <!-- Tags -->
-            {% if post.get_tags_list %}
+            {% if post.translated_tags %}
             <div class="sidebar-widget blog-tags-widget">
-                <h4>Etiketler</h4>
+                <h4>{% t 'blog_tags' %}</h4>
                 <div class="tag-list">
-                    {% for tag in post.get_tags_list %}
+                    {% for tag in post.translated_tags %}
                     <span class="tag">{{ tag }}</span>
                     {% endfor %}
                 </div>
@@ -59,7 +61,7 @@
 
             <!-- Back Link -->
             <div class="sidebar-widget">
-                <a href="{% url 'blog' %}" class="back-link">← Tüm Yazılar</a>
+                <a href="{% url 'blog' %}" class="back-link">← {% t 'blog_all_posts' %}</a>
             </div>
         </aside>
     </div>

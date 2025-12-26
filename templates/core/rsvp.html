@@ -1,15 +1,17 @@
 {% extends "core/base.html" %}
+{% load i18n multilang %}
 
-{% block title %}RSVP · Ankora Atelier{% endblock %}
+{% block title %}{% t 'nav_rsvp' %} · Naba Studio{% endblock %}
 
 {% block content %}
+{% get_current_language as LANGUAGE_CODE %}
 <!-- Hero Section 1899x719 -->
 <section class="rsvp-hero" style="background-image: url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1900&q=80');">
     <div class="rsvp-hero-overlay">
         <div class="rsvp-hero-content">
-            <h1>Wedding Celebration</h1>
-            <p>Join us for an unforgettable evening celebrating love, joy, and new beginnings.</p>
-            <a href="#rsvp-form" class="primary-btn">RSVP Now</a>
+            <h1>{% t 'rsvp_celebration' %}</h1>
+            <p>{% t 'rsvp_join_us' %}</p>
+            <a href="#rsvp-form" class="primary-btn">{% t 'rsvp_now' %}</a>
         </div>
     </div>
 </section>
@@ -18,7 +20,7 @@
 <div class="page-wrapper">
     <section class="rsvp-contact-section" id="rsvp-form">
         <div class="rsvp-contact-details">
-            <h2>Contact details</h2>
+            <h2>{% t 'rsvp_contact_details' %}</h2>
             <address>
                 <p>{{ site_settings.address }}</p>
                 <p><a href="mailto:{{ site_settings.email }}">{{ site_settings.email }}</a></p>
@@ -36,32 +38,32 @@
         
         <form class="rsvp-form" method="post" action="{% url 'rsvp' %}">
             {% csrf_token %}
-            <label for="name">Ad Soyad</label>
-            <input id="name" name="name" placeholder="Adınız Soyadınız" required>
+            <label for="name">{% t 'rsvp_full_name' %}</label>
+            <input id="name" name="name" placeholder="{% t 'rsvp_full_name' %}" required>
 
-            <label for="email">E-posta</label>
-            <input id="email" name="email" type="email" placeholder="adresiniz@example.com" required>
+            <label for="email">{% t 'home_email' %}</label>
+            <input id="email" name="email" type="email" placeholder="vasata@email.com" required>
 
-            <label for="phone">Telefon</label>
+            <label for="phone">{% t 'contact_phone' %}</label>
             <input id="phone" name="phone" type="tel" placeholder="+389 70 123 456">
 
-            <label for="date">Tercih Edilen Tarih</label>
+            <label for="date">{% t 'rsvp_preferred_date' %}</label>
             <input id="date" name="date" type="date">
 
-            <label for="service">Hizmet</label>
+            <label for="service">{% t 'rsvp_service' %}</label>
             <select id="service" name="service" required>
-                <option value="">-- Hizmet Seçiniz --</option>
+                <option value="">{% t 'rsvp_select_service' %}</option>
                 {% for addon in addons %}
-                <option value="{{ addon.name }}">{{ addon.name }}</option>
+                <option value="{{ addon.name }}">{{ addon.translated_name }}</option>
                 {% empty %}
-                <option value="">Kullanılabilir hizmet yok</option>
+                <option value="">{% t 'rsvp_no_services' %}</option>
                 {% endfor %}
             </select>
 
-            <label for="message">Mesaj</label>
-            <textarea id="message" name="message" rows="4" placeholder="Talepleriniz varsa belirtin"></textarea>
+            <label for="message">{% t 'contact_message' %}</label>
+            <textarea id="message" name="message" rows="4" placeholder="{% t 'rsvp_specify_requests' %}"></textarea>
 
-            <button type="submit" class="primary-btn">Randevu Talep Et</button>
+            <button type="submit" class="primary-btn">{% t 'rsvp_request_appointment' %}</button>
         </form>
     </section>
 </div>
@@ -69,7 +71,7 @@
 <!-- Map Section -->
 <div class="page-wrapper">
     <section class="rsvp-map-section">
-        <h2 class="section-heading">Atölye Konumu</h2>
+        <h2 class="section-heading">{% t 'rsvp_atelier_location' %}</h2>
         <div class="map-embed">
             {% if site_settings.map_embed_code %}
                 {{ site_settings.map_embed_code|safe }}

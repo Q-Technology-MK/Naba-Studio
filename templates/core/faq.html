@@ -1,7 +1,7 @@
 {% extends "core/base.html" %}
-{% load i18n %}
+{% load i18n multilang %}
 
-{% block title %}SSS · Ankora Atelier{% endblock %}
+{% block title %}{% t 'nav_faq' %} · Naba Studio{% endblock %}
 
 {% block content %}
 {% get_current_language as LANGUAGE_CODE %}
@@ -9,28 +9,28 @@
     <div class="faq-sections">
         <section class="faq-section faq-main">
             <div class="faq-heading">
-                <p class="eyebrow">FAQ</p>
+                <p class="eyebrow">{% t 'nav_faq' %}</p>
             </div>
 
-            <!-- Category Navigation -->
+            <!-- Category Filter Buttons -->
             {% if faq_categories %}
             <nav class="faq-navigation">
                 <ul class="faq-nav-list">
-                    {% for category in faq_categories.keys %}
+                    {% for category, data in faq_categories.items %}
                     <li>
-                        <a href="#{{ category|slugify }}" class="faq-nav-link">{{ category }}</a>
+                        <button type="button" class="faq-nav-link faq-filter-btn{% if forloop.first %} active{% endif %}" data-category="{{ data.key }}">{{ category }}</button>
                     </li>
                     {% endfor %}
                 </ul>
             </nav>
             {% endif %}
 
-            <!-- FAQ Items Grouped by Category -->
-            {% for category, faqs in faq_categories.items %}
-            <div class="faq-category-group" id="{{ category|slugify }}">
+            <!-- FAQ Items Grouped by Category (initially only first category visible) -->
+            {% for category, data in faq_categories.items %}
+            <div class="faq-category-group" id="{{ data.key }}" data-category="{{ data.key }}" {% if not forloop.first %}style="display: none;"{% endif %}>
                 <h3 class="faq-category-title">{{ category }}</h3>
                 <div class="faq-questions">
-                    {% for faq in faqs %}
+                    {% for faq in data.faqs %}
                         <details class="faq-line">
                             <summary>
                                 {% if LANGUAGE_CODE == 'tr' %}
@@ -64,9 +64,9 @@
                 style="background-image: url('{{ background }}');"
             >
                 <div class="accommodation-content">
-                    <h3>accommodation</h3>
-                    <p>Book the rooms at a wedding boutique hotel</p>
-                    <a href="{% url 'contacts' %}" class="secondary-btn">Book Now</a>
+                    <h3>{% t 'faq_accommodation' %}</h3>
+                    <p>{% t 'faq_book_rooms' %}</p>
+                    <a href="{% url 'contacts' %}" class="secondary-btn">{% t 'faq_book_now' %}</a>
                 </div>
             </section>
             {% endwith %}
@@ -78,19 +78,65 @@
 <div class="faq-cta-panels">
     <section class="contact-showcase faq-cta">
         <div class="showcase-column image-column">
+            {% if faq_cta_left %}
+            <img src="{{ faq_cta_left.image.url }}" alt="{{ faq_cta_left.alt_text|default:'Atelier bouquet' }}">
+            {% else %}
             <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=400&q=80" alt="Atelier bouquet">
+            {% endif %}
         </div>
         <div class="showcase-column text-column">
             <div class="showcase-text">
                 <p class="eyebrow">Naba Studio by Semma</p>
-                <h3>Couture Terziliğin Sanatı</h3>
-                <p>Kuzey Makedonya'daki atölyemizde, her gelinlik bir sanat eseri olarak tasarlanır. Sizin ölçülerinize, stilinize ve hayallarınıza uygun özel dikim gelinlikleri yaratıyoruz. Konsultasyon yapın, gelinliğinizi tasarlamaya başlayın.</p>
-                <a href="{% url 'contacts' %}" class="showcase-cta">Randevu Al</a>
+                <h3>{% t 'faq_couture_art' %}</h3>
+                <p>{% t 'faq_couture_desc' %}</p>
+                <a href="{% url 'contacts' %}" class="showcase-cta">{% t 'services_book_appointment' %}</a>
             </div>
         </div>
         <div class="showcase-column image-column">
+            {% if faq_cta_right %}
+            <img src="{{ faq_cta_right.image.url }}" alt="{{ faq_cta_right.alt_text|default:'Bridal styling' }}">
+            {% else %}
             <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=400&q=80" alt="Bridal styling">
+            {% endif %}
         </div>
     </section>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const filterButtons = document.querySelectorAll('.faq-filter-btn');
+    const categoryGroups = document.querySelectorAll('.faq-category-group');
+    const faqContainer = document.querySelector('.faq-main');
+    
+    // Initially show only first category
+    categoryGroups.forEach(function(group, index) {
+        if (index === 0) {
+            group.style.display = 'block';
+        } else {
+            group.style.display = 'none';
+        }
+    });
+    
+    filterButtons.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            const selectedCategory = this.getAttribute('data-category');
+            
+            // Update active button
+            filterButtons.forEach(function(b) {
+                b.classList.remove('active');
+            });
+            this.classList.add('active');
+            
+            // Show only selected category, hide others
+            categoryGroups.forEach(function(group) {
+                if (group.getAttribute('data-category') === selectedCategory) {
+                    group.style.display = 'block';
+                } else {
+                    group.style.display = 'none';
+                }
+            });
+        });
+    });
+});
+</script>
 {% endblock %}

@@ -8,7 +8,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         faqs_data = [
             {
-                "category": "Закажување термини и Проби",
+                "category": "booking_trials",
                 "order": 1,
                 "question_mk": "Што треба да направам пред да дојдам на закажаниот термин?",
                 "answer_mk": "Ви препорачуваме да изберете облека во која ќе можете удобно да се движите. Донесувањето на чевли со високи потпетици, долна облека во боја на кожа и неколку фотографии од модели што ви се допаѓаат ќе го олесни процесот на дизајнирање.",
@@ -18,7 +18,7 @@ class Command(BaseCommand):
                 "answer_sq": "Ju rekomandojmë të zgjidhni veshje me të cilat mund të lëvizni lirshëm. Veshja e këpucëve me taka, të brendshmeve në ngjyrë mishi (nude) dhe sjellja e disa fotove shembuj të modeleve që pëlqeni do ta lehtësojë procesin e dizajnit.",
             },
             {
-                "category": "Закажување термини и Проби",
+                "category": "booking_trials",
                 "order": 2,
                 "question_mk": "Колку трае пробата?",
                 "answer_mk": "Секоја проба трае просечно 45-60 минути. Времето може да варира во зависност од деталите на дизајнот.",
@@ -28,7 +28,7 @@ class Command(BaseCommand):
                 "answer_sq": "Çdo provë zgjat mesatarisht 45-60 minuta. Koha mund të ndryshojë në varësi të detajeve të dizajnit.",
             },
             {
-                "category": "Закажување термини и Проби",
+                "category": "booking_trials",
                 "order": 3,
                 "question_mk": "Со колку луѓе можам да дојдам?",
                 "answer_mk": "За да имате пријатно и удобно искуство, препорачуваме да дојдете со најмногу 2 гости (придружници).",
@@ -140,7 +140,7 @@ class Command(BaseCommand):
                 "answer_sq": "Ka vendparkim në zonën afër ateliesë sonë. Detajet jua dërgojmë në mesazhin e konfirmimit të takimit.",
             },
             {
-                "category": "Закажување термини и Проби",
+                "category": "booking_trials",
                 "order": 21,
                 "question_mk": "Дали моите клиентски податоци се безбедни?",
                 "answer_mk": "Да. Сите ваши лични податоци и мерки се чуваат доверливо во согласност со законите за заштита на лични податоци и не се споделуваат со трети лица.",
@@ -150,7 +150,7 @@ class Command(BaseCommand):
                 "answer_sq": "Po. Të gjitha të dhënat tuaja personale dhe masat ruhen në mënyrë konfidenciale sipas ligjeve për mbrojtjen e të dhënave dhe nuk ndahen me palë të treta.",
             },
             {
-                "category": "Закажување термини и Проби",
+                "category": "booking_trials",
                 "order": 22,
                 "question_mk": "Може ли да видам венчаници што сте ги сошиле претходно?",
                 "answer_mk": "Да, на нашата веб-страница и на нашиот Instagram профил можете да видите фотографии од нашите вистински невести.",

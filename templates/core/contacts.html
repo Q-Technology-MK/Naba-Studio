@@ -1,33 +1,34 @@
 {% extends "core/base.html" %}
+{% load multilang %}
 
-{% block title %}İletişim · Ankora Atelier{% endblock %}
+{% block title %}{% t 'nav_contact' %} · Naba Studio{% endblock %}
 
 {% block content %}
 <div class="page-wrapper">
     <div class="section-divider"></div>
-    <h1 class="section-heading">İletişim</h1>
-    <p class="section-subtitle">Dilediğiniz zaman mesaj bırakın; atelier ekibi 24 saat içinde cevap verecek.</p>
+    <h1 class="section-heading">{% t 'nav_contact' %}</h1>
+    <p class="section-subtitle">{% t 'contact_leave_message' %}</p>
 
     <div class="contact-cards">
         <article class="contact-card">
-            <h3>Atölye</h3>
-            <p>Skopje, Makedonya</p>
+            <h3>{% t 'contact_atelier' %}</h3>
+            <p>{% t 'contact_skopje' %}</p>
             <p>{{ site_settings.address }}</p>
         </article>
         <article class="contact-card">
-            <h3>Telefon</h3>
+            <h3>{% t 'contact_phone' %}</h3>
             <p>{{ site_settings.phone }}</p>
-            <p>Hafta içi 09:00 - 18:00</p>
+            <p>{% t 'contact_working_days' %}</p>
         </article>
         <article class="contact-card">
-            <h3>E-posta</h3>
+            <h3>{% t 'home_email' %}</h3>
             <a href="mailto:{{ site_settings.email }}" class="underline_anim">{{ site_settings.email }}</a>
-            <p>Her türlü soru ve özel randevu talepleri için uygun.</p>
+            <p>{% t 'contact_suitable' %}</p>
         </article>
     </div>
 
     <section class="contact-form">
-        <h2 class="section-heading">Mesaj bırakın</h2>
+        <h2 class="section-heading">{% t 'contact_leave_msg' %}</h2>
         
         {% if messages %}
         <div class="form-messages">
@@ -39,16 +40,16 @@
         
         <form method="post" action="{% url 'contacts' %}">
             {% csrf_token %}
-            <label for="name">Adınız</label>
-            <input id="name" name="name" placeholder="Örn. Elif Yıldız" required>
+            <label for="name">{% t 'home_your_name' %}</label>
+            <input id="name" name="name" placeholder="{% t 'home_your_name' %}" required>
 
-            <label for="email">E-posta</label>
-            <input id="email" name="email" type="email" placeholder="atelier@ankora.com" required>
+            <label for="email">{% t 'home_email' %}</label>
+            <input id="email" name="email" type="email" placeholder="atelier@nabastudio.mk" required>
 
-            <label for="message">Mesaj</label>
-            <textarea id="message" name="message" rows="5" placeholder="Tasarım talebinizle ilgili birkaç cümle" required></textarea>
+            <label for="message">{% t 'contact_message' %}</label>
+            <textarea id="message" name="message" rows="5" placeholder="{% t 'home_your_message' %}" required></textarea>
 
-            <button type="submit" class="primary-btn">Mesajı gönder</button>
+            <button type="submit" class="primary-btn">{% t 'contact_send_message' %}</button>
         </form>
         <div class="map-embed">
             {% if site_settings.map_embed_code %}
@@ -68,30 +69,44 @@
 <div class="contact-wide-panels">
     <section class="contact-showcase">
         <div class="showcase-column image-column">
+            {% if contact_cta_left %}
+            <img src="{{ contact_cta_left.image.url }}" alt="{{ contact_cta_left.alt_text|default:'Atelier bouquet' }}">
+            {% else %}
             <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=400&q=80" alt="Atelier bouquet">
+            {% endif %}
         </div>
         <div class="showcase-column text-column">
             <div class="showcase-text">
-                <p class="eyebrow">Creative Atelier</p>
-                <h3>We sculpt dreams in florals & fabric.</h3>
-                <p>Her köşesini özenle dokuduğumuz özel gün tasarımlarımız için sizinle buluşmak istiyoruz. Randevu teklifinizi iletin, ekibimiz hemen size geri dönsün.</p>
-                <a href="{% url 'rsvp' %}" class="showcase-cta">Planlamaya başla</a>
+                <p class="eyebrow">{% t 'contact_creative_atelier' %}</p>
+                <h3>{% t 'contact_shaping_dreams' %}</h3>
+                <p>{% t 'home_hero_subtitle' %}</p>
+                <a href="{% url 'rsvp' %}" class="showcase-cta">{% t 'contact_start_planning' %}</a>
             </div>
         </div>
         <div class="showcase-column image-column">
+            {% if contact_cta_right %}
+            <img src="{{ contact_cta_right.image.url }}" alt="{{ contact_cta_right.alt_text|default:'Bridal styling' }}">
+            {% else %}
             <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=400&q=80" alt="Bridal styling">
+            {% endif %}
         </div>
     </section>
     <section class="contact-gallery">
         <div class="gallery-grid">
+            {% if contact_gallery_images %}
+                {% for img in contact_gallery_images %}
+                <img src="{{ img.image.url }}" alt="{{ img.alt_text|default:'Gallery image' }}">
+                {% endfor %}
+            {% else %}
             <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=500&q=80" alt="Bridal detail">
             <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=500&q=80" alt="Bridal bouquet">
             <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=500&q=80" alt="Draped aisle">
             <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=500&q=80" alt="Golden details">
             <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=500&q=80" alt="Romantic styling">
             <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=500&q=80" alt="Modern tablescape">
+            {% endif %}
         </div>
-        <a class="instagram-link" href="https://instagram.com/" target="_blank" rel="noreferrer">
+        <a class="instagram-link" href="{{ site_settings.instagram_url|default:'https://instagram.com/' }}" target="_blank" rel="noreferrer">
             <svg viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M7 2C4.243 2 2 4.243 2 7v10c0 2.757 2.243 5 5 5h10c2.757 0 5-2.243 5-5V7c0-2.757-2.243-5-5-5H7zm0 2h10c1.654 0 3 1.346 3 3v10c0 1.654-1.346 3-3 3H7c-1.654 0-3-1.346-3-3V7c0-1.654 1.346-3 3-3zm5 2a5 5 0 100 10 5 5 0 000-10zm0 2a3 3 0 11.001 5.999A3 3 0 0112 8zm6.5-.5a1 1 0 11-2 0 1 1 0 012 0z"/>
             </svg>
