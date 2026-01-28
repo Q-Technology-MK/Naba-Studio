@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.db import models
+from django.utils.html import format_html
 
 from .models import (
     AddOnService, BlogPost, BlogTag, FAQItem, PageMedia, PortfolioItem, PricingPackage, Product, ProductImage, ProductReview, Service, 
@@ -96,11 +97,22 @@ class ProductReviewInlineForProduct(admin.TabularInline):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ("name", "slug", "category", "price", "in_stock", "is_featured", "created_at")
+    list_display = ("name", "slug", "category", "price", "image_status", "in_stock", "is_featured", "created_at")
     prepopulated_fields = {"slug": ("name",)}
     list_filter = ("category", "in_stock", "is_featured")
     list_editable = ("is_featured",)
     inlines = [ProductImageInline, ProductReviewInlineForProduct]
+    
+    def image_status(self, obj):
+        """Resim yüklü olup olmadığını göster"""
+        if obj.image:
+            return "✅ Var"
+        elif obj.images.exists():
+            return "✅ Var"
+        else:
+            return "❌ Yok"
+    image_status.short_description = "🖼️ Resim"
+    
     fieldsets = (
         ("Македонски (Default)", {
             "fields": ("name", "slug", "summary", "description", "category", "price", "in_stock", "is_featured"),
@@ -116,10 +128,9 @@ class ProductAdmin(admin.ModelAdmin):
             "classes": ("collapse",),
             "description": "Përmbajtja në shqip (opsionale)"
         }),
-        ("🖼️ URL Слика (Опционално)", {
-            "fields": ("image_url",),
-            "classes": ("collapse",),
-            "description": "⚠️ Користете го ова само ако не качувате слики горе. Препорачана големина: 600x800 пиксели"
+        ("🖼️ Слика (Локална)", {
+            "fields": ("image",),
+            "description": "Качете слика од вашиот компјутер. Препорачана големина: 600x800 пиксели, максимално 400KB"
         }),
     )
 
@@ -524,3 +535,50 @@ class ProductReviewAdmin(admin.ModelAdmin):
         self.message_user(request, f"{queryset.count()} değerlendirme reddedildi.")
     reject_reviews.short_description = "Seçili değerlendirmeleri reddet"
 
+
+@admin.register(PageMedia)
+class PageMediaAdmin(admin.ModelAdmin):
+    list_display = ("section", "order", "is_active", "title", "get_image_preview")
+    list_filter = ("section", "is_active")
+    list_editable = ("order", "is_active")
+    search_fields = ("title", "alt_text", "section")
+    fieldsets = (
+        ("Bölüm & Sıra", {
+            "fields": ("section", "order", "is_active")
+        }),
+        ("Görsel Dosyası", {
+            "fields": ("image", "alt_text"),
+            "description": "Lütfen aşağıdaki ölçü önerilerine uyun"
+        }),
+        ("Bilgi & Açıklama", {
+            "fields": ("title", "description"),
+            "classes": ("collapse",),
+        }),
+    )
+    readonly_fields = ("description",)
+    
+    def get_image_preview(self, obj):
+        """Show small image preview in list view"""
+        if obj.image:
+            return format_html(
+                '<img src="{}" width="50" height="50" style="object-fit: cover; border-radius: 4px;" />',
+                obj.image.url
+            )
+        return "No image"
+    get_image_preview.short_description = "Resim Önizleme"
+    
+    def get_form(self, request, obj=None, **kwargs):
+        """Add dynamic help text for size guidelines"""
+        form = super().get_form(request, obj, **kwargs)
+        if 'image' in form.base_fields:
+            from core.models import PageMedia
+            choices_dict = dict(PageMedia.SECTION_CHOICES)
+            size_guidelines = PageMedia.SECTION_SIZE_GUIDELINES
+            help_text = ""
+            for section_key, size_info in size_guidelines.items():
+                help_text += f"<strong>{choices_dict.get(section_key, section_key)}</strong>: {size_info}<br>"
+            form.base_fields['image'].help_text = format_html(
+                '<strong>Ölçü Rehberi:</strong><br>{}',
+                help_text
+            )
+        return form

@@ -14,7 +14,11 @@
             <div class="blog-grid">
                 {% for post in page_obj.object_list %}
                     <article class="blog-card">
-                        <img src="{{ post.hero_image }}" alt="{{ post.translated_title }}">
+                        {% if post.hero_image %}
+                            <img src="{{ post.hero_image.url }}" alt="{{ post.translated_title }}">
+                        {% else %}
+                            <img src="https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?auto=format&fit=crop&w=800&q=80" alt="{{ post.translated_title }}">
+                        {% endif %}
                         <div class="content">
                             <span class="category-badge">{{ post.translated_category }}</span>
                             <p class="meta">{{ post.published_at }}</p>

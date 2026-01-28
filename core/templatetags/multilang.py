@@ -28,6 +28,10 @@ STATIC_TEXTS = {
     # Home Page
     'home_hero_title': {'mk': 'Атеље во срцето на Скопје', 'tr': "Üsküp'ün Kalbinde Bir Atölye", 'sq': 'Një atelie në zemër të Shkupit'},
     'home_hero_subtitle': {'mk': 'Најпрестижното couture атеље за венчаници во Северна Македонија. Секоја венчаница има своја приказна. Дали си подготвена да ја напишеш твојата?', 'tr': "Kuzey Makedonya'nın en prestijli couture gelinlik tasarım atölyesi. Her gelinliğin bir hikâyesi vardır. Seninkini yazmaya hazır mısın?", 'sq': 'Atelieja më prestigjioze e fustaneve të nusërisë couture në Maqedoninë e Veriut. Çdo fustan nusërie ka një histori. A jeni gati të shkruani tuajën?'},
+    'studio_prestige': {'mk': 'Нашиот атеље е позната во целиот регион за совршенство и внимание на детали.', 'tr': 'Atölye, bölge genelinde mükemmellik ve detaylara dikkat etmesiyle tanınmaktadır.', 'sq': 'Atelieja njohet në të gjithë rajonin për përsosmëri dhe vëmendje ndaj detajeve.'},
+    'experience_message': {'mk': 'Со деценија искуство, создаваме венчаници кои го означуваат најспецијалниот ден во вашиот живот.', 'tr': 'Onlarca yıllık deneyimle, hayatınızın en özel gününü işaretleyen gelinlikler yaratıyoruz.', 'sq': 'Me dhjetëra vjet përvojë, ne krijojmë fustan nusërie që shënjestrojnë ditën më të veçantë të jetës tuaj.'},
+    'quality_commitment': {'mk': 'Секоја венчаница е создана со височок квалитет и внимание на деталите.', 'tr': 'Her gelinlik yüksek kalite ve detaylara dikkat ile yapılır.', 'sq': 'Çdo fustan nusërie është krijuar me cilësi të lartë dhe vëmendje ndaj detajeve.'},
+    'custom_design_msg': {'mk': 'Персонализирани дизајни кои го одразуваат вашиот уникален стил и личност.', 'tr': 'Benzersiz tarzınızı ve kişiliğinizi yansıtan kişiselleştirilmiş tasarımlar.', 'sq': 'Dizajne të personalizuara që pasqyrojnë stilin tuaj unik dhe personalitetin.'},
     'home_memory': {'mk': 'Секоја венчаница има свој спомен', 'tr': 'Her Gelinliğin Bir Anısı Vardır', 'sq': 'Çdo fustan nusërie ka një kujtim'},
     'home_couture': {'mk': 'посебно шиење couture', 'tr': 'özel dikim couture', 'sq': 'qepje e veçantë couture'},
     'home_designed': {'mk': 'Венчаници дизајнирани од нула', 'tr': 'Sıfırdan Tasarlanan Gelinlikler', 'sq': 'Fustane nusërie të dizajnuara nga zeroja'},
@@ -65,6 +69,14 @@ STATIC_TEXTS = {
     'services_book_appointment': {'mk': 'Закажи термин', 'tr': 'Randevu Al', 'sq': 'Cakto takim'},
     'services_couture_packages': {'mk': 'Couture пакети за венчаници', 'tr': 'Couture Gelinlik Paketleri', 'sq': 'Paketat e fustaneve të nusërisë Couture'},
     'services_get_now': {'mk': 'Земи сега', 'tr': 'Şimdi Al', 'sq': 'Merr tani'},
+    
+    # Services Page - Descriptions for each service
+    'service_custom_design_desc': {'mk': 'Вашиот уникален дизајн, нашата вештина - создаваме венчаница која го одразува вашиот совршен вкус.', 'tr': 'Sizin benzersiz tasarımınız, bizim ustaslığımız - mükemmel zevkinizi yansıtan bir gelinlik yaratıyoruz.', 'sq': 'Dizajni juaj unik, aftësia jonë - ne krijojmë një fustan nusërie që pasqyron shijen tuaj të përsosur.'},
+    'service_consultation_desc': {'mk': 'Слушаме ваши идеи, советаме од искуство - секоја консултација е почеток на магична трансформација.', 'tr': 'Fikirlerinizi dinliyoruz, deneyimle tavsiye ediyoruz - her danışmanlık büyülü bir dönüşümün başlangıcıdır.', 'sq': 'Ne dëgjojmë idetë tuaja, ne këshillojmë nga përvoja - çdo konsultim është fillimi i një transformimi magjik.'},
+    'service_fitting_desc': {'mk': 'Совршена смена, идеално поставена - секој детал мери и доприлагодува се вашиот телесен облик.', 'tr': 'Kusursuz uyum, ideal yerleşim - her detay ölçülür ve vücut şeklinize uyum sağlanır.', 'sq': 'Përshtatje e përsosur, vendosje ideale - çdo detaj matet dhe përshtatet me formën e trupit tuaj.'},
+    'service_tailoring_desc': {'mk': 'Точна игла, нежни раце - шие со љубав и совршенство на секој шав.', 'tr': 'Hassas iğne, nazik eller - her dikişte sevgi ve kusursuzluk ile dikilir.', 'sq': 'Gjilpë precize, duar të buta - qepet me dashuri dhe përsosmëri në çdo qepje.'},
+    'service_express_alt_desc': {'mk': 'Брзо, сигурно, професионално - срочна преправка за вас кој нема време за чекање.', 'tr': 'Hızlı, güvenilir, profesyonel - hızlı tadilat beklemeyenleri için.', 'sq': 'Shpejt, i sigurt, profesional - ndryshim i shpejtë për ata që nuk kanë kohë për të pritur.'},
+    'service_packages_subtitle': {'mk': 'Разгледајте нашите пакети и изберете ја оваа што најмногу одговара на вашите потреби.', 'tr': 'Paketlerimizi inceleyin ve ihtiyaçlarınıza en uygun olanı seçin.', 'sq': 'Inspektoni paketat tona dhe zgjidhni atë që përshtatet më mirë me nevojat tuaja.'},
     
     # About Page
     'about_dreams_reality': {'mk': 'Ги претвораме соништата во реалност', 'tr': 'Hayalleri Gerçeğe Dönüştürüyoruz', 'sq': 'I kthejmë ëndrrat në realitet'},

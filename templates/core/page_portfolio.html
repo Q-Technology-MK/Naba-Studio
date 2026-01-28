@@ -7,8 +7,13 @@
 {% get_current_language as LANGUAGE_CODE %}
 <!-- Hero / Featured Item -->
 <div class="mb-6 w-full overflow-hidden relative aspect-[16/9] shadow-md px-4 max-w-6xl mx-auto rounded-2xl mt-8">
+    {% if portfolio_hero and portfolio_hero.image %}
+    <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('{{ portfolio_hero.image.url }}');">
+    </div>
+    {% else %}
     <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1487180144351-b8472da7d491?auto=format&fit=crop&w=1200&q=80');">
     </div>
+    {% endif %}
     <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex flex-col justify-center items-center p-5">
         <span class="bg-red-500/90 backdrop-blur-sm text-white text-[10px] font-bold px-2 py-1 rounded w-fit mb-2">{% t 'portfolio_new_collection' %}</span>
         <h3 class="text-white text-2xl font-bold leading-tight text-center">{% t 'portfolio_artworks' %}</h3>

@@ -3,8 +3,7 @@
 
 {% block title %}{{ product.name }} · Atelier Collection{% endblock %}
 
-{% block content %}
-{% get_current_language as LANGUAGE_CODE %}
+{% block content %}{% get_current_language as LANGUAGE_CODE %}{% get_current_language as LANGUAGE_CODE %}
 <div class="product-detail-page">
     <!-- Hero Slideshow -->
     <div class="product-slideshow">
@@ -25,19 +24,17 @@
         
         <!-- Slides Container -->
         <div class="slides-container">
-            {% with all_images=product.get_all_images %}
-            {% if all_images %}
-                {% for img in all_images %}
-                <div class="slide{% if forloop.first %} active{% endif %}" data-index="{{ forloop.counter0 }}">
-                    <img src="{{ img.image.url }}" alt="{{ img.alt_text|default:product.name }}">
-                </div>
-                {% endfor %}
-            {% else %}
-                <div class="slide active" data-index="0">
-                    <img src="{{ product.get_primary_image }}" alt="{{ product.name }}">
-                </div>
-            {% endif %}
-            {% endwith %}
+            <!-- Primary Image (from product.image field) -->
+            <div class="slide active" data-index="0">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+            </div>
+            
+            <!-- Additional Images (from ProductImage inline) -->
+            {% for img in product.images.all %}
+            <div class="slide" data-index="{{ forloop.counter }}">
+                <img src="{{ img.image.url }}" alt="{{ img.alt_text|default:product.name }}">
+            </div>
+            {% endfor %}
         </div>
         
         <!-- Slideshow Controls -->
@@ -50,15 +47,13 @@
         
         <!-- Dots Pagination -->
         <div class="slide-dots">
-            {% with all_images=product.get_all_images %}
-            {% if all_images %}
-                {% for img in all_images %}
-                <span class="dot{% if forloop.first %} active{% endif %}" data-index="{{ forloop.counter0 }}"></span>
-                {% endfor %}
-            {% else %}
-                <span class="dot active" data-index="0"></span>
-            {% endif %}
-            {% endwith %}
+            <!-- Primary image dot -->
+            <span class="dot active" data-index="0"></span>
+            
+            <!-- Additional images dots -->
+            {% for img in product.images.all %}
+            <span class="dot" data-index="{{ forloop.counter }}"></span>
+            {% endfor %}
         </div>
     </div>
     
@@ -68,7 +63,9 @@
             <div class="product-header-left">
                 <span class="product-category">{{ product.get_category_display }}</span>
                 <h1>{% if LANGUAGE_CODE == 'tr' and product.name_tr %}{{ product.name_tr }}{% elif LANGUAGE_CODE == 'sq' and product.name_sq %}{{ product.name_sq }}{% else %}{{ product.name }}{% endif %}</h1>
-                <p class="product-price">{{ product.price }}</p>
+                <p class="product-price">
+                    {% if LANGUAGE_CODE == 'tr' and product.price_tr %}{{ product.price_tr }}{% elif LANGUAGE_CODE == 'sq' and product.price_sq %}{{ product.price_sq }}{% else %}{{ product.price }}{% endif %}
+                </p>
             </div>
             <div class="product-header-right">
                 {% with avg_rating=product.get_average_rating review_count=product.get_review_count %}

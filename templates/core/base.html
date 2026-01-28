@@ -54,10 +54,12 @@
                 {% else %}
                 <span class="brand-mark">{{ site_settings.site_name|slice:":1" }}</span>
                 {% endif %}
+                {% if site_settings.show_header_branding %}
                 <div>
                     <strong>{{ site_settings.site_name }}</strong>
                     <p>{{ site_settings.tagline }}</p>
                 </div>
+                {% endif %}
             </a>
             <nav class="main-nav">
                 <ul class="menu-list sc_layouts_hide_on_tablet sc_layouts_hide_on_mobile">

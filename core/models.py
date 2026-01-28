@@ -204,11 +204,14 @@ class Product(models.Model):
         default='a_line',
         verbose_name="Категорија"
     )
-    price = models.CharField(max_length=60, blank=True, default="По договор")
-    image_url = models.URLField(
+    price = models.CharField(max_length=60, blank=True, default="По договор", verbose_name="Цена (Македонски)")
+    price_tr = models.CharField(max_length=60, blank=True, default="Tafsiye Edilen Fiyat", verbose_name="Fiyat (Türkçe)")
+    price_sq = models.CharField(max_length=60, blank=True, default="Me Marrëveshje", verbose_name="Çmimi (Shqip)")
+    image = models.ImageField(
+        upload_to='products/',
         blank=True,
-        default="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=900&q=80",
-        help_text="Önerilen boyut: 600x800 piksel (dikey dikdörtgen)"
+        null=True,
+        help_text="Önerilen boyut: 600x800 piksel (dikey dikdörtgen), maksimum 400KB"
     )
     created_at = models.DateField(auto_now_add=True)
     in_stock = models.BooleanField(default=True)
@@ -244,6 +247,14 @@ class Product(models.Model):
             return self.description_sq
         return self.description
     
+    def get_price(self, lang='mk'):
+        """Get translated price"""
+        if lang == 'tr' and self.price_tr:
+            return self.price_tr
+        elif lang == 'sq' and self.price_sq:
+            return self.price_sq
+        return self.price
+    
     def get_primary_image(self):
         """Get the primary image for this product"""
         primary = self.images.filter(is_primary=True).first()
@@ -252,7 +263,9 @@ class Product(models.Model):
         first_image = self.images.first()
         if first_image:
             return first_image.image.url
-        return self.image_url or "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=900&q=80"
+        if self.image:
+            return self.image.url
+        return "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=900&q=80"
     
     def get_all_images(self):
         """Get all images for this product"""
@@ -337,10 +350,11 @@ class BlogPost(models.Model):
     
     published_at = models.DateField()
     category = models.CharField(max_length=100, choices=CATEGORY_CHOICES, default='atelier_news', help_text="Blog yazısının kategorisini seçin")
-    hero_image = models.URLField(
+    hero_image = models.ImageField(
+        upload_to='blog/',
         blank=True,
-        default="https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?auto=format&fit=crop&w=1200&q=80",
-        help_text="Önerilen boyut: 1200x675 piksel (16:9 yatay dikdörtgen)"
+        null=True,
+        help_text="Önerilen boyut: 800x450 piksel (16:9 yatay dikdörtgen), maksimum 400KB"
     )
     # Old text-based tags (deprecated, kept for migration)
     tags = models.CharField(max_length=200, blank=True, verbose_name="Етикети (Македонски)", help_text="Eski alan - artık kullanılmıyor")
@@ -580,8 +594,8 @@ class SiteContent(models.Model):
 
 class SiteSettings(models.Model):
     """Admin-manageable site settings including theme colors."""
-    site_name = models.CharField(max_length=100, default="Ankora Atelier")
-    tagline = models.CharField(max_length=200, default="Bridal & Couture Studio")
+    site_name = models.CharField(max_length=100, default="Ankora Atelier", blank=True)
+    tagline = models.CharField(max_length=200, default="Bridal & Couture Studio", blank=True)
     
     # Logo & Favicon - File uploads
     logo_file = models.ImageField(upload_to='logos/', blank=True, null=True, help_text="Logo resmi (Önerilen boyut: 200x60 piksel)")
@@ -603,6 +617,9 @@ class SiteSettings(models.Model):
     email = models.EmailField(blank=True, default="nabastudio25@gmail.com")
     phone = models.CharField(max_length=30, blank=True, default="070 666 567")
     whatsapp_number = models.CharField(max_length=20, blank=True, default="38970666567", help_text="WhatsApp numarası (ülke kodu ile, boşluksuz: örn. 38970666567)")
+    
+    # Header Settings
+    show_header_branding = models.BooleanField(default=True, help_text="Header'da site adı ve slogan göster")
     
     # Social Links
     facebook_url = models.URLField(blank=True)
@@ -710,6 +727,7 @@ class PageMedia(models.Model):
         ('faq_cta_right', 'SSS - CTA Sağ Resim'),
         
         # PORTFOLIO PAGE
+        ('portfolio_hero', 'Portfolio - Hero Arka Planı (Уметнички дела)'),
         ('portfolio_showcase', 'Portfolio - Galerideki Resimler'),
         
         # RSVP PAGE
@@ -740,6 +758,7 @@ class PageMedia(models.Model):
         'faq_accommodation': '800x600px (Yatay), JPG/WebP, max 300KB - SSS konaklama görseli',
         'faq_cta_left': '400x500px (Dikey), JPG/WebP, max 200KB - SSS CTA sol resim',
         'faq_cta_right': '400x500px (Dikey), JPG/WebP, max 200KB - SSS CTA sağ resim',
+        'portfolio_hero': '1920x1080px (Full HD), JPG/WebP, max 500KB - Portfolio hero arka planı',
         'portfolio_showcase': '800x1000px (Dikey), JPG/WebP, max 350KB - Portfolio vitrin',
         'rsvp_hero': '1920x800px (Geniş banner), JPG/WebP, max 400KB - RSVP hero arka planı',
     }

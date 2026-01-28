@@ -64,17 +64,17 @@
             <article>
                 <span class="service-icon">✂</span>
                 <h3>{% t 'home_alterations' %}</h3>
-                <p>{% t 'home_hero_subtitle' %}</p>
+                <p>{% t 'quality_commitment' %}</p>
             </article>
             <article>
                 <span class="service-icon">🧵</span>
                 <h3>{% t 'home_dress_sewing' %}</h3>
-                <p>{% t 'home_hero_subtitle' %}</p>
+                <p>{% t 'experience_message' %}</p>
             </article>
             <article>
                 <span class="service-icon">🪡</span>
                 <h3>{% t 'home_tailoring' %}</h3>
-                <p>{% t 'home_hero_subtitle' %}</p>
+                <p>{% t 'custom_design_msg' %}</p>
             </article>
             {% endfor %}
         </div>
@@ -211,7 +211,11 @@
             {% for post in latest_blog %}
             <article class="article-card">
                 <a href="{% url 'blog_detail' post.slug %}" style="text-decoration: none; color: inherit;">
-                    <img src="{{ post.hero_image }}" alt="{{ post.translated_title }}">
+                    {% if post.hero_image %}
+                        <img src="{{ post.hero_image.url }}" alt="{{ post.translated_title }}">
+                    {% else %}
+                        <img src="https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?auto=format&fit=crop&w=800&q=80" alt="{{ post.translated_title }}">
+                    {% endif %}
                     <div class="article-meta">
                         <p class="article-tag">{% t 'home_story' %}</p>
                         <h3>{{ post.translated_title }}</h3>

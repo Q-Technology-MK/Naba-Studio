@@ -222,6 +222,9 @@ def portfolio(request):
         product.translated_category = Product.get_category_name(product.category, lang)
         products.append(product)
     
+    # Get portfolio hero image from PageMedia
+    portfolio_hero = PageMedia.objects.filter(section='portfolio_hero', is_active=True).first()
+    
     gallery_slides = [
         {"name": "Ninelle", "image": "https://veil.ancorathemes.com/wp-content/uploads/2019/10/bridal1-1024x723.jpg"},
         {"name": "Elizabeth", "image": "https://veil.ancorathemes.com/wp-content/uploads/2019/10/bridal2-1024x1365.jpg"},
@@ -235,6 +238,7 @@ def portfolio(request):
             "gallery_slides": gallery_slides,
             "categories": categories,
             "products": products,
+            "portfolio_hero": portfolio_hero,
             "lang": lang,
         },
     )
@@ -480,9 +484,11 @@ def faq(request):
 
 
 def product_detail(request, slug):
+    from django.utils.translation import get_language
     product = get_object_or_404(Product, slug=slug)
     settings = SiteSettings.get_settings()
-    return render(request, "core/product_detail.html", {"product": product, "site_settings": settings})
+    lang = get_language() or 'mk'
+    return render(request, "core/product_detail.html", {"product": product, "site_settings": settings, "lang": lang})
 
 
 @require_POST

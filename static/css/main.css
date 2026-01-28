@@ -323,7 +323,7 @@ a {
 
 .site-header {
     background: rgba(255, 255, 255, 0.75);
-    padding: 1rem 4vw;
+    padding: 0.25rem 4vw;
     border-bottom: 1px solid var(--border);
     position: sticky;
     top: 0;
@@ -333,7 +333,7 @@ a {
 
 @media (max-width: 480px) {
     .site-header {
-        padding: 0.75rem 1rem;
+        padding: 0.2rem 1rem;
     }
 }
 
@@ -373,11 +373,16 @@ text-decoration: none;
 gap: 0.5rem;
 font-size: 0.75rem;
 }
+
+.brand-logo {
+width: 200px;
+height: 112px;
+}
 }
 
 .brand-logo {
-width: 48px;
-height: 48px;
+width: 320px;
+height: 180px;
 object-fit: contain;
 border-radius: 8px;
 }
@@ -403,7 +408,7 @@ gap: 0.5rem;
 }
 
 .footer-logo {
-width: 80px;
+width: 300px;
 height: auto;
 object-fit: contain;
 margin-bottom: 0.5rem;
@@ -621,7 +626,9 @@ position: relative;
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center;
     transition: transform 0.3s ease;
+    display: block;
 }
 
 .masonry-item:hover img {
@@ -935,9 +942,12 @@ position: relative;
 
 .dress-item img {
     width: 100%;
-    aspect-ratio: 3/4;
+    height: auto;
+    aspect-ratio: 3 / 4;
     object-fit: cover;
+    object-position: center;
     border-radius: 0;
+    display: block;
 }
 
 .video-section {
@@ -2524,8 +2534,8 @@ main {
 
 .masonry-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
 }
 
 .masonry-card {
@@ -2536,12 +2546,15 @@ main {
     flex-direction: column;
     gap: 0.8rem;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+    aspect-ratio: 3 / 4;
+    min-height: 400px;
 }
 
 .masonry-card img {
     width: 100%;
-    height: 200px;
+    height: 75%;
     object-fit: cover;
+    object-position: center;
 }
 
 .masonry-card .info {
@@ -2565,6 +2578,27 @@ main {
     border-radius: 30px;
     max-height: 520px;
     object-fit: cover;
+}
+
+/* Responsive Masonry Grid */
+@media (max-width: 1200px) {
+    .masonry-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .masonry-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .masonry-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
 }
 
 .blog-list {
@@ -2854,10 +2888,11 @@ main {
 .product-slideshow {
     position: relative;
     width: 100%;
-    height: 85vh;
-    min-height: 600px;
+    max-width: 500px;
+    aspect-ratio: 3/4;
     overflow: hidden;
     background: #000;
+    margin: 0 auto;
 }
 
 .slideshow-nav {
@@ -2936,6 +2971,8 @@ main {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center;
+    display: block;
 }
 
 .slide-arrow {
@@ -3444,6 +3481,7 @@ main {
 .footer-grid h3,
 .footer-grid h4 {
     margin-top: 0;
+    margin-bottom: 1rem;
     font-family: "Playfair Display", serif;
     color: var(--secondary);
 }
@@ -4371,12 +4409,12 @@ main {
 .socials {
     display: flex;
     gap: 0.75rem;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
 }
 
 .socials a {
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -4391,8 +4429,8 @@ main {
 }
 
 .socials svg {
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
 }
 
 .footer-extra-text {
@@ -4443,5 +4481,11 @@ main {
     
     .masonry-item img {
         height: 400px;
+    }
+
+    .product-slideshow {
+        max-width: 100%;
+        width: 100%;
+        aspect-ratio: 3/4;
     }
 }
